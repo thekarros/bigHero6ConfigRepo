@@ -1,0 +1,38 @@
+server:
+  port: 9393
+kafka: 
+  bootstrap-server: 10.40.26.222:9092
+  applicationId: comparator-filter-validation-stage
+  consumer-group: comparator-filter-validation-stageusw
+  consumer:
+    aggregateEvent: aggregateAvlEvents-test-stage
+
+# Cycle service to pick up new config changes
+# Tenants enabled: Pinealls-FL-10, TC-VirginiaBeach, Colombia-GA, Cleveland-OH, Hopewell, DentonIndepentendSchoolDistrict, EastAllen-IN, DEKALB-GA
+tenant.enabled.list: f3cad3e4-564d-4fdf-b7c6-4968bb8a615d,80ed9cde-a492-4480-922b-59c4c3e6fcab,7d7588d4-6764-441d-81f9-c839f380d8da,ba82b332-dcad-442b-969f-f989a9a1d5ef,65b9371b-10e1-4c85-b2a3-a271628b0345,47523cb9-2e1e-4072-8825-4ad939d3983a,2924b186-7615-49dd-b23a-867080f97f15,a9251698-daf3-472f-8d83-83439b5983f2,b01079be-9dac-4ba5-8c9b-bafc18982af7
+#tenant.enabled.list: 80ed9cde-a492-4480-922b-59c4c3e6fcab
+eventId.enabled: 1,2103,2001,2140,2002,2141,2005,2152,2006,2153,2160,2150,2151
+sensor.events: 2001,2140,2002,2141,2005,2152,2006,2153,2160,2150,2151
+speed.limit: 5
+comparator.output.topic: comparatoranalysis-input-p01usw2stage
+comparator.input.topic: aggregateAVLEvents-p01usw2stage
+
+
+bootstrap.server: 10.40.26.222:9092
+client.groupId: comparaor-event-filter-analyzer
+
+management.endpoints.web.exposure.include: "*"
+
+es:
+  url: vpc-p01usw2stage-v7-fgczvvgqf5h7zwmoicajtnblua.us-west-2.es.amazonaws.com
+  username: 
+  password: 
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  port: 443
+  query:
+    detectRadius: 10m
+    maxHitThreshold: 30
+    eventSearchWindow: 10m

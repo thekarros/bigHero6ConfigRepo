@@ -1,0 +1,149 @@
+# Property file for stage tier. Will be used if spring.profiles.active is set to "stage"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management.security.enabled: false
+management.context-path: /
+
+ribbon.eureka.enabled: true
+eureka.client.healthcheck.enabled: true
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,/swagger-resources/configuration/security, /manage/**,/hystrix.stream]
+
+security.basic.enabled: false
+
+restTemplate:
+  poolingHttpClientConnection:
+    maxTotal: 20000
+    defaultMaxPerRoute: 10000
+    closeIdleConnectionsInMilliseconds: 30000
+    connectionRequestTimeout: 5000
+    socketTimeout: 15000
+    connectTimeout: 3000
+
+# For caching
+spring.redis.host: redis-stage.usw2.karrostech.net
+spring.redis.port: 6379
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAE2sKTlQDSfimxDjpGVz68IAAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM8e85GsIHhxUIlHd9AgEQgDlDDnuWEINmeSyF3kloXQFrIrnihVq8/itQMyKaN/yqM1X/VVLE61mqv8K2xjeBrHm9edkXR/laE80='
+
+spring.redis.tenant.host: ${spring.redis.host}
+spring.redis.tenant.port: ${spring.redis.port}
+spring.redis.tenant.database: 0
+spring.redis.tenant.password: ${spring.redis.password}
+
+spring.redis.vehicle.host: ${spring.redis.host}
+spring.redis.vehicle.port: ${spring.redis.port}
+spring.redis.vehicle.database: 4
+spring.redis.vehicle.password: ${spring.redis.password}
+
+# For old version
+spring.redis.pool.max-active: 30
+spring.redis.pool.max-wait: 5000
+spring.redis.pool.min-idle: 10
+spring.redis.pool.max-idle: 30
+
+microservices:
+  tenants:
+    serviceId: TENANTSERVICE
+    get-school:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/schools/
+    get-setting:
+      endpoint: http://${microservices.tenants.serviceId}/api/v1.0/tenantsettings/
+    get-detail:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/tenants/
+  studentaccessrequests:
+    serviceId: accessManagementService
+    get-studentaccessrequest-details:
+      endpoint: http://${microservices.studentaccessrequests.serviceId}/api/v1/studentAccessRequests/
+    get-all-studentaccessrequests-by-parent:
+      endpoint: http://${microservices.studentaccessrequests.serviceId}/api/v1/users/
+
+  vehicleliveevents:
+    serviceId: VEHICLELIVEEVENTSERVICE
+    vehicle-status:
+      endpoint: http://${microservices.vehicleliveevents.serviceId}/api/v1/vehicleStatus/
+  transportationlookups:
+    serviceId: TRANSPORTATIONLOOKUPSERVICE
+    get-student-trips:
+      endpoint: http://${microservices.transportationlookups.serviceId}/api/v1/students/
+  vehicles:
+    serviceId: VEHICLEQUERYWSAPI
+    get-vehicle-details:
+      endpoint: http://${microservices.vehicles.serviceId}/api/v3.0/vehicles/
+    search-vehicles:
+      endpoint: http://${microservices.vehicles.serviceId}/api/v3.0/vehicles/search
+  routes:
+    serviceId: ROUTESERVICE
+    get-route-details:
+      endpoint: http://${microservices.routes.serviceId}/api/v1/plan/routes/
+  accessRequests:
+    serviceId: accessManagementService
+    search-access-request:
+      endpoint: http://${microservices.accessRequests.serviceId}/api/v1/accessrequest/search
+    search-access-request-v2:
+      endpoint: http://${microservices.accessRequests.serviceId}/api/v2/accessrequests/search
+  registrationCodeSearch:
+    serviceId: accessManagementService
+    search-registration-code:
+      endpoint: http://${microservices.accessRequests.serviceId}/api/v1/registrationcodes/search
+    search-multiple-registration-code:
+      endpoint: http://${microservices.accessRequests.serviceId}/api/v1/registrationcodes/multiple/search
+  alertZones:
+    serviceId: GEOFENCEALERTMANAGEMENTSERVICE
+    search-alertzones:
+      endpoint: http://${microservices.alertZones.serviceId}/api/v1/geofences/search
+    update-settings-alertzones:
+      endpoint: http://${microservices.alertZones.serviceId}/api/v1/geofences/status
+    count-alertzones:
+      endpoint: http://${microservices.alertZones.serviceId}/api/v1/geofences/count
+
+#Hystrix configuration
+hystrix.command.AccessRequest.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.AccessRequest.coreSize: 10
+hystrix.threadpool.AccessRequest.maximumSize: 500
+hystrix.threadpool.AccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.Student.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.Student.coreSize: 10
+hystrix.threadpool.Student.maximumSize: 500
+hystrix.threadpool.Student.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.RegistrationCode.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.RegistrationCode.coreSize: 10
+hystrix.threadpool.RegistrationCode.maximumSize: 500
+hystrix.threadpool.RegistrationCode.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.MultipleRegistrationCode.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.MultipleRegistrationCode.coreSize: 10
+hystrix.threadpool.MultipleRegistrationCode.maximumSize: 500
+hystrix.threadpool.MultipleRegistrationCode.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.StudentAccessRequest.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.StudentAccessRequest.coreSize: 10
+hystrix.threadpool.StudentAccessRequest.maximumSize: 500
+hystrix.threadpool.StudentAccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.Transportation.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.Transportation.coreSize: 10
+hystrix.threadpool.Transportation.maximumSize: 500
+hystrix.threadpool.Transportation.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.VehicleLiveEvent.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.VehicleLiveEvent.coreSize: 10
+hystrix.threadpool.VehicleLiveEvent.maximumSize: 500
+hystrix.threadpool.VehicleLiveEvent.allowMaximumSizeToDivergeFromCoreSize: true
+
+cache:
+  liveEvent:
+    enable: true

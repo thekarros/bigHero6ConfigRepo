@@ -1,0 +1,11 @@
+ribbon.eureka.enabled: false 
+eureka.client.enabled: false 
+
+kafka:
+  producer:
+    equipmentTopic: equipment-info-p01use2dev
+spring:
+  jpa:
+    properties:
+      hibernate:
+        default_schema: public

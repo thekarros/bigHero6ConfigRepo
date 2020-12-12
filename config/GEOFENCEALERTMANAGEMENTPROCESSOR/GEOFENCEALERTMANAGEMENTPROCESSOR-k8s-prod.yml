@@ -1,0 +1,65 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "k8s-prod"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+
+# DB Configs
+kafka:
+  bootstrap: ${kafka-broker}
+  consumer-group: geofenceAlertManagementProcessor-p01usw1prod
+  consumer:
+    geofenceRequestChangeTopic: geofenceRequestChange-p01usw1prod
+    vehicleChangedTopic: vehicleChanged-p01usw1prod
+    accessRequestChangeTopic: accessRequestChange-p01usw1prod
+    changeRouteAssignmentTopic: changeRouteAssignment-p01usw1prod
+    changeStudentTripTopic: changeStudentTrip-p01usw1prod_v2
+    changedStudentPersonTopic: changedStudentPerson-p01usw1prod
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    geoFence: geofences
+
+maximum_allowed_alert_zone_per_user_vehicle_source_app: 6
+maximum_allowed_alert_zone_for_PP: 1
+minimum_time_interval: 300000
+
+ElasticSearchURL: 20725d3cf72c4ca48a7f2a260c5d4a76.us-west-1.aws.found.io
+usernameElastic: elastic
+passwordElastic: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGDCDEZt8wJ7cz7usk8kOgJAAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMFzn6X8Ys4VK5NGvrAgEQgDNoqNEBTvds5ty7LhR5k/aBMo8p7Fio7Kc67iboqSD73FAsKS6pF/n/wrn8Nj8OoEuXnRc='
+
+spring.redis.host: redis-prod.usw1.karrostech.net
+spring.redis.port: 6379
+
+# Custom redis factory
+spring.redis.geofence.host: ${spring.redis.host}
+spring.redis.geofence.port: ${spring.redis.port}
+spring.redis.geofence.database: 2
+
+spring.redis.tenant.host: ${spring.redis.host}
+spring.redis.tenant.port: ${spring.redis.port}
+spring.redis.tenant.database: 0
+
+spring.redis.vehicle.host: ${spring.redis.host}
+spring.redis.vehicle.port: ${spring.redis.port}
+spring.redis.vehicle.database: 4
+# Custom redis factory
+
+spring.redis.jedis.pool.max-active: 50
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30
+
+kafka-processors:
+  enabled: true

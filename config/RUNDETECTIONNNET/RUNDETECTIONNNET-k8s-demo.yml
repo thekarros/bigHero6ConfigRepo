@@ -1,0 +1,121 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ElasticSearchURL: ${elasticSearch.aws.url}
+kafka:
+  bootstrap-server: ${kafka.servers}
+  consumer-group: runDetectionNNet-p01usw2demo
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        streams:
+          bindings:
+            avlEventInput:
+              consumer:
+                applicationId: runDetectionNNet-p01usw2demo
+                startOffset: latest
+          binder:
+            brokers: ${kafka.servers}
+            applicationId: runDetectionNNet-p01usw2demo
+            configuration:
+              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.value.serde: org.apache.kafka.common.serialization.Serdes$BytesSerde
+              commit.interval.ms: 1000
+      #              application.server: ${server.ip}:${server.port}
+      bindings:
+        avlEventInput:
+          destination: aggregateAVLEvents-p01usw2demo
+          group: runDetectionNNet-p01usw2demo
+          binder: kafka3
+      binders:
+        kafka3:
+          type: kstream
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database-platform: org.hibernate.spatial.dialect.postgis.PostgisDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        show-sql: true
+        use_sql_comments: true
+        format_sql: true
+        dialect: org.hibernate.spatial.dialect.postgis.PostgisDialect
+        ddl-auto: none
+        default_schema: public
+        hbm2ddl:
+          import_files:
+
+spring.redis.host: redis-demo.usw2.karrostech.net
+spring.redis.port: 6379
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsP0dcMRb2ccR0M5OZ9u2QAAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM5ZwTH/yi3i+KkGDHAgEQgDlZb3mBKRe9lvZ4savziOdKl57sdyDy7zH0flgd3GuayrFVgZ6X0It90pekXlX6ccRN3fTO0+dLXuE='
+
+spring.redis.jedis.pool.max-active: 50
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30
+
+spring.redis.vehicle.host: ${spring.redis.host}
+spring.redis.vehicle.port: ${spring.redis.port}
+spring.redis.vehicle.database: 4
+spring.redis.vehicle.password: ${spring.redis.password}
+
+edulog:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 2
+      max-active: 10
+      test-on-borrow: true
+
+es:
+  hosts:
+    -
+      name: ES-AWS
+      url: ${elasticSearch.aws.url}
+      username:
+      password:
+      protocol: https
+      connectionTimeout: 10000
+      socketTimeout: 60000
+      parallelESCountThreads: 100
+      port: ${elasticSearch.aws.port}
+    -
+      name: ES-CLUSTER
+      url: ${elasticSearch.cloud.url}
+      username: ${elasticSearch.cloud.username}
+      password: ${elasticSearch.cloud.password}
+      protocol: https
+      connectionTimeout: 10000
+      socketTimeout: 60000
+      parallelESCountThreads: 100
+      port: ${elasticSearch.cloud.port}
+  tenantIndex:
+    indexName: tenant
+    type: doc
+  directionIndex: rundirections
+  realTimeVehicleEvent:
+    indexName: realtimevehiclesevents
+    type: doc
+
+detection:
+  radius: 50
+  tenantWaitPeriod: 5m
+  oldRunDeleteThreshold: 1h
+  weights:
+    consecutive: 1
+    missed: -.1
+    total: 1

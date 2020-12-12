@@ -1,0 +1,20 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+es:
+  url: ${elasticSearch.logAggregation.url}
+  username: ${elasticSearch.logAggregation.username}
+  password: ${elasticSearch.logAggregation.password}
+  port: ${elasticSearch.logAggregation.port}
+  protocol: https
+  parallelESCountThreads: 100
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  maxScrollSize: 10000
+  auditLogs:
+    index: audit-p01.usw2.stage-*
+    type: _doc

@@ -1,0 +1,78 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+
+endpoints.sensitive: true
+management.security.enabled: false
+management.context-path: /
+
+maxVehicleLimit: 5
+kafka:
+  bootstrap: ${kafka-list-servers}
+  consumer-group: vehicleManagementService-p01usw2demo
+  tenant:
+    groupId: tenantConsumer-vms-demo
+    topic: tenantChanged-p01usw2demo
+  equipment:
+    topic: equipment-info-p01usw2demo
+vehicletopic: vehicle-info-p01usw2demo
+vehicleversion: 1.0
+equipmenttopic: equipment-info-p01usw2demo
+equipmentversion: 1.0
+availabilitytopic: availability-info-p01usw2demo
+availabilityversion: 1.0
+depottopic: depot-info-p01usw2demo
+depotversion: 1.0
+
+
+# DB Configs
+spring:
+  redis:
+    host: redis-demo.usw2.karrostech.net
+    port: 6379
+    database: 0
+    password: J4r8qXA44w6ZukWAtR6qU7wJcKvXTA
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: vms
+        hbm2ddl:
+          import_files:
+        format_sql: true
+
+  
+edulog:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 2
+      max-active: 50
+      max-idle: 50
+      test-on-borrow: false
+assignment.env: demo

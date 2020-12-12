@@ -1,0 +1,12 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management:
+  health:
+    redis:
+      enabled: false
+
+# API Keys that are acceptable
+validApiKeys: ${apiKeys}

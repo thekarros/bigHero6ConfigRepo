@@ -1,0 +1,13 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+kafka:
+  consumer-group: rideRegistrationChange-kafka-consumer-group-use2dev
+  topic:
+    ride-registration-change: rideRegistrationChange-p01use2dev
+    msk-suffix:
+      ride-registration-change: rideRegistrationChange-use2dev

@@ -1,0 +1,81 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "test"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+
+# DB Configs
+spring:
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: master_data
+        hbm2ddl:
+          import_files:
+
+testindex: testhistoricaldata
+testtype: testplandata
+snapShotIndex: plandata
+snapShotType: _doc
+changeLogIndex: plandatachangelog
+changeLogType: _doc
+esUser:
+password:
+port: 443
+parallelESCountThreads: 100
+connectionTimeout: 50000
+socketTimeout: 60000
+maxScrollSize: 10000
+defaultTimeOutinSec: 120
+ElasticSearchURL: ${elasticSearch.aws.url}
+ESconnectionRequestTimeout: -1
+
+# Spring Security configurations are required for this application to work with the
+  # Karrostech Security dependency included in pom.xml.
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**/students/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/** ]
+
+hystrix.command.PostPlanDataHistory.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.PostPlanDataHistory.coreSize: 10
+hystrix.threadpool.PostPlanDataHistory.maximumSize: 500
+hystrix.threadpool.PostPlanDataHistory.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetPlanDataHistory.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.GetPlanDataHistory.coreSize: 10
+hystrix.threadpool.GetPlanDataHistory.maximumSize: 500
+hystrix.threadpool.GetPlanDataHistory.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetMetaDataPlanDataHistory.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.GetMetaDataPlanDataHistory.coreSize: 10
+hystrix.threadpool.GetMetaDataPlanDataHistory.maximumSize: 500
+hystrix.threadpool.GetMetaDataPlanDataHistory.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.DeletePlanDataHistory.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.DeletePlanDataHistory.coreSize: 10
+hystrix.threadpool.DeletePlanDataHistory.maximumSize: 500
+hystrix.threadpool.DeletePlanDataHistory.allowMaximumSizeToDivergeFromCoreSize: true
+
+kafka:
+  bootstrap: ${kafka-broker}
+  groupId: stagechangedPlanRouteGroup
+  producer:
+    topic: changedPlanRoute-p01usw2demo
+  retries: 3
+  publish:
+    enabled: true

@@ -1,0 +1,80 @@
+management.health.elasticsearch.enabled: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+kafka:
+  bootstrap-server: ${kafka-list-servers}
+  routeOverride:
+    topicName: run-sub-ro-results-p01usw2stage
+  consumer:
+    changeRouteAssignment: changeRouteAssignment-p01usw2stage
+    publishNotificationRequest: publishNotificationRequest-p01usw2stage
+    runSubstitution: run-agg-results-p01usw2stage
+    eventsGroupId: substitutionProcessor-p01usw2stage
+  consumer-group: substitution-consumer-group-p01usw2stage
+  applicationId: substitutionProcessor-stage
+es:
+  url: ${elasticSearch.aws.url}
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  username: ${elasticSearch.aws.username}
+  password: ${elasticSearch.aws.password}
+  port: ${elasticSearch.aws.port}
+  runSubstitution:
+    index: run_scored_vehicles-*
+    type: doc
+  subsitutionHistory:
+    index: substitution_history-*
+    type: doc
+  runDetectionInfo:
+    index: detectioninfo
+    type: doc
+
+
+# TODO: encrypt these credentials
+credentials:
+  ApiKey: 11bb4c1845c7a0137ad0bc8f1df055792849df16
+  clientSecret: feb4747c886c6f96385c918f6a6a73c286d9bb3a2dce19f47d8b83ba566acc35
+
+spring:
+  redis:
+    general:
+      port: 6379
+      host: redis-stage.usw2.karrostech.net
+      database: 0
+      password: MwMNehjHjN9Yta63xQq6gEcAQJ8h5G
+      cacheExpirations:
+        Paths: -1
+        Tenants: -1
+        vehicles: -1
+        substitution: 86400
+        CURRENT_ASSIGNMENTS: 600
+    vehicle:
+      host: ${spring.redis.general.host}
+      port: ${spring.redis.general.port}
+      database: 4
+      password: ${spring.redis.general.password}
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+
+latest-timerange:
+  type: recent
+  value: 12
+
+maxCombinationRunScoreVehicle: 10000
+
+buffered-es-bulk-index:
+  batch-size: 1000
+  retention-ms: 1000
+  buffer-size: 50000
+
+kafka-processors:
+  enabled: true

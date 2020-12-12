@@ -1,0 +1,21 @@
+# Eureka
+ribbon.eureka.enabled: true
+
+# Kafka config
+kafka:
+  bootstrap-server: ${kafka-list-servers}
+  consumer:
+    studentTripChange: changeStudentTrip-p01usw2demo_v2
+    appSyncRequestTopic: appSyncRequest-p01usw2demo
+  producer:
+    appSyncRequestTopic: appSyncRequest-p01usw2demo
+  consumer-group: appsyncNotifier-p01usw2demo
+
+microservices:
+  accessManagement:
+    serviceId: ACCESSMANAGEMENTSERVICE
+    searchEmailByStudentAndApp: http://${microservices.accessManagement.serviceId}/api/v1/studentAccessRequests/requesterEmailsByStudentIds/search
+
+appSync:
+  url: https://hr3hxzyrgnfftjk6eh54c5j27a.appsync-api.us-west-2.amazonaws.com/graphql
+  apiKey: da2-pdfxo5tvajcfrl5m34fd5cd4mq

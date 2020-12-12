@@ -1,0 +1,93 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "demo"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-demo.usw2.karrostech.net:1112/eureka/,http://eureka02-p01-demo.usw2.karrostech.net:1112/eureka/
+
+
+# DB Configs
+kafka-broker: ${kafka-list-servers}
+spring:
+  cloud:
+    stream:
+      kafka:
+        streams:
+          bindings:
+            vehicleIntersectGeoFence:
+              consumer:
+                applicationId: geofenceMonitoringService-p01usw2demo
+                startOffset: latest
+          binder:
+            brokers: ${kafka-broker}
+            applicationId: geofenceMonitoringService-p01usw2demo
+            configuration:
+              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.value.serde: org.apache.kafka.common.serialization.Serdes$BytesSerde
+              commit.interval.ms: 1000
+      bindings:
+        vehicleIntersectGeoFence:
+          destination: aggregateAVLEvents-p01usw2demo
+          group: geofenceMonitoringService-p01usw2demo
+      binders:
+        kafka3:
+          type: kstream
+kafka:
+  bootstrap: ${kafka-broker}
+  producer:
+    publishNotificationRequest: publishNotificationRequest-p01usw2demo
+
+labelToAdd: geoFence
+trackToAdd: Inside
+statsToAdd: Some Stats Coming Soon!
+
+ElasticSearchURL: 8c86d819876e464dbbb6823dbf2f49c6.us-west-2.aws.found.io
+usernameElastic: elastic
+passwordElastic: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFZTMVBb47wXPRyqjXKPAvfAAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMizjwDh2xToc0qNYQAgEQgDM36JFJOGLTI3rcRDxKZ++OsKprYDfgfvn7HIvV8+7LoMJLAdnyfcpsuokw0VEFds5O8Vo='
+
+AlertZoneKeyValueStoreName: ${spring.cloud.stream.bindings.insideStateStore.destination}
+keyValueStoreName: vehicleInterested
+eventIdToBeProcessed: 2103,1
+searchSize: 1000
+
+spring.redis.host: redis-demo.usw2.karrostech.net
+spring.redis.port: 6379
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsP0dcMRb2ccR0M5OZ9u2QAAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM5ZwTH/yi3i+KkGDHAgEQgDlZb3mBKRe9lvZ4savziOdKl57sdyDy7zH0flgd3GuayrFVgZ6X0It90pekXlX6ccRN3fTO0+dLXuE='
+
+# Custom redis factory
+spring.redis.geofence.host: ${spring.redis.host}
+spring.redis.geofence.port: ${spring.redis.port}
+spring.redis.geofence.database: 2
+spring.redis.geofence.password: ${spring.redis.password}
+
+spring.redis.tenant.host: ${spring.redis.host}
+spring.redis.tenant.port: ${spring.redis.port}
+spring.redis.tenant.database: 0
+spring.redis.tenant.password: ${spring.redis.password}
+# Custom redis factory
+
+spring.redis.jedis.pool.max-active: 50
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    ignoredMessage: ignored_messages-*
+    geofences: geofences
+
+alertZone:
+  maximum_allowed_alert_zone_per_user_vehicle_source_app: 6
+  minimum_time_interval: 300000
+
+timeToIgnoredPushNotification: 3600000
+timeToStillSendPushNotification: 900000

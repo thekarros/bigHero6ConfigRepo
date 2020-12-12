@@ -1,0 +1,102 @@
+# Property file for dev use. Will be used if spring.profiles.active is set to "dev"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management.security.enabled: false
+
+# Spring Security configurations are required for this application to work with the
+# Karrostech Security dependency included in pom.xml.
+security.jwt:
+  tokenExpirationTime: 120 # Number of minutes
+  refreshTokenExpTime: 60 # Minutes
+  tokenIssuer: http://karrostech.com
+  # base 64 encoded signing key
+  tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/** ]
+security.basic.enabled: false
+
+spring:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 20
+      max-active: 50
+      test-on-borrow: true
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public
+        ddl-auto: none
+        hbm2ddl:
+          import_files:
+
+edulog:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 10
+      max-active: 20
+      test-on-borrow: true
+
+hystrix.command.GetPathByIdAndActiveIsTrue.execution.isolation.thread.timeoutInMilliseconds: 600000
+hystrix.threadpool.GetPathByIdAndActiveIsTrue.coreSize: 10
+hystrix.threadpool.GetPathByIdAndActiveIsTrue.maximumSize: 500
+hystrix.threadpool.GetPathByIdAndActiveIsTrue.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetPathByRouteId.execution.isolation.thread.timeoutInMilliseconds: 600000
+hystrix.threadpool.GetPathByRouteId.coreSize: 10
+hystrix.threadpool.GetPathByRouteId.maximumSize: 500
+hystrix.threadpool.GetPathByRouteId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetAllPathsByRouteId.execution.isolation.thread.timeoutInMilliseconds: 600000
+hystrix.threadpool.GetAllPathsByRouteId.coreSize: 10
+hystrix.threadpool.GetAllPathsByRouteId.maximumSize: 500
+hystrix.threadpool.GetAllPathsByRouteId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetPathByRouteIdAndActiveTrue.execution.isolation.thread.timeoutInMilliseconds: 600000
+hystrix.threadpool.GetPathByRouteIdAndActiveTrue.coreSize: 10
+hystrix.threadpool.GetPathByRouteIdAndActiveTrue.maximumSize: 500
+hystrix.threadpool.GetPathByRouteIdAndActiveTrue.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetPathDTOBByRouteId.execution.isolation.thread.timeoutInMilliseconds: 600000
+hystrix.threadpool.GetPathDTOBByRouteId.coreSize: 10
+hystrix.threadpool.GetPathDTOBByRouteId.maximumSize: 500
+hystrix.threadpool.GetPathDTOBByRouteId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.CreateOrUpdatePaths.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.threadpool.CreateOrUpdatePaths.coreSize: 10
+hystrix.threadpool.CreateOrUpdatePaths.maximumSize: 500
+hystrix.threadpool.CreateOrUpdatePaths.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.DeactivateAllPaths.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.DeactivateAllPaths.coreSize: 10
+hystrix.threadpool.DeactivateAllPaths.maximumSize: 500
+hystrix.threadpool.DeactivateAllPaths.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.activateAllPaths.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.activateAllPaths.coreSize: 10
+hystrix.threadpool.activateAllPaths.maximumSize: 500
+hystrix.threadpool.activateAllPaths.allowMaximumSizeToDivergeFromCoreSize: true

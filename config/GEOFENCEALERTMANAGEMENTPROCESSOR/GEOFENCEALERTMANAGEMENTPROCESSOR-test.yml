@@ -1,0 +1,63 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "test"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+
+# DB Configs
+kafka-broker: 10.40.26.222:9092,10.40.26.210:9092,10.40.26.181:9092
+kafka:
+  bootstrap: ${kafka-broker}
+  consumer:
+    alertsCreateGroupId: geoFenceAlertRequest-p01use2dev
+    alertsCreateTopic: geoFenceAlertRequest-p01use2dev
+    inputVehicleUpdatedTopic: vehicleChanged-p01use2dev
+    accessRequestChangeTopic: accessRequestChange-p01use2dev
+  producer:
+    vehicleInterested: geoFenceVehicle-p01use2dev
+    tripChangeAlert: geoFenceAlertTripChange-p01use2dev
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    geoFence: geofences
+
+spring.redis.host: redis-stage.usw2.karrostech.net
+spring.redis.port: 6379
+spring.redis.password: MwMNehjHjN9Yta63xQq6gEcAQJ8h5G
+
+# Custom redis factory
+spring.redis.geofence.host: ${spring.redis.host}
+spring.redis.geofence.port: ${spring.redis.port}
+spring.redis.geofence.database: 2
+spring.redis.geofence.password: ${spring.redis.password}
+
+spring.redis.tenant.host: ${spring.redis.host}
+spring.redis.tenant.port: ${spring.redis.port}
+spring.redis.tenant.database: 0
+spring.redis.tenant.password: ${spring.redis.password}
+
+spring.redis.vehicle.host: ${spring.redis.host}
+spring.redis.vehicle.port: ${spring.redis.port}
+spring.redis.vehicle.database: 4
+spring.redis.vehicle.password: ${spring.redis.password}
+
+# Custom redis factory
+
+spring.redis.jedis.pool.max-active: 50
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30
+
+kafka-processors:
+  enabled: true

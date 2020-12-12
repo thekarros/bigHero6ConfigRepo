@@ -1,0 +1,17 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "test"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-demo.usw2.karrostech.net:1112/eureka/
+
+spring.redis.host: redis-demo.usw2.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 4
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsP0dcMRb2ccR0M5OZ9u2QAAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM5ZwTH/yi3i+KkGDHAgEQgDlZb3mBKRe9lvZ4savziOdKl57sdyDy7zH0flgd3GuayrFVgZ6X0It90pekXlX6ccRN3fTO0+dLXuE='
+
+# For old version
+spring.redis.pool.max-active: 30
+spring.redis.pool.max-wait: 5000
+spring.redis.pool.min-idle: 10
+spring.redis.pool.max-idle: 30

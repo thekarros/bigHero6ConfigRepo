@@ -1,0 +1,20 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+es:
+  url: a52402d200e0432fb99a8088a4b009fd.us-west-1.aws.found.io
+  username: auditing
+  password: k@rr0s_t3chn0loGies
+  port: 9243
+  protocol: https
+  parallelESCountThreads: 100
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  maxScrollSize: 10000
+  auditLogs:
+    index: audit-p01.usw1.prod-*
+    type: _doc

@@ -1,0 +1,66 @@
+# Property file for prod environment. Will be used if spring.profiles.active is set to prod
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-prod.usw1.karrostech.net:1112/eureka/,http://eureka02-p01-prod.usw1.karrostech.net:1112/eureka/
+
+management.security.enabled: false
+
+# DB Configs
+spring:
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: public
+        hbm2ddl:
+          import_files:
+
+edulog:
+  datasource:
+    url: jdbc:postgresql://db-prod.usw1.karrostech.net:5432/Edulog
+    username: karros_prod_admin
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGrx/wBTNFYFkMyWMs1zDiRAAAAezB5BgkqhkiG9w0BBwagbDBqAgEAMGUGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMbdsrRTlU6ozJEvsdAgEQgDjNLewA1V49MQQWNmqjsLYRDmsx+9K7TTNCaePFZ+qDLp0KS/Ock1Cvgg/T6hDEPBCdJqYByDDDnw=='
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 10
+      max-active: 50
+      test-on-borrow: true
+
+# Spring Security configurations are required for this application to work with the
+# Karrostech Security dependency included in pom.xml.
+security.jwt:
+  tokenExpirationTime: 120 # Number of minutes
+  refreshTokenExpTime: 60 # Minutes
+  tokenIssuer: http://karrostech.com
+  # base 64 encoded signing key
+  tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
+  secureAuthenticationEntryUrl: /api/**/waypoints/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/** ]
+  applications: ["ParentPortal", "*", "Insight", "TenantManagement"]
+security.basic.enabled: false
+
+hystrix.command.createWaypoints.execution.isolation.thread.timeoutInMilliseconds: 50000
+hystrix.threadpool.createWaypoints.coreSize: 10
+hystrix.threadpool.createWaypoints.maximumSize: 500
+hystrix.threadpool.createWaypoints.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.deleteWaypoints.execution.isolation.thread.timeoutInMilliseconds: 50000
+hystrix.threadpool.deleteWaypoints.coreSize: 10
+hystrix.threadpool.deleteWaypoints.maximumSize: 500
+hystrix.threadpool.deleteWaypoints.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getwayPoints.execution.isolation.thread.timeoutInMilliseconds: 50000
+hystrix.threadpool.getwayPoints.coreSize: 10
+hystrix.threadpool.getwayPoints.maximumSize: 500
+hystrix.threadpool.getwayPoints.allowMaximumSizeToDivergeFromCoreSize: true

@@ -1,0 +1,10 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka-server:1112/eureka/
+
+kafka:
+  bootstrap-server: 10.20.20.121:9092
+  producer:
+    zonarFetchTopic: linhtr-zonarfetchrequests

@@ -1,0 +1,42 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+      healthcheck:
+        enabled: true
+
+ribbon:
+  eureka:
+    enabled: true
+
+
+kafka: 
+  applicationId: substitutionNotifier-p01use2prod
+  consumer-group: substitutionNotifier-p01use2prod
+  consumer:
+    changeRouteAssignment: changeRouteAssignment-p01usw1prod
+    substitutionNotifier: substitutionNotifierInternalTopic-p01use2prod
+  producer:
+    substitutionNotifier: substitutionNotifierInternalTopic-p01use2prod
+    publishNotificationRequest: publishNotificationRequest-p01usw1prod
+
+es:
+  url: vpc-substitutionwsapi-prod-3eysw3i3p6ammoyxdiaxkqrwtu.us-west-1.es.amazonaws.com
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  username:
+  password:
+  port: 443
+  subsitutionHistory:
+    index: substitution_history-*
+    type: doc
+
+spring:
+  redis:
+    host: redis-prod.usw1.karrostech.net
+    port: 6379
+    database: 0
+    password:
+  

@@ -1,0 +1,125 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management.security.enabled: false
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.defaults.enabled: false
+
+#Accepted status values
+validStatusTypes: "Active, Revoked"
+connectionTimeout: 10000
+socketTimeout: 60000
+maxScrollSize: 10000
+defaultTimeOutinSec: 120
+registrationCodeLength: 8
+
+
+logging:
+  level:
+    root: WARN
+    org.springframework: INFO
+    org.apache.kafka: INFO
+
+# DB Configs
+kafka-broker: ${kafka-list-servers}
+spring.cloud.stream.bindings:
+  inputDD:
+    destination: run-sub-es-results-p01usw2stage
+    group: latestRead
+  outputDD:
+    destination: ddKtable-p01usw2stage
+  inputRA:
+    destination: changeRouteAssignment-p01usw2stage
+  outputRA:
+    destination: raKtable-p01usw2stage
+  inputRO:
+    destination: run-sub-ro-results-p01usw2stage
+  outputRO:
+    destination: roKtable-p01usw2stage
+  ddTable:
+    destination: ddKtable-p01usw2stage
+  roTable:
+    destination: roKtable-p01usw2stage
+  raTable:
+    destination: raKtable-p01usw2stage
+  inputRaWithRoKtable:
+    destination: raroKtable-p01usw2stage
+  outputRaWithRoKtable:
+    destination: raroKtable-p01usw2stage
+  outputJoinedResults:
+    destination: run-agg-results-p01usw2stage     
+es:
+  ElasticSearchURL: ${elasticSearch.cloud.url}
+  username: ${elasticSearch.cloud.username}
+  password: ${elasticSearch.cloud.password}
+  port: ${elasticSearch.cloud.port}
+  parallelESCountThreads: 100
+
+spring:
+  redis:
+    host: redis-stage.usw2.karrostech.net
+    port: 6379
+    database: 3
+    password: MwMNehjHjN9Yta63xQq6gEcAQJ8h5G
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+spring.cloud.stream.kafka.streams.bindings:
+  inputDD:
+    consumer: 
+      applicationId: dd-p01usw2stage
+  inputRA:
+    consumer: 
+      applicationId: ra-p01usw2stage
+  inputRO:
+    consumer: 
+      applicationId: ro-p01usw2stage
+  ddTable:
+    consumer: 
+      applicationId: ddKtable-p01usw2stage   
+  raTable:
+    consumer: 
+      applicationId: raKtable-p01usw2stage
+      materializedAs: routeAssignmentsStore 
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+  roTable:
+    consumer: 
+      applicationId: roKtable-p01usw2stage
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde            
+  inputRaWithRoKtable:
+    consumer: 
+      applicationId: raroKtable-p01usw2stage
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+       
+              
+spring.cloud.stream.kafka.streams:
+  binder:
+    brokers: ${kafka-broker} #localhost #192.168.99.100
+    applicationId: RUNSUBSTITUTEAGG-STAGE
+    configuration:
+      default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      commit.interval.ms: 1000
+      auto.offset.reset: earliest
+      num:
+        stream:
+          threads: 3
+      
+raScore: 1        
+current-version: 
+  version: version1
+  config:
+    coefficient-dd: 1
+    coefficient-ro: 1
+    coefficient-ra: 1
+raStore: routeAssignmentsStore
+maxNumberOfMessages: 20       

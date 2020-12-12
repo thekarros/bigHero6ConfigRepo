@@ -1,0 +1,104 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "test"
+management.security.enabled: false
+management.context-path: /
+management.endpoints.web.exposure.include: "*"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+logging.level.root: INFO
+
+# DB Configs
+kafka-broker: 10.40.26.222:9092,10.40.26.210:9092,10.40.26.181:9092
+spring:
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+    stream:
+      kafka:
+        streams:
+          bindings:
+            insideStateStore:
+              consumer:
+                applicationId: geofencemonitoringservice-statestored-stage
+                startOffset: latest
+            input:
+              consumer:
+                applicationId: geofencemonitoringservice-geofencevehicle-stage
+                startOffset: earliest
+            vehicleIntersectGeoFence:
+              consumer:
+                applicationId: geofencemonitoringservice-vehicleintersectgeoFence-test		
+                startOffset: latest
+          binder:
+            brokers: ${kafka-broker}
+            applicationId: geofence-monitoring-service-stage
+            configuration:
+              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.value.serde: org.apache.kafka.common.serialization.Serdes$BytesSerde
+              commit.interval.ms: 1000
+      bindings:
+        insideStateStore:
+          destination: stateStoredVehicle-p01usw2stage
+          group: geoFenceVehicle-stage
+          binder: kafka3
+        input:
+          destination: geoFenceVehicle-p01usw2stage
+          group: geoFenceVehicle-stage
+          binder: kafka3
+        vehicleIntersectGeoFence:
+          destination: aggregateAVLEvents-test		
+          group: aggregateAVLEvents-test
+      binders:
+        kafka3:
+          type: kstream
+kafka:
+  bootstrap: ${kafka-broker}
+  producer:
+    stateStoredVehicleTopicName: stateStoredVehicle-p01usw2stage
+    notificationTopic: geoMonitoringResponse-p01usw2stage
+    publishNotificationRequest: publishNotificationRequest-p01usw2stage 
+
+labelToAdd: geoFence
+trackToAdd: Inside
+statsToAdd: Some Stats Coming Soon!
+
+AlertZoneKeyValueStoreName: ${spring.cloud.stream.bindings.insideStateStore.destination}
+keyValueStoreName: vehicleInterested
+eventIdToBeProcessed: 2103,1
+searchSize: 1000
+
+spring.redis.host: redis-stage.usw2.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 2
+spring.redis.password: MwMNehjHjN9Yta63xQq6gEcAQJ8h5G
+
+spring.redis.jedis.pool.max-active: 50
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    ignoredMessage: ignored_messages-*
+    geofences: geofences
+
+alertZone:
+  maximum_allowed_alert_zone_per_user_vehicle_source_app: 6		
+  minimum_time_interval: 30000
+
+timeToIgnoredPushNotification: 3600000		
+timeToStillSendPushNotification: 900000

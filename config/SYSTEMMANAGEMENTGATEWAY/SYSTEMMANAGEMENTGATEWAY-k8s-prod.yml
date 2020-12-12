@@ -1,0 +1,50 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+server:
+  max-http-header-size: 1024000
+
+management:
+  health:
+    redis:
+      enabled: false
+
+# API Keys that are acceptable
+validApiKeys: 11bb4c1845c7a0137ad0bc8f1df055792849df16, c62ac14ec31ffdd04d98268aeb6ec3b5244b1bcf, 94d9b8d2c7433f7145ae5d83bf2a73310b6c0628, 9d6c3f85669a40cd1b1fa4635b049b92bb04c881, f84f6e88351fbf27f2c58643063b84d263318ae2, 7573c26b16993ef536dc9397f5c08911a551c79a, dda54ae0a6b57658537d01ac47deca8799c965ca
+
+zuul:
+  ignoredHeaders: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+  sensitiveHeaders: Cookie,Set-Cookie
+  ribbonIsolationStrategy: THREAD
+  routes:
+    pathServices:
+      path: /api/v*/paths/**
+      serviceId: PATHSERVICE
+      stripPrefix: false
+    inventoryService:
+      path: /api/*/equipment/**
+      serviceId: INVENTORYSERVICE
+      stripPrefix: false
+  retryable: true
+audit:
+  loggedBy: ${spring.application.name}
+  enabled: true
+  methods: GET,POST,PUT,DELETE,PATCH
+  defaultIgnoredEndpoints: /export
+  defaultStoreResponseBody: false
+  defaultStoreRequestBody: true
+  #This header will be added before Zuul routing, but Zuul auto converts to lower case, so the value should be in lower case
+  xTrkHeaderKeyName: x-trk-id
+  xUrlRewrittenKeyName: x-url-rewritten
+  customRequests:
+    - endpoints: /api/v1/vehicleStatus, /api/0.2/events/vehicleId?vehicleId=
+      methods: GET
+      enabled: true
+      storeRequestBody: true
+      storeResponseBody: true
+
+springdoc:
+  api-docs:
+    enabled: false

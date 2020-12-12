@@ -1,0 +1,135 @@
+
+kafka:
+  producer:
+    studentPersonChangeTopic: changedStudentPerson-p01usw1prod
+
+microservices:
+  tenants:
+    serviceId: TENANTSERVICE
+    get-school:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/schools/
+    get-tenant:
+      endpoint: http://${microservices.tenants.serviceId}/api/v1/tenants/
+    get-legacy-school:
+      endpoint: http://${microservices.tenants.serviceId}/api/v1/schools
+
+aws:
+  accessKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGMXC5/c93yF97pusZCeWdSAAAAcjBwBgkqhkiG9w0BBwagYzBhAgEAMFwGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMpA1sLcZQb0dwybHfAgEQgC9NO9RXR7Dn4cYmeSbAp5n05/wpawDjlEqGKz2w1vaVcEF8MG5LVnMadnCOgaauKQ=='
+  secretKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGVby/wd9QLjOPOn02/2GggAAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDMIa0Q0NMMiA/40mEQIBEIBD8lmGj15FKc2Z7MzTKVSCbuc3T+96lqYbQ6RmPr2ZVSiDJY8LEdWFSb9MY7YGpgCQVHgxo5lW7yzNRh5N281JSWaYFw=='
+  s3:
+    region: us-east-1
+    bucket: prod-image-profile
+    folder:
+      studentAvatar: students
+    presigned:
+      expireTime:
+        studentAvatar: 3600
+
+spring:
+  redis:
+    host: redis-prod.usw1.karrostech.net
+    port: 6379
+    database: 0
+    password:
+    cacheDurations:
+      STUDENT: 86400
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+
+management.security.enabled: false
+management.context-path: /
+security.basic.enabled: false
+spring.metrics.export.statsd.host: localhost
+
+hystrix.command.GetPerson.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetPerson.coreSize: 10
+hystrix.threadpool.GetPerson.maximumSize: 500
+hystrix.threadpool.GetPerson.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.CreatePeople.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.CreatePeople.coreSize: 10
+hystrix.threadpool.CreatePeople.maximumSize: 500
+hystrix.threadpool.CreatePeople.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.savePerson.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.savePerson.coreSize: 10
+hystrix.threadpool.savePerson.maximumSize: 500
+hystrix.threadpool.savePerson.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.saveAddresses.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.saveAddresses.coreSize: 10
+hystrix.threadpool.saveAddresses.maximumSize: 500
+hystrix.threadpool.saveAddresses.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.deleteAddresses.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.deleteAddresses.coreSize: 10
+hystrix.threadpool.deleteAddresses.maximumSize: 500
+hystrix.threadpool.deleteAddresses.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.savePhoneNumbers.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.savePhoneNumbers.coreSize: 10
+hystrix.threadpool.savePhoneNumbers.maximumSize: 500
+hystrix.threadpool.savePhoneNumbers.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.deletePhoneNumbers.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.deletePhoneNumbers.coreSize: 10
+hystrix.threadpool.deletePhoneNumbers.maximumSize: 500
+hystrix.threadpool.deletePhoneNumbers.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.DeletePerson.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.DeletePerson.coreSize: 10
+hystrix.threadpool.DeletePerson.maximumSize: 500
+hystrix.threadpool.DeletePerson.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.findByPersonId.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.findByPersonId.coreSize: 10
+hystrix.threadpool.findByPersonId.maximumSize: 500
+hystrix.threadpool.findByPersonId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.findPhoneNumbersByPersonId.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.findPhoneNumbersByPersonId.coreSize: 10
+hystrix.threadpool.findPhoneNumbersByPersonId.maximumSize: 500
+hystrix.threadpool.findPhoneNumbersByPersonId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetStudent.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetStudent.coreSize: 10
+hystrix.threadpool.GetStudent.maximumSize: 500
+hystrix.threadpool.GetStudent.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getStudentEntity.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.getStudentEntity.coreSize: 10
+hystrix.threadpool.getStudentEntity.maximumSize: 500
+hystrix.threadpool.getStudentEntity.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchStudents.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.searchStudents.coreSize: 10
+hystrix.threadpool.searchStudents.maximumSize: 500
+hystrix.threadpool.searchStudents.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.createStudents.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.createStudents.coreSize: 10
+hystrix.threadpool.createStudents.maximumSize: 500
+hystrix.threadpool.createStudents.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.updateStudent.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.updateStudent.coreSize: 10
+hystrix.threadpool.updateStudent.maximumSize: 500
+hystrix.threadpool.updateStudent.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.saveOrUpdateStudent.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.saveOrUpdateStudent.coreSize: 10
+hystrix.threadpool.saveOrUpdateStudent.maximumSize: 500
+hystrix.threadpool.saveOrUpdateStudent.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.disableStudent.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.disableStudent.coreSize: 10
+hystrix.threadpool.disableStudent.maximumSize: 500
+hystrix.threadpool.disableStudent.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.deletestudentDistrictId.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.deletestudentDistrictId.coreSize: 10
+hystrix.threadpool.deletestudentDistrictId.maximumSize: 500
+hystrix.threadpool.deletestudentDistrictId.allowMaximumSizeToDivergeFromCoreSize: true

@@ -1,0 +1,161 @@
+# Property file for Staging and Production tiers. Will be used if spring.profiles.active is set to "prod"
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-prod.usw1.karrostech.net:1112/eureka/,http://eureka02-p01-prod.usw1.karrostech.net:1112/eureka/
+  instance:
+    preferIpAddress: false
+
+ribbon.eureka.enabled: true
+
+management.security.enabled: false
+management.context-path: /
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: 120 # Number of minutes
+  refreshTokenExpTime: 60 # Minutes
+  tokenIssuer: http://karrostech.com
+  # base 64 encoded signing key
+  tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,/swagger-resources/configuration/security, /manage/**,/hystrix.stream]
+credentials:
+  ApiKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGmPuYgvi3Lf7P5TWnsf8JfAAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDJMYu4jRoIBsa6XbCQIBEIBD/A+aT/5ePQslezNxhmUdvJtoI+/BJDMfdOTqMzcyZKu4GPWTgG1ZWkXw1vlvk5dFz9Gx/xZRG8mfJuA3zM7kbzxECw=='
+  clientSecret: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHb0IfPLp/eDFvfIcl5LQTSAAAAojCBnwYJKoZIhvcNAQcGoIGRMIGOAgEAMIGIBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDH4LBpJloA6W7YSLvwIBEIBbdqhIaNfX+NYqo5yckaU4vbeIjqt2haLWRDRejhl1XKZUTKXVBUonsrmw+NRl41HeDNLeLu3BLh8Rs/+TArRr9m01n7zHDwTQsn2TiNdLW2wSdVWWqSawrXad8Q=='
+security.basic.enabled: false
+
+kafka:
+  consumer:
+    accessRequestChangeTopic: accessRequestChange-p01usw1prod
+    publishNotificationRequestTopic: publishNotificationRequest-p01usw1prod
+    snsPublishQueueTopic: snsPublishQueue-p01usw1prod
+    changedAccountSetting: changedAccountSetting-p01usw1prod
+  producer:
+    snsPublishQueueTopic: snsPublishQueue-p01usw1prod
+    geofenceRequestChangeTopic: geofenceRequestChange-p01usw1prod
+    queuedNotificationTopic: queuedNotification-p01usw1prod
+  consumer-group: notificationProcessor-p01usw1prod
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    notificationSubscription: notification_subscription
+    publishedMessage: published_messages-*
+    ignoredMessage: ignored_messages-*
+    queuedNotification: queued_notification
+
+concurrent:
+  numberOfThreadPool: 200
+  
+# For caching
+spring.redis.host: redis-prod.usw1.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 4
+spring.redis.password:
+
+spring.redis.tenant.host: ${spring.redis.host}
+spring.redis.tenant.port: ${spring.redis.port}
+spring.redis.tenant.database: 0
+spring.redis.tenant.password:
+
+spring.redis.jedis.pool.max-active: 30
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30
+
+firebase:
+  project:
+    id: parent-portal-lite
+    apiKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAEvv4L/+HH668o2aJEoi9RoAAAAhjCBgwYJKoZIhvcNAQcGoHYwdAIBADBvBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDLlNsZVCy8Iaz6RSaQIBEIBCWSNPv7HEQVN5TCkIT6/JHyDkQMTvtfQhj3hpM1fSf2aTqEivcxPQEjaf9uj5NgmepJR2zBfQ2zBN3hVr4rFO7Byc'
+
+aws:
+  accessKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGMXC5/c93yF97pusZCeWdSAAAAcjBwBgkqhkiG9w0BBwagYzBhAgEAMFwGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMpA1sLcZQb0dwybHfAgEQgC9NO9RXR7Dn4cYmeSbAp5n05/wpawDjlEqGKz2w1vaVcEF8MG5LVnMadnCOgaauKQ=='
+  secretKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGVby/wd9QLjOPOn02/2GggAAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDMIa0Q0NMMiA/40mEQIBEIBD8lmGj15FKc2Z7MzTKVSCbuc3T+96lqYbQ6RmPr2ZVSiDJY8LEdWFSb9MY7YGpgCQVHgxo5lW7yzNRh5N281JSWaYFw=='
+  sns:
+    regionForTopics: us-east-1
+    validSourceApps: PP, PPL, PP_v2
+    mobileApplications:
+      PPL_GCM:
+        region: us-east-1
+        name: Parent-Portal-Lite-Android
+        arn: arn:aws:sns:us-east-1:690893158275:app/GCM/Parent-Portal-Lite-Android
+        platform: GCM
+      PPL_APNS:
+        region: us-east-1
+        name: Parent-Portal-Lite-Prod
+        arn: arn:aws:sns:us-east-1:690893158275:app/APNS/Parent-Portal-Lite-Prod
+        platform: APNS
+      PP_GCM:
+        region: us-east-1
+        name: Parent-Portal-Android
+        arn: arn:aws:sns:us-east-1:690893158275:app/GCM/Parent-Portal-Android
+        platform: GCM
+      PP_APNS:
+        region: us-east-1
+        name: Parent-Portal-Prod
+        arn: arn:aws:sns:us-east-1:690893158275:app/APNS/Parent-Portal-Prod
+        platform: APNS
+      PP_V2_GCM:
+        region: us-east-1
+        name: Parent-Portal-v2-Android
+        arn: arn:aws:sns:us-east-1:690893158275:app/GCM/Parent-Portal-v2-Android
+        platform: GCM
+      PP_V2_APNS:
+        region: us-east-1
+        name: Parent-Portal-v2-Prod
+        arn: arn:aws:sns:us-east-1:690893158275:app/APNS/Parent-Portal-v2-Prod
+        platform: APNS
+      PP_V2_APNS_SANDBOX:
+        region: us-west-2
+        name: Parent-Portal-v2-Dev
+        arn: arn:aws:sns:us-west-2:690893158275:app/APNS_SANDBOX/Parent-Portal-v2-Dev
+        platform: APNS_SANDBOX
+
+timeToIgnoredPushNotification: 3600000
+timeToStillSendPushNotification: 900000
+
+
+microservices:
+  languageService:
+    clientSecret: dc507de47bbe7c771e642fc34aa9ca4045b6e68ba35349a88d08b6b14bd69675
+    sourceAppForLanguage: NOTIFICATION
+    environment: prod
+    apiKey: 94d9b8d2c7433f7145ae5d83bf2a73310b6c0628
+    scope: Parent Portal
+    getLanguagesUrl:
+      endpoint: https://localization.karrostech.io/get-supported-languages
+    getLanguageFileUrl:
+      endpoint: https://localization.karrostech.io/download-language-file
+
+# Hystrix configuration
+hystrix.command.searchUsers.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.searchUsers.coreSize: 10
+hystrix.threadpool.searchUsers.maximumSize: 500
+hystrix.threadpool.searchUsers.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getRidershipNotificationSettings.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getRidershipNotificationSettings.coreSize: 10
+hystrix.threadpool.getRidershipNotificationSettings.maximumSize: 500
+hystrix.threadpool.getRidershipNotificationSettings.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchAlertZone.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.searchAlertZone.coreSize: 10
+hystrix.threadpool.searchAlertZone.maximumSize: 500
+hystrix.threadpool.searchAlertZone.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchMessage.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.searchMessage.coreSize: 10
+hystrix.threadpool.searchMessage.maximumSize: 500
+hystrix.threadpool.searchMessage.allowMaximumSizeToDivergeFromCoreSize: true
+
+kafka-processors:
+  enabled: false

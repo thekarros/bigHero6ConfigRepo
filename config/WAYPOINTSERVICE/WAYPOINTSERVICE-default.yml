@@ -1,0 +1,68 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management.security.enabled: false
+
+# DB Configs
+spring:
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: public
+        hbm2ddl:
+          import_files:
+
+edulog:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 20
+      max-active: 50
+      test-on-borrow: true
+
+# Spring Security configurations are required for this application to work with the
+# Karrostech Security dependency included in pom.xml.
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**/waypoints/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/** ]
+  applications: ["ParentPortal", "*", "Insight", "TenantManagement"]
+security.basic.enabled: false
+
+hystrix.command.createWaypoints.execution.isolation.thread.timeoutInMilliseconds: 50000
+hystrix.threadpool.createWaypoints.coreSize: 10
+hystrix.threadpool.createWaypoints.maximumSize: 500
+hystrix.threadpool.createWaypoints.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.deleteWaypoints.execution.isolation.thread.timeoutInMilliseconds: 50000
+hystrix.threadpool.deleteWaypoints.coreSize: 10
+hystrix.threadpool.deleteWaypoints.maximumSize: 500
+hystrix.threadpool.deleteWaypoints.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getwayPoints.execution.isolation.thread.timeoutInMilliseconds: 50000
+hystrix.threadpool.getwayPoints.coreSize: 10
+hystrix.threadpool.getwayPoints.maximumSize: 500
+hystrix.threadpool.getwayPoints.allowMaximumSizeToDivergeFromCoreSize: true
+

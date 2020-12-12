@@ -1,0 +1,18 @@
+postgres:
+  url: db-prod.usw1.karrostech.net
+  port: 5432
+  database: Edulog
+  username_plan_ingest_monitoring: plan_ingest_monitoring
+  password_plan_ingest_monitoring: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGG7oaSp7ADQhJvVAqM2mPHAAAAbTBrBgkqhkiG9w0BBwagXjBcAgEAMFcGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMrDthcY9ZmeBZauneAgEQgCryVFly3JgRc3JNbNMRtzezyXiDQUP/3cZNrNu+iBFKXoMPXQEZnwhB+kI='
+
+
+elastic_search_aws:
+  timeout: 20s 
+  
+elastic_search_co:
+  timeout: 20s
+
+
+aws_v7_prod: vpc-p01usw1prod3-v7-6lhyyd46hyr5bous6vqtykpdce.us-west-1.es.amazonaws.com
+gateway_url: https://gateway-p01-prod.usw1.karrostech.net
+mission_control_gateway: https://missioncontrolgateway-p01-prod.usw1.karrostech.net

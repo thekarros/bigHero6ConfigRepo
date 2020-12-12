@@ -1,0 +1,42 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+      healthcheck:
+        enabled: true
+
+ribbon:
+  eureka:
+    enabled: true
+
+
+kafka: 
+  applicationId: substitutionNotifier-p01use2stage
+  consumer-group: substitutionNotifier-p01use2stage
+  consumer:
+    changeRouteAssignment: changeRouteAssignment-p01usw2stage
+    substitutionNotifier: substitutionNotifierInternalTopic-p01use2stage
+  producer:
+    substitutionNotifier: substitutionNotifierInternalTopic-p01use2stage
+    publishNotificationRequest: publishNotificationRequest-p01usw2stage
+
+es:
+  url: ${elasticSearch.aws.url}
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  username: ${elasticSearch.aws.username}
+  password: ${elasticSearch.aws.password}
+  port: ${elasticSearch.aws.port}
+  subsitutionHistory:
+    index: substitution_history-*
+    type: doc
+
+spring:
+  redis:
+    port: 6379
+    host: redis-stage.usw2.karrostech.net
+    database: 0
+    password: MwMNehjHjN9Yta63xQq6gEcAQJ8h5G
+    

@@ -1,0 +1,75 @@
+comparator.input.topic: caanalysis-dev-validation
+comparator.output.topic: comparator-geosearch-output-p01usw2stage
+bootstrap.server: 10.40.26.222:9092
+client.groupId: comparaor-analysis-stage-test1
+detection.output.topic: stop-detection-p01usw2stage
+supported.waypoints: STUDENT_STOP,SCHOOL_STOP
+
+score.rfid.event: 100
+score.dooropen.event: 50
+score.stoparm.event: 50
+score.wheelchair.event: 50
+score.gps.accurate.event: 20
+score.gps.delayed.event: 10
+
+max.delayed.allowed: 3
+eventId.enabled: 1,2103,2140,2141,2152,2153,2160,2150,2151
+unscheduled.events: 2140,2141,2152,2153,2160,2150,2151
+ksql.server.host: 10.40.26.73
+ksql.server.port: 8088
+ksql.table.name: COMPARATOR_WAYPOINT_SCORE_MVW_P01USW2STAGE
+nonSensor.additional.scoretime: 2
+nonSensor.additional.score: 50
+
+ksql.scoretable.name: CA_SCHEDULED_SCORE_MVW_P01USW2STAGE
+ksql.unschedule.name: CA_UNSCHEDULED_SCORE_MVW_P01USW2STAGE
+
+management:
+  endpoint:
+    health:
+      show-details: always
+
+kafka: 
+  bootstrap-server: 10.40.26.222:9092
+  applicationId: score-calculation-validation-stageusw1
+  consumer-group: score-calculation-validation-stageusw1
+  consumer:
+    scheduleevent: ca-score-trigger-p01usw2stage
+    unscheduleevent: unscheduled-event-p01usw2stage
+  producer:
+    publishNotificationRequest: publishNotificationRequest-p01usw2stage  
+
+ElasticSearchURL: vpc-p01usw2stage-v7-fgczvvgqf5h7zwmoicajtnblua.us-west-2.es.amazonaws.com
+
+spring:
+  elasticsearch:
+    rest:
+      uris: https://vpc-p01usw2stage-v7-fgczvvgqf5h7zwmoicajtnblua.us-west-2.es.amazonaws.com:444
+      username: 
+      password: 
+
+management.endpoints.web.exposure.include: "*"
+
+index.name: stopdirections
+number.of.threads: 20
+retry.topic: ca-score-trigger-p01usw2stage
+max.retry: 1
+
+es:
+  username:
+  password:
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  port: 443
+  query:
+    detectDistanceMeters: 30
+    maxHitThreshold: 10
+    eventSearchWindow: 10m
+
+microservices:
+  rovar:
+    serviceId: ROUTEVEHICLEASSIGNMENTSERVICE
+    getCurrentassignment:
+      endpoint: http://${microservices.rovar.serviceId}/api/v1/rovars/graphql

@@ -1,0 +1,34 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+# Configure Eureka client
+quarkus.eureka.port: 1112
+quarkus.eureka.host-name: LIVEEVENTSERVICE
+#quarkus.eureka.vip-address=LIVEEVENTSERVICE
+quarkus.eureka.region: default
+quarkus.eureka.health-check-url: /health
+#quarkus.eureka.status-page-url=/status
+quarkus.eureka.service-url.default: ${eureka.instances}
+
+quarkus.redis.hosts: 'redis.use2.karrostech.net:6379'
+quarkus.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFygaQGqTM9+fOupFyJyoS2AAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMOyFWHmeGDfK9FKYFAgEQgDld2OogLrbzrKBA3GuW7M5PefamTGHGqKCOsXFCTAPqYvWw4d3FF2jl/1+arIwMaBpExwLSvzIiTBI='
+quarkus.redis.database: 4
+redis.host: redis.use2.karrostech.net
+redis.port: 6379
+redis.database: 4
+
+elasticsearch:
+  realtimeLiveEvent:
+    index: realtimevehiclesevents*
+    type: doc
+
+redis:
+  channel:
+    vehicle_event_prefix: 'LIVE_EVENT:'
+
+session:
+  expiration:
+    policy: 0
+    time: 15

@@ -1,0 +1,25 @@
+es:
+  url: e20f6fed69ae415483d527d15665f843.us-west-2.aws.found.io
+  username: elastic
+  password: lwZ96p4ycTL8p4Jt9Iw4S9Pu
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  port: 9243
+  query:
+    detectRadius: 10m
+    maxHitThreshold: 30
+    eventSearchWindow: 10m
+
+management:
+  endpoint:
+    info:
+      enabled: true
+
+management.health.elasticsearch.enabled: false
+management.security.enabled: false
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.defaults.enabled: true

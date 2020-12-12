@@ -1,0 +1,6 @@
+#### custom config ####
+k8s:
+  env: stage
+
+aws:
+  region: us-west-2

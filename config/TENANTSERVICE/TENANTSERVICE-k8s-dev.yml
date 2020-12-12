@@ -1,0 +1,147 @@
+# Property file for dev use. Will be used if spring.profiles.active is set to dev
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management.security.enabled: false
+management.context-path: /
+eureka.client.healthcheck.enabled: true
+ribbon.eureka.enabled: true
+
+secret: ${aesKey}
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,/swagger-resources/configuration/security, /manage/**,/hystrix.stream]
+security.basic.enabled: false
+
+# ES7
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    tenant: tenant
+    school: school
+    tenantSetting: tenantsettings
+
+spring:
+  redis:
+    host: redis.use2.karrostech.net
+    port: 6379
+    database: 0
+    password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+
+kafka: 
+  applicationId: tenantService
+  consumer-group: tenantService-consumer-group-p01use2dev
+  producer:
+    tenantChanged: tenantChanged-p01use2dev
+    schoolChange: schoolChange-p01use2dev
+
+#hystrix configuration
+hystrix.command.GetSchoolById.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetSchoolById.coreSize: 10
+hystrix.threadpool.GetSchoolById.maximumSize: 500
+hystrix.threadpool.GetSchoolById.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetSchoolByIdAndCode.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetSchoolByIdAndCode.coreSize: 10
+hystrix.threadpool.GetSchoolByIdAndCode.maximumSize: 500
+hystrix.threadpool.GetSchoolByIdAndCode.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetSchoolByName.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.GetSchoolByName.coreSize: 10
+hystrix.threadpool.GetSchoolByName.maximumSize: 500
+hystrix.threadpool.GetSchoolByName.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.CreateSchool.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.CreateSchool.coreSize: 10
+hystrix.threadpool.CreateSchool.maximumSize: 500
+hystrix.threadpool.CreateSchool.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.UpdateSchool.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.UpdateSchool.coreSize: 10
+hystrix.threadpool.UpdateSchool.maximumSize: 500
+hystrix.threadpool.UpdateSchool.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.DeleteSchool.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.DeleteSchool.coreSize: 10
+hystrix.threadpool.DeleteSchool.maximumSize: 500
+hystrix.threadpool.DeleteSchool.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetSchool.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetSchool.coreSize: 10
+hystrix.threadpool.GetSchool.maximumSize: 500
+hystrix.threadpool.GetSchool.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetSchoolByParams.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.GetSchoolByParams.coreSize: 10
+hystrix.threadpool.GetSchoolByParams.maximumSize: 500
+hystrix.threadpool.GetSchoolByParams.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetSchoolByGeom.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.GetSchoolByGeom.coreSize: 10
+hystrix.threadpool.GetSchoolByGeom.maximumSize: 500
+hystrix.threadpool.GetSchoolByGeom.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetTenantById.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetTenantById.coreSize: 10
+hystrix.threadpool.GetTenantById.maximumSize: 500
+hystrix.threadpool.GetTenantById.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetTenantByName.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetTenantByName.coreSize: 10
+hystrix.threadpool.GetTenantByName.maximumSize: 500
+hystrix.threadpool.GetTenantByName.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.UpdateTenant.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.UpdateTenant.coreSize: 10
+hystrix.threadpool.UpdateTenant.maximumSize: 500
+hystrix.threadpool.UpdateTenant.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.UpdateTenantWithLogin.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.UpdateTenantWithLogin.coreSize: 10
+hystrix.threadpool.UpdateTenantWithLogin.maximumSize: 500
+hystrix.threadpool.UpdateTenantWithLogin.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetTenantWithIngestion.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetTenantWithIngestion.coreSize: 10
+hystrix.threadpool.GetTenantWithIngestion.maximumSize: 500
+hystrix.threadpool.GetTenantWithIngestion.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.DeleteTenant.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.DeleteTenant.coreSize: 10
+hystrix.threadpool.DeleteTenant.maximumSize: 500
+hystrix.threadpool.DeleteTenant.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetAllTenant.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetAllTenant.coreSize: 10
+hystrix.threadpool.GetAllTenant.maximumSize: 500
+hystrix.threadpool.GetAllTenant.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.SearchTenant.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.SearchTenant.coreSize: 10
+hystrix.threadpool.SearchTenant.maximumSize: 500
+hystrix.threadpool.SearchTenant.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.SchoolToTenantMapping.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.SchoolToTenantMapping.coreSize: 10
+hystrix.threadpool.SchoolToTenantMapping.maximumSize: 500
+hystrix.threadpool.SchoolToTenantMapping.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.SearchSchools.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.SearchSchools.coreSize: 10
+hystrix.threadpool.SearchSchools.maximumSize: 500
+hystrix.threadpool.SearchSchools.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getTenantsByIds.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.getTenantsByIds.coreSize: 10
+hystrix.threadpool.getTenantsByIds.maximumSize: 500
+hystrix.threadpool.getTenantsByIds.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.findSettings.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.findSettings.coreSize: 10
+hystrix.threadpool.findSettings.maximumSize: 500
+hystrix.threadpool.findSettings.allowMaximumSizeToDivergeFromCoreSize: true

@@ -1,0 +1,34 @@
+server:
+  port: 9394
+management:
+  health:
+    defaults:
+      enabled: false
+spring.application.name: eventFanOutService
+
+ribbon.eureka.enabled: true
+logging.file: /opt/karros_tech/logs/@project.artifactId@-@project.version@.log
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+      healthcheck:
+        enabled: true
+drools:
+  enabled: true
+
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.elasticsearch.enabled: false
+
+kafka:
+  bootstrap-server: 10.20.20.121:9092
+  applicationId: eventFanOutService
+  consumer-group: eventsFanOut-consumer-group-p01use2demo
+  consumer:
+    aggregateChanges: aggregateAVLEvents-p01usw2demo
+    
+tenant.vehicle.list: eb9a9b65-3810-4ffe-8cb2-fbb878ef9d1e,98100262-9d51-40f8-a1b2-4f27d01299db,47ba9b81-fe8c-4af6-a4d7-a92f53d369cc
+  

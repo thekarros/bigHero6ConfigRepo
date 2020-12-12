@@ -1,0 +1,11 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+kafka:
+  consumer-group: rideRegistrationChange-kafka-consumer-group-usw2stage
+  topic:
+    ride-registration-change: rideRegistrationChange-p01usw2stage
+    msk-suffix:
+      ride-registration-change: rideRegistrationChange-usw2stage

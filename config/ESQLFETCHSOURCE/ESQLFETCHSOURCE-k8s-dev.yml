@@ -1,0 +1,39 @@
+eureka:
+  hostname: ${eureka.instances}
+  service_port: 80
+
+auth:
+  clientId: ${auth.credentials.clientId}
+  clientSecret: ${auth.credentials.clientSecret}
+  grantType: client_credentials
+  scope: Parent Portal
+
+app_config:
+  name: EsqlFetchSource
+  fetch_retry_count: 10
+  thread_count: 10
+  log_level: "DEBUG"
+  key: ${aesKey}
+  bad_char: "[1, 2, 3]"
+
+elastic_search:
+  url: ${elasticSearch.planIngest.url}
+  port: ${elasticSearch.planIngest.port}
+  password: ${elasticSearch.planIngest.password}
+  username: ${elasticSearch.planIngest.username}
+  timeout: 5s
+  result_index: esqlimportresult
+  route_index: esqlroute
+  student_index: esqlstudent
+  driver_directions_index: esql.driver.directions
+
+gateway:
+  url: https://gateway-p01-dev.use2.karrostech.net
+
+kafka:
+  bootstrap: ${kafka-broker}
+  nifi_topic: esqlFetchStatus-p01use2dev
+  student_delete: proposedStudentDeletes-p01use2dev
+  route_delete: proposedRouteDeletes-p01use2dev
+  retries: 5
+

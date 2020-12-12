@@ -1,0 +1,5 @@
+kafka-broker: 10.20.20.121:9092
+ElasticSearchCloud:
+   URL: ${elasticSearch.cloud.url}
+   username: ${elasticSearch.cloud.username}
+   password: ${elasticSearch.cloud.password}

@@ -1,0 +1,6 @@
+#### custom config ####
+k8s:
+  env: demo
+
+aws:
+  region: us-west-1

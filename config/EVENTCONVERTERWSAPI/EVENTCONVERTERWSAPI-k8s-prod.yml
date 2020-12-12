@@ -1,0 +1,60 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+kafka:
+  bootstrap: ${kafka-list-servers}
+  consumer:
+    groupId: production-live-event-conversion
+    topic: xirgoRawEventsFix2
+  producer:
+    topic: avlEvents-p01usw1prod
+    errorTopic: rawError-p01usw1prod
+    
+spring:
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: public
+        hbm2ddl:
+          import_files:
+
+edulog:
+  datasource:
+    url: jdbc:postgresql://db-demo.usw2.karrostech.net:5432/Edulog
+    username: karros_demo_admin
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGrx/wBTNFYFkMyWMs1zDiRAAAAezB5BgkqhkiG9w0BBwagbDBqAgEAMGUGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMbdsrRTlU6ozJEvsdAgEQgDjNLewA1V49MQQWNmqjsLYRDmsx+9K7TTNCaePFZ+qDLp0KS/Ock1Cvgg/T6hDEPBCdJqYByDDDnw=='
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 2
+      max-active: 5
+      test-on-borrow: true
+      
+vehicleservice.ribbon.eureka.enabled: true
+vehicleServiceName: VEHICLEMANAGEMENTSERVICE
+vehicleServiceURL : http://${vehicleServiceName}/api/v4.0/vehicles?vins=
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: 120 # Number of minutes
+  refreshTokenExpTime: 60 # Minutes
+  tokenIssuer: http://karrostech.com
+  # base 64 encoded signing key
+  tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
+management.security.enabled: false
+
+hystrix.command.getVehicleTenantMapping.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getVehicleTenantMapping.coreSize: 10
+hystrix.threadpool.getVehicleTenantMapping.maximumSize: 500
+hystrix.threadpool.getVehicleTenantMapping.allowMaximumSizeToDivergeFromCoreSize: true

@@ -1,0 +1,7 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+spring.cloud.discovery.enabled: false

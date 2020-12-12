@@ -1,0 +1,56 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+      
+# Spring Security configurations are required for this application to work with the 
+# Karrostech Security dependency included in pom.xml.
+security.jwt:
+  tokenExpirationTime: 120 # Number of minutes
+  refreshTokenExpTime: 60 # Minutes
+  tokenIssuer: http://karrostech.com
+  # base 64 encoded signing key
+  tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/** ]
+security.basic.enabled: false
+
+hystrix.command.GetTransportationLookup.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.GetTransportationLookup.coreSize: 10
+hystrix.threadpool.GetTransportationLookup.maximumSize: 500
+hystrix.threadpool.GetTransportationLookup.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getStudentTripInfo.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.getStudentTripInfo.coreSize: 10
+hystrix.threadpool.getStudentTripInfo.maximumSize: 500
+hystrix.threadpool.getStudentTripInfo.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getSchoolInfo.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.getSchoolInfo.coreSize: 10
+hystrix.threadpool.getSchoolInfo.maximumSize: 500
+hystrix.threadpool.getSchoolInfo.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getDriverInfo.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.getDriverInfo.coreSize: 10
+hystrix.threadpool.getDriverInfo.maximumSize: 500
+hystrix.threadpool.getDriverInfo.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getStudentInfo.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.getStudentInf.coreSize: 10
+hystrix.threadpool.getStudentInf.maximumSize: 500
+hystrix.threadpool.getStudentInf.allowMaximumSizeToDivergeFromCoreSize: true
+
+# Redis
+spring.redis.host: redis-prod.usw1.karrostech.net
+spring.redis.port: 6379
+
+spring.redis.tenant.host: ${spring.redis.host}
+spring.redis.tenant.port: ${spring.redis.port}
+spring.redis.tenant.database: 0
+
+spring.redis.jedis.pool.max-active: 50
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30

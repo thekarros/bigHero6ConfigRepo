@@ -1,0 +1,23 @@
+ribbon.eureka.enabled: false
+
+# Kafka
+kafka:
+  consumer-group: scheudlerManagementService-p01usw2stage
+  producer:
+    scheduler-command: schedulerCommand-p01usw2stage
+  consumer:
+    scheduler-ack: schedulerAck-p01usw2stage
+
+# Elasticsearch
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    scheduler: scheduler
+    scheduler-history: scheduler_history

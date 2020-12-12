@@ -1,0 +1,72 @@
+# Property file for stage tier. Will be used if spring.profiles.active is set to stage
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+kafka:
+  bootstrap: ${kafka-list-servers}
+  groupId: testchangedStudentTripGroup
+  producer:
+    topic: changedStudentTrip-p01usw2stage
+
+spring:
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: karrosingestion
+        hbm2ddl:
+          import_files:
+
+edulog:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 10
+      max-active: 50
+      test-on-borrow: true
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/** ]
+  applications: ["ParentPortal", "*", "Insight", "TenantManagement"]
+security.basic.enabled: false
+management.security.enabled: false
+
+credentials:
+  ApiKey: ${auth.credentials.clientId}
+  clientSecret: ${auth.credentials.clientSecret}
+
+microservices:
+  authenticationService:
+    serviceId: AUTHSERVICE
+    get-credentials:
+      endpoint: http://${microservices.authenticationService.serviceId}/api/v1/signin

@@ -1,0 +1,7 @@
+quarkus:
+  elasticsearch:
+    hosts: ${elasticSearch.awsv7.url}:${elasticSearch.awsv7.port}
+    protocol: https
+    indexes:
+      application: application
+      subscription: subscription

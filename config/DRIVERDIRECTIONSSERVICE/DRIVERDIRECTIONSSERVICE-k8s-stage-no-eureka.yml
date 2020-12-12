@@ -1,0 +1,61 @@
+# Property file for stage tier. Will be used if spring.profiles.active is set to "stage"
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+ElasticSearchURL: ${elasticSearch.aws.url}
+esUser:
+password:
+port: 443
+index: plandirections
+type: doc
+testindex: testplandirections
+testtype: testdoc
+parallelESCountThreads: 100
+connectionTimeout: 50000
+socketTimeout: 60000
+maxScrollSize: 10000
+defaultTimeOutinSec: 120
+defaultPage: 0
+defaultSize: 20
+
+# Spring Security configurations are required for this application to work with the
+# Karrostech Security dependency included in pom.xml.
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**/students/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/** ]
+  applications: ["ParentPortal", "*", "Insight", "TenantManagement"]
+security.basic.enabled: false
+management.security.enabled: false
+management.context-path: /
+eureka.client.healthcheck.enabled: true
+
+#Hystrix Configuration
+hystrix.command.PostDrivingDirections.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.PostDrivingDirections.coreSize: 10
+hystrix.threadpool.PostDrivingDirections.maximumSize: 500
+hystrix.threadpool.PostDrivingDirections.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetDrivingDirections.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetDrivingDirections.coreSize: 10
+hystrix.threadpool.GetDrivingDirections.maximumSize: 500
+hystrix.threadpool.GetDrivingDirections.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetDrivingDirectionsForPathList.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetDrivingDirectionsForPathList.coreSize: 10
+hystrix.threadpool.GetDrivingDirectionsForPathList.maximumSize: 500
+hystrix.threadpool.GetDrivingDirectionsForPathList.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetMetaDataPlanDataHistory.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetMetaDataPlanDataHistory.coreSize: 10
+hystrix.threadpool.GetMetaDataPlanDataHistory.maximumSize: 500
+hystrix.threadpool.GetMetaDataPlanDataHistory.allowMaximumSizeToDivergeFromCoreSize: true

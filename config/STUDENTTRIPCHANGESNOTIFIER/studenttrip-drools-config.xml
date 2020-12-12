@@ -1,0 +1,37 @@
+<droolsconfig>
+	<notificationRule>
+		<ruleId>Default</ruleId>
+		<consolidateEvent>true</consolidateEvent>
+		<keyToConsider>pickupTime,pickupAddress1,dropoffTime,dropoffAddress1,busNumber,pickupLongitude,pickupLatitude,dropoffLongitude,dropoffLatitude,frequency
+		</keyToConsider>
+		<enableNotification>true</enableNotification>
+		<fromschool>true</fromschool>
+		<toschool>true</toschool>
+		<rule>
+			<key>pickupTime</key>
+			<actionType>timeDifference</actionType>
+			<applyRule>true</applyRule>
+			<laterTime>5</laterTime>
+			<earlierTime>4</earlierTime>
+		</rule>
+		<rule>
+			<key>dropoffTime</key>
+			<actionType>timeDifference</actionType>
+			<applyRule>true</applyRule>
+			<laterTime>10</laterTime>
+			<earlierTime>4</earlierTime>
+		</rule>
+		<rule>
+			<key>PickupLocation</key>
+			<actionType>distanceCheck</actionType>
+			<applyRule>true</applyRule>
+			<distanceThreshold>100</distanceThreshold>
+		</rule>
+		<rule>
+			<key>DropoffLocation</key>
+			<actionType>distanceCheck</actionType>
+			<applyRule>true</applyRule>
+			<distanceThreshold>100</distanceThreshold>
+		</rule>
+	</notificationRule>
+</droolsconfig>

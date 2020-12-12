@@ -1,0 +1,31 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+kafka:
+  bootstrap: 10.20.20.121:9092
+  consumer:
+    groupId: test-consumer-group
+    topic: rawEventsTopic
+  producer:
+    topic: avlEvents-p01use2dev
+    errorTopic: rawError
+
+vehicleservice.ribbon.eureka.enabled: true
+vehicleServiceName: VEHICLEMANAGEMENTSERVICE
+vehicleServiceURL : http://${vehicleServiceName}/api/v4.0/vehicles?vins=
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+management.security.enabled: false
+
+hystrix.command.getVehicleTenantMapping.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getVehicleTenantMapping.coreSize: 10
+hystrix.threadpool.getVehicleTenantMapping.maximumSize: 500
+hystrix.threadpool.getVehicleTenantMapping.allowMaximumSizeToDivergeFromCoreSize: true

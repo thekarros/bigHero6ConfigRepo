@@ -1,0 +1,30 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+health:
+  config:
+    enabled: false
+spring:
+  cloud:
+    config:
+      fail-fast: true
+    gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowedCredentials: true
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin, RETAIN_LAST
+      routes:
+        - id: liveeventwsserviceSockjs
+          uri: http://LIVEEVENTWSSERVICE
+          predicates:
+            - Path=/ws/info/**
+        - id: liveeventwsservice
+          uri: ws://LIVEEVENTWSSERVICE
+          predicates:
+            - Path=/ws/**

@@ -1,0 +1,49 @@
+spring:
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: master_data
+        hbm2ddl:
+          import_files:
+        format_sql: true
+
+edulog:
+  datasource:
+    url: jdbc:postgresql://db-dev.use2.karrostech.net:5432/Edulog
+    username: karros
+    password: th3Br0wnF0xRa!d3dTh3Ch!ck3nC00p
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: SELECT 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 2
+      max-active: 50
+      max-idle: 50
+      test-on-borrow: false
+
+es:
+  url: 265eb3574a7146a791b71965a2e378fa.us-west-2.aws.found.io
+  username: elastic
+  password: yWPE6w6D9Ye1qLI0qypTXGxf
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  port: 9243
+  query:
+    detectRadius: 10m
+    maxHitThreshold: 30
+    eventSearchWindow: 10m

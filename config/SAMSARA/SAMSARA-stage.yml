@@ -1,0 +1,118 @@
+postgres:
+  url: db-stage.usw2.karrostech.net
+  port: 5432
+  database: Edulog
+  username: samsara_monitoring
+  password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFv6dO5liV2kBF+5lsx8hGiAAAAbjBsBgkqhkiG9w0BBwagXzBdAgEAMFgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMUGUVRcIFojXHeY0CAgEQgCuBEJRsgTNh/OJQiSveW8DtutSfg7860G7hJyNMjGPltOoVzoEw9Rj/oqZo'
+
+
+elastic_search_aws:
+  timeout: 20s 
+  
+elastic_search_aws_v7:
+  url: vpc-p01usw2stage-v7-fgczvvgqf5h7zwmoicajtnblua.us-west-2.es.amazonaws.com
+  
+elastic_search_co:
+  vehicle_alert_index: samsarafailedvehicles-*
+  event_alert_index: samsarafailedevents-*
+  sled_alert_index: samsarasledfailedevents-*
+  timeout: 20s
+
+alert:
+  vehicle:
+    API_FAILURE_SAMSARA:
+      severity: Critical
+    BAD_INPUT_USER:
+      severity: Critical
+    BAD_API_RESPONSE:
+      severity: Info
+    BAD_AUTHORIZATION:
+      severity: Info
+    NOT_REACHABLE:
+      severity: Critical
+    TENANT_ID_BUS_NUMBER:
+      severity: Critical
+    DUPLICATE_TENANT_VIN:
+      severity: Critical
+    JOLT_EXTRACT_DATA_ERROR:
+      severity: Info
+   
+  event:
+    BAD_INPUT:
+      severity: Info
+    ALREADY_STARTED_STOPPED:
+      severity: Info
+    TENANT_SERVICE_REDIS_DOWN:
+      severity: Info
+    CREATE_SQS_ERROR:
+      severity: Info
+    CACHE_FAILURE:
+      severity: Info
+    BAD_DATA:
+      severity: Info
+    VEHICLE_QUERY_WSAPI_DOWN:
+      severity: Critical
+    AUTHORIZATION_DOWN:
+      severity: Critical
+    PersistingMessage:
+      severity: Critical  
+    ERROR_401:
+      severity: Info
+    ERROR_404:
+      severity: Info      
+    ERROR_500:
+      severity: Critical          
+
+  sled:
+    BAD_INPUT:
+      severity: Info
+    ALREADY_STARTED_STOPPED:
+      severity: Info
+    TENANT_SERVICE_REDIS_DOWN:
+      severity: Info
+    CREATE_SQS_ERROR:
+      severity: Info
+    CACHE_FAILURE:
+      severity: Info
+    BAD_DATA:
+      severity: Info
+    VEHICLE_QUERY_WSAPI_DOWN:
+      severity: Critical
+    AUTHORIZATION_DOWN:
+      severity: Critical
+    PersistingMessage:
+      severity: Critical
+    ERROR_401:
+      severity: Info
+    ERROR_404:
+      severity: Info
+    ERROR_500:
+      severity: Critical      
+    
+  dequeue:
+    SQS_MESSAGE_TRANSFORM:
+      severity: Critical
+    MESSAGE_PROCESSED_DUPLICATE:
+      severity: Info
+        
+  enqueue:
+    CREATING_SQS_TICKET:
+      severity: Info
+    DELETING_SQS_TICKET:
+      severity: Info
+    TRANSFORM_CREATE_SQS_TICKET:
+      severity: Info
+    ERROR_UPDATING_RECORVERY:
+      severity: Critical
+     
+  samsara:
+    EXTRACT_FROM_SAMSARA_API:
+      severity: Info
+    BAD_DATA_FROM_SAMSARA_API:
+      severity: Info
+    LATENCY_MORE_THAN_20SEC:
+      severity: Info
+    LATENCY_TRANSFORM_ERRORMORE_THAN_20SEC:
+      severity: Info
+    UNPROCESSABLE_RECOVERY_WINDOW:
+      severity: Critical

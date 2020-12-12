@@ -1,0 +1,73 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+connectionTimeout: 10000
+socketTimeout: 60000
+maxScrollSize: 10000
+defaultTimeOutinSec: 120
+index: realtimevehiclesevents*
+type: doc
+ElasticSearchURL: ${elasticSearch.aws.url}
+usernamee:
+password:
+port: ${elasticSearch.aws.port}
+
+# Spring Security configurations are required for this application to work with the
+# Karrostech Security dependency included in pom.xml.
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**/students/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/** ]
+security.basic.enabled: false
+
+hystrix.command.GetMetaDataVehicleLiveEvent.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.GetMetaDataVehicleLiveEvent.coreSize: 10
+hystrix.threadpool.GetMetaDataVehicleLiveEvent.maximumSize: 500
+hystrix.threadpool.GetMetaDataVehicleLiveEvent.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.PostVehicleLiveEvent.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.PostVehicleLiveEvent.coreSize: 10
+hystrix.threadpool.PostVehicleLiveEvent.maximumSize: 500
+hystrix.threadpool.PostVehicleLiveEvent.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetVehicleLiveEvent.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.GetVehicleLiveEvent.coreSize: 10
+hystrix.threadpool.GetVehicleLiveEvent.maximumSize: 500
+hystrix.threadpool.GetVehicleLiveEvent.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.getEvent.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getEvent.coreSize: 10
+hystrix.threadpool.getEvent.maximumSize: 500
+hystrix.threadpool.getEvent.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.getEventsByParameters.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getEventsByParameters.coreSize: 10
+hystrix.threadpool.getEventsByParameters.maximumSize: 500
+hystrix.threadpool.getEventsByParameters.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.getLastEventByVehicleId.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getLastEventByVehicleId.coreSize: 10
+hystrix.threadpool.getLastEventByVehicleId.maximumSize: 500
+hystrix.command.GetDeviceIdsByTenant.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.GetDeviceIdsByTenant.coreSize: 10
+hystrix.threadpool.GetDeviceIdsByTenant.maximumSize: 500
+hystrix.threadpool.GetDeviceIdsByTenant.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.threadpool.getLastEventByVehicleId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getLastLocationByVehicleIds.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getLastLocationByVehicleIds.coreSize: 10
+hystrix.threadpool.getLastLocationByVehicleIds.maximumSize: 500
+hystrix.threadpool.getLastLocationByVehicleIds.allowMaximumSizeToDivergeFromCoreSize: true
+
+spring.redis.host: redis-stage.usw2.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 4
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAE2sKTlQDSfimxDjpGVz68IAAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM8e85GsIHhxUIlHd9AgEQgDlDDnuWEINmeSyF3kloXQFrIrnihVq8/itQMyKaN/yqM1X/VVLE61mqv8K2xjeBrHm9edkXR/laE80='
+
+# For old version
+spring.redis.pool.max-active: 30
+spring.redis.pool.max-wait: 5000
+spring.redis.pool.min-idle: 10
+spring.redis.pool.max-idle: 30

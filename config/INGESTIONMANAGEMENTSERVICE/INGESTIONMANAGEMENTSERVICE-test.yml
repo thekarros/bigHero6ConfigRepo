@@ -1,0 +1,19 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ElasticSearchURL: ${elasticSearch.aws.url}
+parallelESCountThreads: 100
+usernamee: ""
+esUser: ""
+password: ""
+
+port: 443
+socketTimeout: 60000
+
+scheduleIndex: iservice
+docType: doc
+fetchServiceName: ESQLFETCHSOURCE
+fetchServiceURL: http://${fetchServiceName}/import/
+searchSize: 1000

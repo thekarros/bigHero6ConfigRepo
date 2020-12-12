@@ -1,0 +1,34 @@
+kafka:
+  bootstrap-server: ${kafka-broker}
+  consumer-group: inventoryService-p01use2dev
+  producer:
+    equipmentTopic: equipment-info-p01use2dev
+spring:
+  cloud:
+    stream:
+      kafka:
+        streams:
+          bindings:
+            equipmentInputBinding:
+              consumer:
+                applicationId: inventoryService-p01use2dev
+                startOffset: latest
+          binder:
+            brokers: ${kafka-broker}
+            applicationId: inventoryService-p01use2dev
+            configuration:
+              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.value.serde: org.apache.kafka.common.serialization.Serdes$BytesSerde
+              commit.interval.ms: 1000
+      bindings:
+        equipmentInputBinding:
+          destination: vehicle-info-p01use2dev
+          group: inventoryService-p01use2dev
+          binder: kafka3
+      binders:
+        kafka3:
+          type: kstream
+  jpa:
+    properties:
+      hibernate:
+        default_schema: public

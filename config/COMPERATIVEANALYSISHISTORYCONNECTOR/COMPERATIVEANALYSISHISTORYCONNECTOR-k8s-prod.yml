@@ -1,0 +1,36 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+
+
+# Worker configs
+kafka_broker: 10.40.26.181:9092
+schema_registry_broker: 10.40.26.181:8081
+
+worker_key_converter: org.apache.kafka.connect.storage.StringConverter
+worker_value_converter: org.apache.kafka.connect.json.JsonConverter
+offset_storage_file: /tmp/connect.offsets
+plugin_path: "share/java,share/confluent-hub-components"
+consumer_max_poll_interval_ms: 30000
+
+
+# Connector configs
+
+connector_class: io.confluent.connect.elasticsearch.ElasticsearchSinkConnector
+tasks_max: 1
+connecttopic: stop-detection-prod
+elasticsearch_url: https://20725d3cf72c4ca48a7f2a260c5d4a76.us-west-1.aws.found.io:9243
+es_username: kafka-connect
+es_password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAG368a8i4x8+iCUm3cw/ooMAAAAbjBsBgkqhkiG9w0BBwagXzBdAgEAMFgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMpLavzK9d/lZS5G7MAgEQgCuPoTwmiRflBz3pyKl9fSDnR+373taYI3rmdHMlJx0QTyXTqQHcSl6o8+ev'
+#elasticsearch_url: https://vpc-p01use2dev-ba2ebrzmg3m3wtnpn7vrhlub2y.us-east-2.es.amazonaws.com
+index: comparative_analytics_events
+key_ignore: true
+schema_ignore: false
+type_name: _doc
+connector_key_converter: org.apache.kafka.connect.storage.StringConverter
+connector_value_converter: org.apache.kafka.connect.json.JsonConverter
+connector_key_converter_schema_enabled: false
+connector_value_converter_schema_enabled: false
+connector_internal_key_converter_schema_enabled: false
+connector_internal_value_converter_schema_enabled: false
+#connector_internal_key_converter: org.apache.kafka.connect.storage.StringConverter
+#connector_internal_value_converter: org.apache.kafka.connect.json.JsonConverter
+connector_error_tolerance: none

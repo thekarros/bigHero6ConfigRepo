@@ -1,0 +1,210 @@
+# Property file for local use. Will be used if spring.profiles.active is set to "test"
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: true
+
+management.security.enabled: false
+management.context-path: /
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,/swagger-resources/configuration/security, /manage/**,/hystrix.stream]
+credentials:
+  ApiKey: ${auth.credentials.clientId}
+  clientSecret: ${auth.credentials.clientSecret}
+security.basic.enabled: false
+kafka:
+  bootstrap-server: 10.20.20.121:9092
+  consumer:
+    notificationTopic: geoFenceAlertResponse-p01use2dev
+    studentTripChangeTopic: changedStudentTrip-p01use2dev
+    changeRouteAssignmentTopic: changeRouteAssignment-p01use2dev
+    accessRequestChangeTopic: accessRequestChange-p01use2dev
+    studentPersonChangeTopic: changedStudentPerson-p01use2dev
+    publishNotificationRequestTopic: publishNotificationRequest-p01use2dev
+    snsPublishQueueTopic: snsPublishQueue-test
+    changedAccountSetting: changedAccountSetting-p01use2dev
+  producer:
+    geofenceUpdateTopic: geoFenceAlertRequest-p01use2dev
+    snsPublishQueueTopic: snsPublishQueue-test
+    queuedNotificationTopic: queuedNotification-p01use2dev
+  consumer-group: notification-consumer-group
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    notificationSubscription: notification_subscription
+    publishedMessage: published_messages-*
+    ignoredMessage: ignored_messages-*
+    queuedNotification: queued_notification
+
+concurrent:
+  numberOfThreadPool: 200
+# For Caching
+spring.redis.host: redis.use2.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 4
+spring.redis.password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+
+spring.redis.tenant.host: ${spring.redis.host}
+spring.redis.tenant.port: ${spring.redis.port}
+spring.redis.tenant.database: 0
+spring.redis.tenant.password: ${spring.redis.password}
+
+spring.redis.jedis.pool.max-active: 30
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30
+
+firebase:
+  project:
+    id: parent-portal-lite
+    apiKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAEvv4L/+HH668o2aJEoi9RoAAAAhjCBgwYJKoZIhvcNAQcGoHYwdAIBADBvBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDLlNsZVCy8Iaz6RSaQIBEIBCWSNPv7HEQVN5TCkIT6/JHyDkQMTvtfQhj3hpM1fSf2aTqEivcxPQEjaf9uj5NgmepJR2zBfQ2zBN3hVr4rFO7Byc'
+
+aws:
+  accessKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGMXC5/c93yF97pusZCeWdSAAAAcjBwBgkqhkiG9w0BBwagYzBhAgEAMFwGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMpA1sLcZQb0dwybHfAgEQgC9NO9RXR7Dn4cYmeSbAp5n05/wpawDjlEqGKz2w1vaVcEF8MG5LVnMadnCOgaauKQ=='
+  secretKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGVby/wd9QLjOPOn02/2GggAAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDMIa0Q0NMMiA/40mEQIBEIBD8lmGj15FKc2Z7MzTKVSCbuc3T+96lqYbQ6RmPr2ZVSiDJY8LEdWFSb9MY7YGpgCQVHgxo5lW7yzNRh5N281JSWaYFw=='
+  sns:
+    # regionForTopics: us-west-2
+    # validSourceApps: PP, PPL
+    # mobileApplications:
+    #   PPL_GCM:
+    #     region: us-west-2
+    #     name: Parent-Portal-Lite-Android
+    #     arn: arn:aws:sns:us-west-2:690893158275:app/GCM/Parent-Portal-Lite-Android
+    #     platform: GCM
+    #   PPL_APNS_SANDBOX:
+    #     region: us-west-2
+    #     name: Parent-Portal-Lite-Dev
+    #     arn: arn:aws:sns:us-west-2:690893158275:app/APNS_SANDBOX/Parent-Portal-Lite-Dev
+    #     platform: APNS_SANDBOX
+    #   PPL_APNS:
+    #     region: us-west-2
+    #     name: Parent-Portal-Lite-Prod
+    #     arn: arn:aws:sns:us-west-2:690893158275:app/APNS/Parent-Portal-Lite-Prod
+    #     platform: APNS
+    #   PP_GCM:
+    #     region: us-west-2
+    #     name: Parent-Portal-Android
+    #     arn: arn:aws:sns:us-west-2:690893158275:app/GCM/Parent-Portal-Android
+    #     platform: GCM
+    #   PP_APNS_SANDBOX:
+    #     region: us-west-2
+    #     name: Parent-Portal-Dev
+    #     arn: arn:aws:sns:us-west-2:690893158275:app/APNS_SANDBOX/Parent-Portal-Dev
+    #     platform: APNS_SANDBOX
+    #   PP_APNS:
+    #     region: us-west-2
+    #     name: Parent-Portal-Prod
+    #     arn: arn:aws:sns:us-west-2:690893158275:app/APNS/Parent-Portal-Prod
+    #     platform: APNS
+    # topic:
+    #   prefix: DEV_
+    regionForTopics: us-east-1
+    validSourceApps: PP, PPL, PP_v2
+    mobileApplications:
+      PPL_GCM:
+        region: us-west-2
+        name: Parent-Portal-Lite-Android
+        arn: arn:aws:sns:us-west-2:690893158275:app/GCM/Parent-Portal-Lite-Android
+        platform: GCM
+      PPL_APNS_SANDBOX:
+        region: us-west-2
+        name: Parent-Portal-Lite-Dev
+        arn: arn:aws:sns:us-west-2:690893158275:app/APNS_SANDBOX/Parent-Portal-Lite-Dev
+        platform: APNS_SANDBOX
+      PPL_APNS:
+        region: us-west-2
+        name: Parent-Portal-Lite-Prod
+        arn: arn:aws:sns:us-west-2:690893158275:app/APNS/Parent-Portal-Lite-Prod
+        platform: APNS
+      PP_GCM:
+        region: us-west-2
+        name: Parent-Portal-Android
+        arn: arn:aws:sns:us-west-2:690893158275:app/GCM/Parent-Portal-Android
+        platform: GCM
+      PP_APNS_SANDBOX:
+        region: us-west-2
+        name: Parent-Portal-Dev
+        arn: arn:aws:sns:us-west-2:690893158275:app/APNS_SANDBOX/Parent-Portal-Dev
+        platform: APNS_SANDBOX
+      PP_APNS:
+        region: us-west-2
+        name: Parent-Portal-Prod
+        arn: arn:aws:sns:us-west-2:690893158275:app/APNS/Parent-Portal-Prod
+        platform: APNS
+      PP_V2_GCM:
+        region: us-east-1
+        name: Parent-Portal-v2-Android
+        arn: arn:aws:sns:us-east-1:690893158275:app/GCM/Parent-Portal-v2-Android
+        platform: GCM
+      PP_V2_APNS:
+        region: us-east-1
+        name: Parent-Portal-v2-Prod
+        arn: arn:aws:sns:us-east-1:690893158275:app/APNS/Parent-Portal-v2-Prod
+        platform: APNS
+      PP_V2_APNS_SANDBOX:
+        region: us-west-2
+        name: Parent-Portal-v2-Dev
+        arn: arn:aws:sns:us-west-2:690893158275:app/APNS_SANDBOX/Parent-Portal-v2-Dev
+        platform: APNS_SANDBOX
+
+microservices:
+  languageService:
+    clientSecret: a13ac36065ab94197e870552760ba879bd5790952afe5a2bce4e7fc8edf46235
+    sourceAppForLanguage: NOTIFICATION
+    environment: dev
+    apiKey: 2279779a6ffd50f5e8784c2307224fac0d7a9325
+    scope: Parent Portal
+    getLanguagesUrl:
+      endpoint: https://localization-dev.karrostech.io/get-supported-languages
+    getLanguageFileUrl:
+      endpoint: https://localization-dev.karrostech.io/download-language-file
+
+timeToIgnoredPushNotification: 3600000
+timeToStillSendPushNotification: 900000
+
+backgroundJob:
+  batch:
+    size: 500
+  
+# Hystrix configuration
+hystrix.command.searchUsers.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.searchUsers.coreSize: 10
+hystrix.threadpool.searchUsers.maximumSize: 500
+hystrix.threadpool.searchUsers.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getRidershipNotificationSettings.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getRidershipNotificationSettings.coreSize: 10
+hystrix.threadpool.getRidershipNotificationSettings.maximumSize: 500
+hystrix.threadpool.getRidershipNotificationSettings.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchAlertZone.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.searchAlertZone.coreSize: 10
+hystrix.threadpool.searchAlertZone.maximumSize: 500
+hystrix.threadpool.searchAlertZone.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchMessage.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.searchMessage.coreSize: 10
+hystrix.threadpool.searchMessage.maximumSize: 500
+hystrix.threadpool.searchMessage.allowMaximumSizeToDivergeFromCoreSize: true
+
+kafka-processors:
+  enabled: false
