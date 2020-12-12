@@ -1,0 +1,61 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+
+# Eureka
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    geoFence: geofences
+
+# Service
+maximum_allowed_alert_zone_per_user_vehicle_source_app: 6
+maximum_allowed_alert_zone_for_PP: 1
+minimum_time_interval: 300000
+
+hystrix.command.searchAlertZone.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.searchAlertZone.coreSize: 10
+hystrix.threadpool.searchAlertZone.maximumSize: 500
+hystrix.threadpool.searchAlertZone.allowMaximumSizeToDivergeFromCoreSize: true
+
+# Redis
+spring.redis.host: redis.use2.karrostech.net
+spring.redis.port: 6379
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFygaQGqTM9+fOupFyJyoS2AAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMOyFWHmeGDfK9FKYFAgEQgDld2OogLrbzrKBA3GuW7M5PefamTGHGqKCOsXFCTAPqYvWw4d3FF2jl/1+arIwMaBpExwLSvzIiTBI='
+
+spring.redis.geofence.host: ${spring.redis.host}
+spring.redis.geofence.port: ${spring.redis.port}
+spring.redis.geofence.database: 2
+spring.redis.geofence.password: ${spring.redis.password}
+
+spring.redis.tenant.host: ${spring.redis.host}
+spring.redis.tenant.port: ${spring.redis.port}
+spring.redis.tenant.database: 0
+spring.redis.tenant.password: ${spring.redis.password}
+
+spring.redis.vehicle.host: ${spring.redis.host}
+spring.redis.vehicle.port: ${spring.redis.port}
+spring.redis.vehicle.database: 4
+spring.redis.vehicle.password: ${spring.redis.password}
+
+spring.redis.jedis.pool.max-active: 8
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 1
+spring.redis.jedis.pool.max-idle: 8
+
+# Conditional bean (enable/disable kafka)
+kafka-processors:
+  enabled: false

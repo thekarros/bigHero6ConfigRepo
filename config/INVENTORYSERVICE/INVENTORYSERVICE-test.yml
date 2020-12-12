@@ -1,0 +1,46 @@
+edulog:
+  datasource:
+    # fix test env, please update again
+    url: jdbc:h2:mem:Edulog;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=FALSE;INIT=create schema IF NOT EXISTS public
+    username: sa
+    password: sa
+    driverClassName: org.h2.Driver
+    test-while-idle: true
+    validation-query: select 1
+    tomcat:
+      max-wait: 10000
+      initialSize: 1
+      max-active: 5
+      test-on-borrow: true
+    dev:
+      url: jdbc:h2:mem:Edulog;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=FALSE;INIT=create schema IF NOT EXISTS public
+      username: sa
+      password: sa
+      driverClassName: org.h2.Driver
+      test-while-idle: true
+      validation-query: select 1
+      tomcat:
+        max-wait: 10000
+        initialSize: 1
+        max-active: 5
+        test-on-borrow: true
+
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        generate_statistics: true
+        ddl-auto: none
+        default_schema: public
+        use_jdbc_metadata_defaults: false
+        hbm2ddl:
+          import_files:
+
+kafka:
+  producer:
+    equipmentTopic: equipment-info-p01usw2dev

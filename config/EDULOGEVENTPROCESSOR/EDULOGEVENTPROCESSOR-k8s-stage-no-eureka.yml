@@ -1,0 +1,15 @@
+kafka:
+  producer:
+    edulogRawEventsTopic: edulogRawEvents
+
+ribbon.eureka.enabled: false
+
+security:
+  enabled: false
+  jwt:
+    secureAuthenticationEntryUrl: /api/**/scan-events/**
+    unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources,
+                       /configuration/security, /swagger-ui.html, /swagger-ui.html/**,
+                       /webjars/**, /swagger-resources/configuration/ui,
+                       /swagger-resources/configuration/security, /manage/**,
+                       /health, /info, /prometheus]

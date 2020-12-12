@@ -1,0 +1,81 @@
+management.health.elasticsearch.enabled: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+kafka:
+  bootstrap-server: 10.20.20.121:9092
+  routeOverride:
+    topicName: run-sub-ro-results-p01use2dev
+  consumer:
+    changeRouteAssignment: changeRouteAssignment-p01use2dev
+    publishNotificationRequest: publishNotificationRequest-p01use2dev
+    runSubstitution: run-agg-results-p01use2dev
+    eventsGroupId: substitutionProcessor-p01use2dev
+  consumer-group: substitution-consumer-group-p01use2dev
+  applicationId: substitutionProcessor-dev
+es:
+  url: ${elasticSearch.aws.url}
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  username: ${elasticSearch.aws.username}
+  password: ${elasticSearch.aws.password}
+  port: ${elasticSearch.aws.port}
+  runSubstitution:
+    index: run_scored_vehicles-*
+    type: doc
+  subsitutionHistory:
+    index: substitution_history-*
+    type: doc
+  runDetectionInfo:
+    index: detectioninfo
+    type: doc
+
+# TODO: encrypt these credentials
+credentials:
+  ApiKey: 0844c776530ac4da07fdbbe3e588ee642a13657e
+  clientSecret: 8d9714302e9c425bfcb59bf81a3a1594e9dc40b05c7598820c7f5b419cdac7ce
+
+spring:
+  redis:
+    general:
+      host: redis.use2.karrostech.net
+      port: 6379
+      database: 0
+      password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+      cacheExpirations:
+        Paths: -1
+        Tenants: -1
+        vehicles: -1
+        substitution: 86400
+        CURRENT_ASSIGNMENTS: 600
+    vehicle:
+      host: ${spring.redis.general.host}
+      port: ${spring.redis.general.port}
+      database: 4
+      password: ${spring.redis.general.password}
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+
+latest-timerange:
+  type: recent
+  value: 12
+
+maxCombinationRunScoreVehicle: 10000
+
+buffered-es-bulk-index:
+  batch-size: 1000
+  retention-ms: 1000
+  buffer-size: 50000
+
+kafka-processors:
+  enabled: true

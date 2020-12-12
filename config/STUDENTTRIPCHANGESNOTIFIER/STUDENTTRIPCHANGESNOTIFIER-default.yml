@@ -1,0 +1,23 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+      healthcheck:
+        enabled: true
+
+ribbon:
+  eureka:
+    enabled: true
+
+
+kafka: 
+  bootstrap-server: 10.40.26.222:9092
+  applicationId: studenttripChangesNotifier-p01use2stage
+  consumer-group: comp-test-val-iss
+  consumer:
+    studentTripChanges: comparatoranalysis-test-stage1
+  producer:
+    publishNotificationRequest: publishNotificationRequest-p01usw2stage
+

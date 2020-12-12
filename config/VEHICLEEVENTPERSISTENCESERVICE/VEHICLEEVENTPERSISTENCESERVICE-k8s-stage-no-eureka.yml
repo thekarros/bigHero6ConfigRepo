@@ -1,0 +1,24 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "test"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+kafka:
+  bootstrap: ${kafka-list-servers}
+  consumer:
+    groupId: staging-live-event-conversion
+    topic: avlEvents-p01usw2stage
+
+index: realtimevehiclesevents
+type: doc
+ElasticSearchURL: vpc-p01usw2stage-k7cgmx4es77qsmxter5xwj7vnm.us-west-2.es.amazonaws.com
+usernamee:
+password:
+port: 443
+parallelESCountThreads: 500     
+usernameElastic:
+passwordElastic:

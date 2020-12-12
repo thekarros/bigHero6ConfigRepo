@@ -1,0 +1,19 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-prod.usw1.karrostech.net:1112/eureka/
+
+ElasticSearchURL: vpc-p01usw1prod-mk5xmhey72i44thke3onjjacda.us-west-1.es.amazonaws.com
+parallelESCountThreads: 100
+usernamee: ""
+esUser: ""
+password: ""
+
+port: 443
+socketTimeout: 60000
+
+scheduleIndex: ingestionmanagementservice-schedule
+docType: doc
+fetchServiceName: ESQLFETCHSOURCE
+fetchServiceURL: http://${fetchServiceName}/import/
+searchSize: 1000

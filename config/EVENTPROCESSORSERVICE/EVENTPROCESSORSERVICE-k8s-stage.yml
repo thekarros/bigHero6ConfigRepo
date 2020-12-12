@@ -1,0 +1,47 @@
+comparator.input.topic: comparatoranalysis-input-stage
+comparator.output.topic: comparator-geosearch-outputstage2
+bootstrap.server: 10.40.26.222:9092
+client.groupId: comparaor-event-stage-validation
+detection.output.topic: stop-detection-stage
+
+score.rfid.event: 100
+score.dooropen.event: 50
+score.stoparm.event: 50
+score.wheelchair.event: 50
+score.gps.accurate.event: 20
+score.gps.delayed.event: 10
+
+max.delayed.allowed: 3
+eventId.enabled: 1,2103,2001,2140,2002,2141,2005,2152,2006,2153,2160,2150,2151
+unscheduled.events: 2001,2140,2002,2141,2005,2152,2006,2153,2160,2150,2151
+ksql.server.host: 10.40.26.73
+ksql.server.port: 8088
+ksql.table.name: COMPARATOR_WAYPOINT_SCORE_MVW_STAGE
+
+kafka: 
+  bootstrap-server: 10.40.26.222:9092
+  applicationId: comparator-event-validation-stage
+  consumer-group: comparator-event-validation-stageusw2
+  consumer:
+    aggregateEvent: comparatoranalysis-input-stage
+  producer:
+    publishNotificationRequest: comparator-geosearch-outputstage
+
+ElasticSearchURL: vpc-p01usw2stage-v7-fgczvvgqf5h7zwmoicajtnblua.us-west-2.es.amazonaws.com
+
+management.endpoints.web.exposure.include: "*"
+nonSensor.additional.scoretime: 2
+nonSensor.additional.score: 50
+
+es:
+  username:
+  password:
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  port: 443
+  query:
+    detectDistanceMeters: 200
+    maxHitThreshold: 10
+    eventSearchWindow: 10m

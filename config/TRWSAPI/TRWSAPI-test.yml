@@ -1,0 +1,19 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ElasticSearchURL: ${elasticSearch.cloud.url}
+es:
+  username: ${elasticSearch.cloud.username}
+  password: ${elasticSearch.cloud.password}
+  port: ${elasticSearch.cloud.port}
+
+kafka:
+  consumer:
+    changedStudentPerson: changedStudentPerson-p01use2dev
+    schoolChange: schoolChange-p01use2dev
+  consumer-group: transportationRequestWSAPI-p01use2dev
+  applicationId: transportationRequestWSAPI-p01use2dev
+  producer:
+    rideRegistrationChange: rideRegistrationChange-p01use2dev

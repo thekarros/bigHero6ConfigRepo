@@ -1,0 +1,80 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+endpoints.sensitive: true
+management.security.enabled: false
+management.context-path: /
+
+maxVehicleLimit: 5
+assignment.env: dev
+
+# DB Configs
+spring:
+  redis:
+    host: redis.use2.karrostech.net
+    port: 6379
+    database: 0
+    password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: vms
+        hbm2ddl:
+          import_files:
+        format_sql: true
+kafka-broker: 10.20.20.121:9092
+kafka:
+  bootstrap: ${kafka-broker}
+  consumer-group: vehicleManagementService-p01use2dev
+  schema.registry.url: http://10.20.20.121:8081
+  tenant:
+    groupId: tenantConsumer-vms-dev
+    topic: tenantChanged-p01use2dev
+  equipment:
+    topic: equipment-info-p01use2dev
+vehicletopic: vehicle-info-p01use2dev 
+vehicleversion: 1.0
+equipmenttopic: equipment-info-p01use2dev 
+equipmentversion: 1.0
+availabilitytopic: availability-info-p01use2dev 
+availabilityversion: 1.0
+depottopic: depot-info-p01usw2dev 
+depotversion: 1.0
+
+edulog:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 2
+      max-active: 50
+      max-idle: 50
+      test-on-borrow: false
+defaultcapacitymapping: '[{"seatingTypeCode":"GE","seatingType":"General Education","capacity":50,"isDefault":true},{"seatingTypeCode":"WC","seatingType":"Wheel Chair","capacity":5,"isDefault":true},{"seatingTypeCode":"HAR","seatingType":"Harness","capacity":6,"isDefault":true},{"seatingTypeCode":"CS","seatingType":"Car seat","capacity":6,"isDefault":true},{"seatingTypeCode":"PAR","seatingType":"Paraplegic","capacity":6,"isDefault":true}]'

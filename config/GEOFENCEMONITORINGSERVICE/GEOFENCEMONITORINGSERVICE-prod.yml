@@ -1,0 +1,80 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-prod.usw1.karrostech.net:1112/eureka/,http://eureka02-p01-prod.usw1.karrostech.net:1112/eureka/
+
+
+# DB Configs
+kafka-broker: ${kafka.bootstrap-server}
+spring:
+  cloud:
+    stream:
+      kafka:
+        streams:
+          bindings:
+            vehicleIntersectGeoFence:
+              consumer:
+                startOffset: latest
+                applicationId: geofenceMonitoringService-p01usw1prod
+          binder:
+            brokers: ${kafka-broker}
+            applicationId: geofenceMonitoringService-p01usw1prod
+            configuration:
+              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.value.serde: org.apache.kafka.common.serialization.Serdes$BytesSerde
+              commit.interval.ms: 1000
+      bindings:
+        vehicleIntersectGeoFence:
+          destination: aggregateAVLEvents-p01usw1prod
+          group: geofenceMonitoringService-p01usw1prod
+          binder: kafka3
+      binders:
+        kafka3:
+          type: kstream
+kafka:
+  bootstrap: ${kafka-broker}
+  producer:
+    publishNotificationRequest: publishNotificationRequest-p01usw1prod
+
+keyValueStoreName: vehicleInterested
+eventIdToBeProcessed: 2103,1
+searchSize: 1000
+
+spring.redis.host: redis-prod.usw1.karrostech.net
+spring.redis.port: 6379
+
+# Custom redis factory
+spring.redis.geofence.host: ${spring.redis.host}
+spring.redis.geofence.port: ${spring.redis.port}
+spring.redis.geofence.database: 2
+
+spring.redis.tenant.host: ${spring.redis.host}
+spring.redis.tenant.port: ${spring.redis.port}
+spring.redis.tenant.database: 0
+# Custom redis factory
+
+spring.redis.jedis.pool.max-active: 50
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    ignoredMessage: ignored_messages-*
+    geofences: geofences
+
+alertZone:
+  maximum_allowed_alert_zone_per_user_vehicle_source_app: 6
+  minimum_time_interval: 300000
+
+timeToIgnoredPushNotification: 3600000
+timeToStillSendPushNotification: 900000

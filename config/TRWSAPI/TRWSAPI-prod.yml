@@ -1,0 +1,29 @@
+# Property file for Staging and Production tiers. Will be used if spring.profiles.active is set to "prod"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-prod.usw1.karrostech.net:1112/eureka/
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    transportationrequest: transportation_request
+    rideregistration: transportation_request_v2
+
+kafka:
+  consumer:
+    changedStudentPerson: changedStudentPerson-p01usw1prod
+    schoolChange: schoolChange-p01usw1prod
+  consumer-group: transportationRequestWSAPI-p01usw1prod
+  applicationId: transportationRequestWSAPI-p01usw1prod
+  producer:
+    rideRegistrationChange: rideRegistrationChange-p01usw1prod

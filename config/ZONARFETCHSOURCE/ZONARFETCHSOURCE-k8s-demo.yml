@@ -1,0 +1,40 @@
+eureka:
+  hostname: ${eureka.instances}
+  service_port: 8100
+  enabled: true
+
+server:
+  port: 9090
+
+sidecar:
+  host: localhost
+  port: 5000
+  slug: health
+  health-uri: http://${sidecar.host}:${sidecar.port}/${sidecar.slug}
+  home-page-uri: http://${sidecar.host}}:${sidecar.port}/
+
+auth:
+  clientId: ${auth.credentials.clientId}
+  clientSecret: ${auth.credentials.clientSecret}
+  grantType: client_credentials
+  scope: Parent Portal
+
+app_config:
+  concurrent_count: 8
+  log_level: "DEBUG"
+  key: ${aesKey}
+
+elastic_search:
+  url: ${elasticSearch.cloud.url}
+  port: ${elasticSearch.cloud.port}
+  password: ${elasticSearch.cloud.password}
+  username: ${elasticSearch.cloud.username}
+  index_base: zonarfetchsource
+  status_index: ${elastic_search.index_base}.status
+  raw_index: ${elastic_search.index_base}.raw
+
+
+gateway:
+  url: https://gateway-p01-demo.usw2.karrostech.net
+
+log_level: DEBUG

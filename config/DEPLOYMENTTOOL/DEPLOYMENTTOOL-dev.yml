@@ -1,0 +1,6 @@
+#### custom config ####
+k8s:
+  env: dev
+
+aws:
+  region: us-east-2

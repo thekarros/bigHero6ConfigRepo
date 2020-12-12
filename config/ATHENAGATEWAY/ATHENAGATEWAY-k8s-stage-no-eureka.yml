@@ -1,0 +1,49 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+management:
+  health:
+    redis:
+      enabled: false
+
+# API Keys that are acceptable
+validApiKeys: 11bb4c1845c7a0137ad0bc8f1df055792849df16, c62ac14ec31ffdd04d98268aeb6ec3b5244b1bcf, 94d9b8d2c7433f7145ae5d83bf2a73310b6c0628, 9d6c3f85669a40cd1b1fa4635b049b92bb04c881, f84f6e88351fbf27f2c58643063b84d263318ae2, 7573c26b16993ef536dc9397f5c08911a551c79a, dda54ae0a6b57658537d01ac47deca8799c965ca
+whiteListedRequest: /signin, /signup, /forgotpassword, /verificationemail, /resetpassword, /sendverificationemail, /verified, /v2/api-docs
+zuul:
+  ignoredHeaders: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+  sensitiveHeaders: Cookie,Set-Cookie
+  ribbonIsolationStrategy: THREAD
+  routes:
+    telematicsSubscriptionService:
+      path: /api/*/telematics/**
+      serviceId: TELEMATICSSUBSCRIPTIONSERVICE
+      stripPrefix: false
+    vehiclemanagementservice: 
+      path: /vehiclemanagementservice/**
+      serviceId: VEHICLEMANAGEMENTSERVICE
+      stripPrefix: true
+    vehiclemanagementservice_graphql: 
+      path: /vms/**
+      serviceId: VEHICLEMANAGEMENTSERVICE
+      stripPrefix: true
+    routeVehicleAssignmentService:
+      path: /api/*/rovars/**
+      serviceId: ROUTEVEHICLEASSIGNMENTSERVICE
+      stripPrefix: false
+    athenawsapi:
+      path: /api/*/athena/**
+      serviceId: ATHENAWSAPI
+      stripPrefix: false
+    historicalProcessedEvent:
+      path: /api/*/fetchHistoricalProcessedEvents/**
+      serviceId: HISTORICALPROCESSEDEVENTSSERVICE
+      stripPrefix: false
+    featureflagservice:
+      path: /api/*/ff/**
+      serviceId: FEATUREFLAGNATIVESERVICE
+      stripPrefix: false
+  retryable: true

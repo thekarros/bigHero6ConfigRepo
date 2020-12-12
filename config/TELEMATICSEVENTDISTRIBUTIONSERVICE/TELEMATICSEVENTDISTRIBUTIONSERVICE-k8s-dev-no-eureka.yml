@@ -1,0 +1,56 @@
+management:
+  health:
+    defaults:
+      enabled: false
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eurekaserver:1112/eureka/
+
+ribbon.eureka.enabled: false
+
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.elasticsearch.enabled: false
+
+ElasticSearchURL: vpc-p01use2dev-7-3ga6y7r4qsd4mzrwyyrjtnpwra.us-east-2.es.amazonaws.com
+
+es:
+  username:
+  password:
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  port: 443  
+
+kafka:
+  schemaUrl: http://10.20.20.121:8081
+  bootstrap-server: 10.20.20.121:9092
+  applicationId: telematicsEventService
+  consumer-group: telematics-event-distribution-p01use2dev1
+  consumer:
+    aggregateavltopic: aggregateAVLEvents-p01use2dev
+    routeassignmenttopic: route-assignment-dev
+    comparativeeventstopic: stop-detection-dev
+    
+    
+async.enabled: enabled
+
+consolidate.limit: 10    
+
+publish.env: DEV
+    
+eventFilterMap: 1,2103,1001
+
+publish.events: ON_TIME_STOP_ARRIVAL,DELAYED_STOP_ARRIVAL,EARLY_STOP_ARRIVAL
+
+certificateFile: /edc3963789-certificate.pem.crt
+
+privateKeyFile: /edc3963789-private.pem.key
+
+default.response.key: id,busid,eventid,eventtime,location,vehicle_id,unitid,tenantid
+additional.response.key: mileage

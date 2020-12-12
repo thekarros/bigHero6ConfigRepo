@@ -1,0 +1,52 @@
+ElasticSearchURL: ${elasticSearch.awsv7.url}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management.security.enabled: false
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.defaults.enabled: false  
+
+spring:
+  redis:
+    host: redis-prod.usw1.karrostech.net
+    port: 6379
+    database: 0
+    password: 
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+
+es:
+  username:
+  password:
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  port: 443  
+
+kafka: 
+  applicationId: telematicsEventService-prod
+  consumer-group: telematicsEventService-consumer-group-p01use2prod
+  consumer:
+    aggregateavltopic: aggregateAVLEvents-p01usw1prod
+    
+    
+async.enabled: enabled
+
+consolidate.limit: 10
+
+publish.env: prod
+    
+eventFilterMap: 1,2103,1001
+
+certificateFile: /edc3963789-certificate.pem.crt
+
+privateKeyFile: /edc3963789-private.pem.key

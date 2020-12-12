@@ -1,0 +1,14 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-ingest.usw2.karrostech.net:1112/eureka/, http://eureka02-p01-ingest.usw2.karrostech.net:1112/eureka/
+kafka:
+  bootstrap: 18.188.82.87:9092
+  consumer:
+    groupId: test-calampRawData-group
+    topic: calampRawData
+  producer:
+    topic: calampDecodedMessage
+    errorTopic: rawError

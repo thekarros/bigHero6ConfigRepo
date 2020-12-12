@@ -1,0 +1,222 @@
+eureka:
+  instances: http://eurekaserver:1112/eureka/
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+    healthcheck:
+      enabled: true
+
+#Disable Eureka discovery for Ribbon. Use k8s service name instead and let k8s service discovery handle load balancing
+#ribbon.eureka.enabled: false
+ACCMGMTSERVICE.ribbon.listOfServers: accountmanagementservice
+SYSTEMMANAGEMENTWSAPI.ribbon.listOfServers: systemmanagementwsapi
+PERSONSERVICE.ribbon.listOfServers: personservice
+TENANTSERVICE.ribbon.listOfServers: tenantservice
+ACCESSMANAGEMENTSERVICE.ribbon:listOfServers: accessmanagementservice
+VEHICLELIVEEVENTSERVICE.ribbon:listOfServers: vehicleliveeventservice
+STUDENTTRIPSERVICE.ribbon:listOfServers: studenttripservice
+NOTIFICATIONSERVICE.ribbon:listOfServers: notificationservice
+RIDERSHIPMANAGEMENTSERVICE.ribbon:listOfServers: ridershipmanagementservice
+TRWSAPI.ribbon:listOfServers: transportationrequestwsapi
+AUTHSERVICE.ribbon:listOfServers: authenticationservice
+EVENTQUERYWSAPI.ribbon:listOfServers: eventconverterwsapi
+VEHICLEQUERYWSAPI.ribbon:listOfServers: vehiclequerywsapi
+TRANSPORTATIONLOOKUPSERVICE.ribbon:listOfServers: transportationlookupservice
+INSIGHTWSAPI.ribbon:listOfServers: insightwsapi
+INVENTORYSERVICE.ribbon:listOfServers: inventoryservice
+ROUTEVEHICLEDRIVERMAPPINGSERVICE.ribbon:listOfServers: routevehicledrivermappingservice
+AGGPLANDATASERVICE.ribbon:listOfServers: aggplandataservice
+planDataHistoryService.ribbon:listOfServers: plandatahistoryservice
+WAYPOINTSERVICE.ribbon:listOfServices: waypointservice
+driverDirectionsService.ribbon:listOfServers: driverdirectionsservice
+VEHICLEHISTORICALEVENTSERVICE.ribbon:listOfServers: vehiclehistoricaleventservice
+MISSIONCONTROLWSAPI.ribbon:listOfServers: missioncontrolwsapi
+ROUTESERVICE.ribbon:listOfServers: routeservice
+PATHSERVICE.ribbon:listOfServers: pathservice
+INGESTIONMANAGEMENTSERVICE.ribbon:listOfServers: ingestionmanagementservice
+SUBSTITUTIONWSAPI.ribbon:listOfServers: substitutionwsapi
+RIDERSHIPMONITORINGSERVICE.ribbon:listOfServers: ridershipmonitoringservice
+GEOFENCEALERTMANAGEMENTSERVICE.ribbon:listOfServers: geofencealertmanagementservice
+AUDITSERVICE.ribbon:listOfServers: auditservice
+TELEMATICSSUBSCRIPTIONSERVICE.ribbon:listOfServers: telematicssubscriptionservice
+PPWSAPI.ribbon:listOfServers : parentportalwsapi
+ACCOUNTSERVICE.ribbon:listOfServers: accountservice
+VEHICLEMANAGEMENTSERVICE.ribbon:listOfServers: vehiclemanagementservice
+IDENTITYACCESSCONTROLSERVICE.ribbon:listOfServers: identityaccesscontrolservice
+ROUTEVEHICLEASSIGNMENTSERVICE.ribbon:listOfServers: routevehicleassignmentservice
+MCWSAPI.ribbon:listOfServers: missioncontrolwsapi
+LIVEEVENTSERVICE.ribbon:listOfServers: liveeventservice
+FEATUREFLAGSERVICE.ribbon:listOfServers: featureflagservice
+FEATUREFLAGNATIVESERVICE.ribbon:listOfServers: featureflagnativeservice
+ATHENAWSAPI.ribbon:listOfServers: athenawsapi
+ATHENAETLSERVICE.ribbon:listOfServers: athenaetlservice
+SCHEDULERMANAGEMENTSERVICE.ribbon:listOfServers: schedulermanagementservice
+ESQLFETCHSOURCE.ribbon:listOfServers: esqlfetchsource
+RRSYNCHRONIZER.ribbon:listOfServers: rideregistrationsynchronizer
+
+kafka-broker: 10.20.20.121:9092 #use in other services, will be remove soon
+kafka:
+  bootstrapServer: 10.20.20.121:9092
+  bootstrap-server: 10.20.20.121:9092
+  bootstrap-msk: b-1.msk-dev.lo40dw.c3.kafka.us-east-2.amazonaws.com:9092, b-2.msk-dev.lo40dw.c3.kafka.us-east-2.amazonaws.com:9092
+  athena-bootstrap-msk: b-1.athenamsk.eg7z0i.c3.kafka.us-east-2.amazonaws.com:9092, b-2.athenamsk.eg7z0i.c3.kafka.us-east-2.amazonaws.com:9092
+management:
+  security:
+    enabled: false
+  health:
+    elasticsearch:
+      enabled: false
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "*"
+
+elasticSearch:
+  logAggregation:
+    url: 2ccf0579872b4a3aad8aeda90137dfd6.us-east-1.aws.found.io
+    username: elastic
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGcaZWtA+fj+eRZQ7T7FMW+AAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMAt4chiKot4qvp5lGAgEQgDMXt7mSjzH4tyl1w4IVqfSuZky+IjABks9nHqTb/H6Umc6PHXYiCpCslksWG4gpIFtxG98='
+    port: 9243
+  cloud:
+    url: 265eb3574a7146a791b71965a2e378fa.us-west-2.aws.found.io
+    username: elastic
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGnZdnV5uwcWTG3MvEK/ys3AAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMtC/iBkI5cxQeg5qTAgEQgDNmCgz5QqPD5Ks2FGA5G0QwRi4FDKZcEeN4kHP+NLVIRiV8Urca0hKVoNr4KFp26Ugya8w='
+    port: 9243
+  aws:
+    url: vpc-p01use2dev-ba2ebrzmg3m3wtnpn7vrhlub2y.us-east-2.es.amazonaws.com
+    username:
+    password:
+    port: 443
+  awsv7:
+    url: vpc-p01use2dev-7-3ga6y7r4qsd4mzrwyyrjtnpwra.us-east-2.es.amazonaws.com
+    username:
+    password:
+    port: 443
+  eventIngest:
+    url: 265eb3574a7146a791b71965a2e378fa.us-west-2.aws.found.io
+    username: event-ingest
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHrYULei9VvjrcEM/XGIjY6AAAAdTBzBgkqhkiG9w0BBwagZjBkAgEAMF8GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMbOXObSUbfahFQ1GWAgEQgDKjv8uIVVOzBRLBat9xwZTNEJL4PAC7OubLi4yxaYmAuJasygXNBw84tKzQt19Wszcciw=='
+    port: 9243
+  coreServices:
+    url: 265eb3574a7146a791b71965a2e378fa.us-west-2.aws.found.io
+    username: core-services
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAE5003OKiXE8w3apK0VyLwaAAAAcTBvBgkqhkiG9w0BBwagYjBgAgEAMFsGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMcm6NiXGsRBEvMLzkAgEQgC504+gWV6pbff3SoqH1tc/i+mjnPZyIfVD+wXh6lWthQDhVKB0QfJ/vaauUiXQ3'
+    port: 9243
+  insight:
+    url: 265eb3574a7146a791b71965a2e378fa.us-west-2.aws.found.io
+    username: insight
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAEN/AuqSU3x2no2rjvNLempAAAAczBxBgkqhkiG9w0BBwagZDBiAgEAMF0GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMj7VCvox70OAy/hDzAgEQgDDj+Qbi73l7gHt2uiKDOaBhwOLFBt1UTrbdsCsMJiceVO9ZEXvDSmJRdT0L7mj14yI='
+    port: 9243
+  missionControl:
+    url: 265eb3574a7146a791b71965a2e378fa.us-west-2.aws.found.io
+    username: mission-control
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFWYoc4BkL0+0oIn6h/yNB7AAAAczBxBgkqhkiG9w0BBwagZDBiAgEAMF0GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMCSSiZjYItntVR3omAgEQgDBSyXFPv/VYIbwBNO+lMeMuVUWCZZyIk7GCS64Xg5vcpOS76ev0UUae7q3KV7cdbyI='
+    port: 9243
+  systemManagement:
+    url: 265eb3574a7146a791b71965a2e378fa.us-west-2.aws.found.io
+    username: system-management
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHZJj0c/L6PqctSj3srfE5CAAAAbzBtBgkqhkiG9w0BBwagYDBeAgEAMFkGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM0RyKPh7RFFJwouXLAgEQgCzL3MFSPkiQF1cjKmLWmjrPYIxDFgBHGqmSNsSOo+NowCmOpAQXAEth36H4IQ=='
+    port: 9243
+  parentPortal:
+    url: 265eb3574a7146a791b71965a2e378fa.us-west-2.aws.found.io
+    username: parent-portal
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHwo0PPItaDhw9/NqGwh+U5AAAAeTB3BgkqhkiG9w0BBwagajBoAgEAMGMGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMtj/bgFIFFfQ2NaoCAgEQgDbX5BI3VSPqAcKY/O/tmm9DMXyLQ+t1XmOrErXzpLdaHh0WRyDVPQnxbvqzqx2ODtT4VH6PxoA='
+    port: 9243
+  planIngest:
+    url: 265eb3574a7146a791b71965a2e378fa.us-west-2.aws.found.io
+    username: plan-ingest
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAF9ZPn1dM+2/8Qzd/x+PMvpAAAAcjBwBgkqhkiG9w0BBwagYzBhAgEAMFwGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMMTcI1te90e8YSEy0AgEQgC+n3S26dIQSIYc4O60N2NvD05NeS4x3piiyu8zZFrh8+AJfQlCpnWIjmMsJHvFQWg=='
+    port: 9243
+
+
+
+rds:
+  dataSource:
+    url: jdbc:postgresql://db-dev.use2.karrostech.net:5432/Edulog #use in other services, will be remove soon
+    username: karros #use in other services, will be remove soon
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAF1tjwR9jL3pwqiDVUwBkrMAAAAfTB7BgkqhkiG9w0BBwagbjBsAgEAMGcGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMsxulA/cLhH/DVWPIAgEQgDqhMN6j5wKMj/5H4HHEW1O3vodBUEabssk2Sv2Nzi+pp0jItHq4QaFWNmj8PCQpFuSSjmYKWKC4d31K' #use in other services, will be remove soon
+
+#AWS DevQA DB
+edulog:
+  datasource:
+    url: jdbc:postgresql://db-dev.use2.karrostech.net:5432/Edulog
+    username: karros
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAF1tjwR9jL3pwqiDVUwBkrMAAAAfTB7BgkqhkiG9w0BBwagbjBsAgEAMGcGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMsxulA/cLhH/DVWPIAgEQgDqhMN6j5wKMj/5H4HHEW1O3vodBUEabssk2Sv2Nzi+pp0jItHq4QaFWNmj8PCQpFuSSjmYKWKC4d31K'
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 2
+      max-active: 50
+      test-on-borrow: true
+
+# DB Configs
+spring:
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        generate_statistics: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: master_data
+        use_jdbc_metadata_defaults: false
+        hbm2ddl:
+          import_files:
+#Enable failfast for spring cloud config
+spring.cloud.config.failFast: true
+
+# Spring Security configurations are required for this application to work with the
+# Karrostech Security dependency included in pom.xml.
+security:
+  jwt:
+    tokenExpirationTime: 120 # Number of minutes
+    refreshTokenExpTime: 60 # Minutes
+    tokenIssuer: http://karrostech.com
+    # base 64 encoded signing key
+    tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
+    secureAuthenticationEntryUrl: /api/**/students/**
+    unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                      /swagger-resources/configuration/security, /manage/**, /api/v1/people ]
+    issuer: http://karrostech.com #use in other services, will be remove soon
+    signature: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ==' #use in other services, will be remove soon
+    duration: # minutes #use in other services, will be remove soon
+      token: 120 #use in other services, will be remove soon
+      refreshToken: 60 #use in other services, will be remove soon
+    enableKeycloakJWT: true
+    keycloakTokenIssuer: karros-keycloak
+    keycloakPublicKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAE7SDT6+hIPoZGtfDySOhnNAAAB8DCCAewGCSqGSIb3DQEHBqCCAd0wggHZAgEAMIIB0gYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAyWauegFma7EvMFtWcCARCAggGjfkWEYu0cJVIzddkKZZE0z2HB0EPyRrwHIlCDN/Al1MdP4zjiXkW2yrA3YPFplp61GV1npUyVD3Zj6sDepxz8PfDF+Lt0eiYgqUpAe8i0LS6B3xCXBhQZfcnvmN5so4bOFkpgXBJQrwWSh920LKZoNQ6Mf2Re6FpG2HPzvRhJSuq2poIQsXmUKJOGyLGRBoMX6kcWn+i1z9rbE0FFFAp5hJ+13RgRZ6DAcvW7MXTTgTtPi1lx/E9ikNe3Nwffs1P1jaNVAolcfbBCfi4CcpKcMRAaH3t27Rm90V5ysHDCEkvtoR8vlbU6VR28z5swPPiW40AdZ873roBhgtj4IJGw9hqQPW4FUUoeIZhU1hkFMtj2GTUkfYVDt1omby7bR4hrlLGSB//Vm3r85mbusm2FZaWDHg1sAPx2JMJzevS4cRRZkBaDXbxAK6RoCI5caC8pL3+NPojOGk9kePNCQ0Eum9iWlMyoHpr6yShrQfaSCOnHI7U2CHKIkIJPQ5+UtLRWu4ueqFxn4mmTloTobRudxz+S5kf/3lqltFR3qw9WnVXD1v8='
+
+auth:
+  credentials:
+    clientId: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAH+B2Aa2gdAV4uOodo4dgGcAAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDHCp+JqK/s8hu1hbWwIBEIBDZVeV3Vpkfy+yrqL0EfYIio/AT3okxFgUxBJzkX8D4XMNgpdQyYIIosnTMerBO/0Jq1Je1ezmnktzVSFlXeA2cOKEIw=='
+    clientSecret: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHMTVc0y0zg9CkheEQ8djrSAAAAojCBnwYJKoZIhvcNAQcGoIGRMIGOAgEAMIGIBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDC1Zmq4pEPAyLkqhXwIBEIBbD9zgW5/+k21v/MOylELL/ylZJ5kQXXXP93pMoEh+ny1VdFoy3ZVBoZ+Y3NdRpCTpmufdXaqPKL5SFKtHUQqjDGx4w0Fy5v0y9WtTOAWyNEgSO42AzEv36ZHj0g=='
+
+aesKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAEknn8joGV1dY2c7x06fJNtAAAAazBpBgkqhkiG9w0BBwagXDBaAgEAMFUGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM3vvHm+h6yaalSEDRAgEQgChxNI9aqNevUh4YuQ7Q2MSL6GwQe9fExI/BqUn6yzjXmuNq16vDe8nC'
+
+apiKeys: 0844c776530ac4da07fdbbe3e588ee642a13657e, 799173c1bdcc5b19b2a7a9eccd65178f5673af8e, 2279779a6ffd50f5e8784c2307224fac0d7a9325, 3b252846658f89dd61156c921d18df649938f041, 92574542d968c136c9b3b7bc4502766ba831dc11, da139ba972eee32e734103b4bf7561787fff930e, 6826be840dd21691d06f91a803e93ae7c8722390,61466361-dabc-4eb7-b761-2040e57fb297, 0bd9ef23a2a418379641a78a52bf7fc20ffd042b
+
+gateways:
+  core: https://gateway-p01-dev.use2.karrostech.net
+  missionControl: https://missioncontrolgateway-p01-dev.use2.karrostech.net
+  systemManagement: https://systemmanagementgateway-p01-dev.use2.karrostech.net
+  athena: https://athenagateway.use2.karrostech.net
+  parentPortal: https://parentportalgateway-p01-dev.use2.karrostech.net
+  parentPortalLite: https://parentportallitegateway-p01-dev.use2.karrostech.net
+
+
+#Testing properties
+service.elastic-search.num-threads: 200
+
+# email config
+ses:
+  sender: support@karroslab.com
+  accessKey: AKIARNCTWFL5EMO5CKPN
+  secretKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHTybxOBDaAECabZ47LQ925AAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDCbwtUEk8z3S/hhHJwIBEIBDPd1pJdKdRka8WH51X6Qnd/tiPPtd0E3zqJquVegHoMh/TJjNvSIUqlk7bwjKeZAZ1nZt3gzcvdn3HNHSR5fJD1lqsg=='
+  region: us-east-1

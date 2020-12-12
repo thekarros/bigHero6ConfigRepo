@@ -1,0 +1,298 @@
+# Property file for Staging and Production tiers. Will be used if spring.profiles.active is set to "prod"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+es:
+  esqlStatus:
+    index: esqlimportresult
+    type: doc
+    targetData: ESQLIMPORTRESULT
+  ingestionAuditing:
+    index: planingestionauditing
+    type: doc
+    targetData: INGESTION
+  tenantHost:
+    index: tenanthost
+    type: doc
+    targetData: TENANTHOST
+  auditLogs:
+    index: audit-p01.usw1.prod-*
+    type: _doc
+    targetData: AUDITLOG
+  hosts:
+  -
+    targetData: AUDITLOG
+    url: a52402d200e0432fb99a8088a4b009fd.us-west-1.aws.found.io
+    username: auditing
+    password: k@rr0s_t3chn0loGies
+    port: 9243
+    parallelESCountThreads: 100
+    connectionTimeout: 10000
+    socketTimeout: 60000
+    maxScrollSize: 10000
+  -
+    targetData: ESQLIMPORTRESULT
+    url: ${elasticSearch.cloud.url}
+    username: ${elasticSearch.cloud.username}
+    password: ${elasticSearch.cloud.password}
+    port: 443
+    parallelESCountThreads: 100
+    connectionTimeout: 10000
+    socketTimeout: 60000
+    maxScrollSize: 10000
+  -
+    targetData: INGESTION
+    url: vpc-p01usw1prod-mk5xmhey72i44thke3onjjacda.us-west-1.es.amazonaws.com
+    username:
+    password:
+    port: 443
+    parallelESCountThreads: 100
+    connectionTimeout: 10000
+    socketTimeout: 60000
+    maxScrollSize: 10000
+  -
+    targetData: TENANTHOST
+    url: vpc-p01usw1prod-mk5xmhey72i44thke3onjjacda.us-west-1.es.amazonaws.com
+    username:
+    password:
+    port: 443
+    parallelESCountThreads: 100
+    connectionTimeout: 10000
+    socketTimeout: 60000
+    maxScrollSize: 10000
+
+kafka:
+  bootstrap-server: ${kafka-list-servers}
+  producer:
+    zonarFetchTopic: linhtr-zonarfetchrequests
+  sentMessageFailed:
+    code: 4051
+    message: Failed to sent message to kafka
+
+aws:
+  sqs:
+    queue-url:  https://sqs.us-west-2.amazonaws.com/690893158275/Zonar_ingest_default
+    region: us-west-2
+  accessKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAEDAyPw29y5RnL10Lk7fVOSAAAAcjBwBgkqhkiG9w0BBwagYzBhAgEAMFwGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMbBswlQqlwf5y2jcyAgEQgC85Ugor+05M3fydmvhq8A6Eqq3gqTvYqUWsWfkBXW+3Lt3b4l9wVBs0JUHeEqORQw=='
+  secretKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHzyDtcmkyKOVLswrp4N4GfAAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDGtgzTQX1f54pyHuDgIBEIBD7qMfW9MkbA5nx04J8xf1zxtF2NQr6i0DtPo2fw4EJyQjtqLk2PJoGKQe5ttOEZMR6Te/pLBCS9Da/KMI1p9i5kAKkA=='
+  cloudfront:
+    hostedZoneId: Z2FDTNDATAQYW2
+  distributionDNs: d2gktcso4ffrwo.cloudfront.net, d22pd5fz5otebc.cloudfront.net, d269yawahtxhua.cloudfront.net
+  availableHostedZones:
+    -
+      id: ZPNED8AYA0B4K
+      name: karrostech.io
+    -
+      id: Z33NWCVN5UFMNZ
+      name: karrostech.net
+  iot:
+    accessKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAE3gpE81PuwLd33D4LfN/9nAAAAcjBwBgkqhkiG9w0BBwagYzBhAgEAMFwGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMd/7pczjkpiTtjTjSAgEQgC/OriEJvrzON5NXsJ8HbsMa+kBpkhj2eC8JN3j60ArUjtGGrLqKLPxS+wgnrslXOQ=='
+    secretKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFFrmAfyQuiSu1kmwC4NJZyAAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDGwOPujjg4vX5yxcnQIBEIBDInyES6Yq/LcEGrKuwU3UUqiUyRPtGWnwmrXSGYUackkgQGm44WRXiwON2UGdlUwRWEe9h0KjVid4E+tZM8DYUjKlIQ=='
+
+
+microservices:
+  mc:
+    pathPrefix: /api/v1/mc
+  accounts:
+    serviceId: ACCMGMTSERVICE
+    search:
+      endpoint: http://${microservices.accounts.serviceId}/api/v1/accounts/search
+  persons:
+    serviceId: PERSONSERVICE
+    get-by-id:
+      endpoint: http://${microservices.persons.serviceId}/api/v1/people/
+    search-people-by-email-tenantuuids:
+      endpoint: http://${microservices.persons.serviceId}/api/v1.0/people/search
+    get-by-ids:
+      endpoint: http://${microservices.persons.serviceId}/api/v1.0/people/searchbyids
+    create-person:
+      endpoint: http://${microservices.persons.serviceId}/api/v1/people
+  tenants:
+    serviceId: TENANTSERVICE
+    get-schools:
+      #Use this endpoint as this is the only endpoint return schools with status active and inactive
+      endpoint: http://${microservices.tenants.serviceId}/api/v1/schools/suggest
+    filter-schools:
+      endpoint: http://${microservices.tenants.serviceId}/api/v1/schools/search
+    get-school-by-id:
+      endpoint: http://${microservices.tenants.serviceId}/api/v1/schools/
+    get-tenant-by-id:
+      endpoint: http://${microservices.tenants.serviceId}/api/v1/tenants/
+    get-tenant-by-id-v2:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/tenants/
+    create-tenant:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/tenants
+    update-tenant:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/tenants/
+    search-tenant:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/tenants/search
+    get-tenants:
+      endpoint: http://${microservices.tenants.serviceId}/api/v1/tenants
+    deleteTenantSetting:
+      endpoint: http://${microservices.tenants.serviceId}/api/v1.0/tenantsettings/
+  vehicles:
+    serviceId: VEHICLEQUERYWSAPI
+    filter-vehicles:
+      endpoint: http://${microservices.vehicles.serviceId}/api/v3.0/vehicles/search
+    update-vehicle:
+      endpoint: http://${microservices.vehicles.serviceId}/api/v3.0/vehicles/
+    get-vehicle:
+      endpoint: http://${microservices.vehicles.serviceId}/api/v3.0/vehicles
+    patch-vehicle:
+      endpoint: http://${microservices.vehicles.serviceId}/api/v3.0/vehicles/
+    export-vehicles:
+      endpoint: http://${microservices.vehicles.serviceId}/api/v3.0/vehicles/export
+  routeVehicleDriverMapping:
+    serviceId: ROUTEVEHICLEDRIVERMAPPINGSERVICE
+    get-route-vehicle-driver-mapping:
+      endpoint: http://${microservices.routeVehicleDriverMapping.serviceId}/api/v1/routeAssignments
+    delete-route-assignments:
+      endpoint: http://${microservices.routeVehicleDriverMapping.serviceId}/api/v1/routeAssignments
+  ims:
+    serviceId: INGESTIONMANAGEMENTSERVICE
+    get-ingestion-schedule:
+      endpoint: http://${microservices.ims.serviceId}/api/v1/ingestion/schedule/
+  zonarFetchSource: 
+    serviceId: ZONARFETCHSOURCE
+    importVehicle:
+      endpoint: http://${microservices.zonarFetchSource.serviceId}/import/vehicles/
+    importVehicleStatus:
+      endpoint: http://${microservices.zonarFetchSource.serviceId}/import/status/
+  esql:
+    secretKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAE8tLng8qzs3zeO+TGn0mCHAAAAazBpBgkqhkiG9w0BBwagXDBaAgEAMFUGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRUrRt1QxCO1VW3DQAgEQgCg8hRYA+w5/OP/kPQozfralfNYM/DVE/d7/VTwND9lWwF70AwyU4gjl'
+  iotbuilder:
+    create-iot-thing:
+      endpoint: http://iotbuilder/create-thing
+    delete-iot-thing:
+      endpoint: http://iotbuilder/delete-thing
+
+ingestionHost:
+  jsonApi:
+    getSchools: /getSchools.jsn
+    getStudents: /getStudents.jsn
+    getRoutes: /getRoutes.jsn
+  eduApi:
+    getStudents: /students:getIds
+    getRoutes: /routes:getIds
+
+vehicleLiveEvent:
+  zonarScheduleFetch:
+    defaultInterval: 10
+    recoveryInterval: 15
+
+zonarHost:
+  getAssets: /interface.php?action=showopen&operation=showassets&format=json&customer=
+
+samsara:
+    nifiPersistHost: http://10.40.26.57
+    nifiFetchHost: http://10.40.26.57
+    triggerSamsaraImportVehicle:
+        endpoint: ${samsara.nifiPersistHost}:10091/samsara/importVehicles
+        successMessage: Request trigger samsara import vehicles successfully.
+        almostSuccessMessage: Request trigger samsara import vehicles fail on %s.
+        failMessage: Request trigger samsara import vehicles has been fail. 
+    triggerSamsaraVehicleLiveEvent:
+        endpoint: ${samsara.nifiFetchHost}:10092/samsara/liveEventScheduler
+
+keycloak:
+  getAccessToken:
+    stage:
+      endpoint: https://aaa-stage.usw2.karrostech.net/auth/realms/Edulog/protocol/openid-connect/token
+      clientSecret: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAF1vLmcHIdYQjPJ7Hx9HZHpAAAAgzCBgAYJKoZIhvcNAQcGoHMwcQIBADBsBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDIKWEfrUgJ3U2+ReJgIBEIA/5DpN3CtQMgUa7LTP+APcaNuclQ7fqV79n6NFr3dZA6AAaycswy3G+5BI0PbV8AgOEUDfIzgXFRkT+xLECOyL'
+    demo:
+      endpoint: https://aaa-demo.usw2.karrostech.net/auth/realms/Edulog/protocol/openid-connect/token
+      clientSecret: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAEPxzn5FtMAUU0tzyZVRMjPAAAAgzCBgAYJKoZIhvcNAQcGoHMwcQIBADBsBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDBnRBztqjr7wZyPkYgIBEIA/MGymxtEYyxphU0+HSB3LFk07JNPtkVhCwgUoounwbyGVD4Dc0PKyHI0wUV3gPYkNTKi3RATaU9qw2EJPbADn'
+    prod:
+      endpoint: https://aaa-prod.usw1.karrostech.net/auth/realms/Edulog/protocol/openid-connect/token
+      clientSecret: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAH94nx3nLqZBO2GyYo36lYeAAAAgzCBgAYJKoZIhvcNAQcGoHMwcQIBADBsBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDAf4Qq/g9da2s8rdTAIBEIA/6GQ5ODsGyeXTTc43UbpyrLR8DKD7+myIQ52dIZxAXmqqpQtIQYI16vUJnlCwnUO2myikJJcLbrCfJ4ReG2qd'
+  supportedClients: mission-control,system-management,parent-portal,parent-portal-lite,athena,insight
+  endpoint: https://aaa-prod.usw1.karrostech.net/auth
+  realms: Edulog
+  clientId: mission-control
+  clientSecret: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFdyqm1BK2W/F/yoHnKgFrXAAAAgzCBgAYJKoZIhvcNAQcGoHMwcQIBADBsBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDCgRO4AhwZUBm/mfWQIBEIA/TbOeqvVOOCpoFwAid0GjozvNEQya4iW+fLnUUuia+rgArc0GlxZXcT6KQJRBROHG2HOMrU80oF82vunya31L'
+  grantType: password
+  username: missioncontrolwsapi
+  password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFxr2+UCrCZW4/DCjBnDbZ/AAAAZDBiBgkqhkiG9w0BBwagVTBTAgEAME4GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMz+Wd8kpHuZwyHYmCAgEQgCHvFv0oASHe9zPAbaYnKywg4vPcskhSMU1YJKG4tGkBl+U='
+  getUserEndpoint: ${keycloak.endpoint}/admin/realms/Edulog/users
+  getTokenEndpoint: ${keycloak.endpoint}/realms/Edulog/protocol/openid-connect/token
+  token:
+    endpoint:
+      openidConnectToken: ${keycloak.endpoint}/realms/${keycloak.realms}/protocol/openid-connect/token
+  users:
+    endpoint:
+      createUser: ${keycloak.endpoint}/admin/realms/${keycloak.realms}/users
+      getUser: ${keycloak.endpoint}/admin/realms/${keycloak.realms}/users
+
+# TODO: Need to make this a group list and get code in settings config to parse through all
+# groupNames and do a union of the roles of them all.
+security.basic.enabled: false
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,/swagger-resources/configuration/security, /manage/**,/hystrix.stream]
+
+#hystrix configuration
+hystrix.command.Account.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.Account.coreSize: 10
+hystrix.threadpool.Account.maximumSize: 500
+hystrix.threadpool.Account.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.AuditLog.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.AuditLog.coreSize: 10
+hystrix.threadpool.AuditLog.maximumSize: 500
+hystrix.threadpool.AuditLog.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.Reporting.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.Reporting.coreSize: 10
+hystrix.threadpool.Reporting.maximumSize: 500
+hystrix.threadpool.Reporting.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.RouteVehicle.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.RouteVehicle.coreSize: 10
+hystrix.threadpool.RouteVehicle.maximumSize: 500
+hystrix.threadpool.RouteVehicle.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.RouteVehicleDriverMappingService.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.RouteVehicleDriverMappingService.coreSize: 10
+hystrix.threadpool.RouteVehicleDriverMappingService.maximumSize: 500
+hystrix.threadpool.RouteVehicleDriverMappingService.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.School.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.School.coreSize: 10
+hystrix.threadpool.School.maximumSize: 500
+hystrix.threadpool.School.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.Tenant.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.threadpool.Tenant.coreSize: 10
+hystrix.threadpool.Tenant.maximumSize: 500
+hystrix.threadpool.Tenant.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.TenantService.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.TenantService.coreSize: 10
+hystrix.threadpool.TenantService.maximumSize: 500
+hystrix.threadpool.TenantService.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.Vehicle.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.Vehicle.coreSize: 10
+hystrix.threadpool.Vehicle.maximumSize: 500
+hystrix.threadpool.Vehicle.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.VehicleLiveEvent.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.VehicleLiveEvent.coreSize: 10
+hystrix.threadpool.VehicleLiveEvent.maximumSize: 500
+hystrix.threadpool.VehicleLiveEvent.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.AwsIotService.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.AwsIotService.coreSize: 10
+hystrix.threadpool.AwsIotService.maximumSize: 500
+hystrix.threadpool.AwsIotService.allowMaximumSizeToDivergeFromCoreSize: true
+

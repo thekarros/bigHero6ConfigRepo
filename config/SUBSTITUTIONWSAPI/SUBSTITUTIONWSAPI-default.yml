@@ -1,0 +1,102 @@
+management.health.elasticsearch.enabled: false
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+kafka:
+  bootstrap-server: 10.20.20.121:9092
+  runSubstitution:
+    topicName: run-agg-results-p01use2dev
+  routeOverride:
+    topicName: run-sub-ro-results-p01use2dev
+  assignmentChangeRequest:
+    topicName: assignmentChangeRequest-p01use2dev
+  consumer:
+    changeRouteAssignment: changeRouteAssignment-p01use2dev
+    publishNotificationRequest: publishNotificationRequest-p01use2dev
+    eventsGroupId: substitution-consumer-group-p01use2dev
+  applicationId: substitutionWSAPI
+es:
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  username: ${elasticSearch.cloud.username}
+  password: ${elasticSearch.cloud.password}
+  port: ${elasticSearch.cloud.port}
+  runSubstitution:
+    index: run_scored_vehicles
+    type: doc
+  subsitutionHistory:
+    index: substitution_history-*
+    type: doc
+  runDetectionInfo:
+    index: detectioninfo
+    type: doc
+    
+ElasticSearchURL: ${elasticSearch.cloud.url}
+
+# TODO: encrypt these credentials
+credentials:
+  ApiKey: 0844c776530ac4da07fdbbe3e588ee642a13657e
+  clientSecret: 8d9714302e9c425bfcb59bf81a3a1594e9dc40b05c7598820c7f5b419cdac7ce
+
+spring.cloud.stream.kafka:
+  binder:
+    brokers: ${kafka.bootstrap-server}
+spring.cloud.stream.bindings:
+  input:
+    destination: run-agg-results-p01use2dev
+
+
+spring.cloud.stream.kafka.streams:
+  bindings:
+    input:
+      groupId: substitutionwsapi-dev
+      consumer:
+        startOffset: latest
+  binder:
+    brokers: ${kafka.bootstrap-server}
+    applicationId: substitutionWSAPI-dev
+
+spring:
+  redis:
+    general:
+      host: redis.use2.karrostech.net
+      port: 6379
+      database: 0
+      password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+      cacheExpirations:
+        Paths: -1
+        Tenants: -1
+        vehicles: -1
+        substitution: 86400
+        CURRENT_ASSIGNMENTS: 600
+    vehicle:
+      host: ${spring.redis.general.host}
+      port: ${spring.redis.general.port}
+      database: 4
+      password: ${spring.redis.general.password}
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+
+#define the time rage to query latest scored events, supports 3 types:
+#  - recent (with value is numeric - in hour),
+#  - today (from the beginning of today at tenant timezone, value will be received from client. Unless, the beginning of UTC will be used)
+#  - all (no time range applied, all data will be loaded with maximum is 10K records)
+latest-timerange:
+  type: recent
+  value: 12
+
+buffered-es-bulk-index:
+  batch-size: 500
+  retention-ms: 5000
+  buffer-size: 5000
+
+kafka-processors:
+  enabled: false

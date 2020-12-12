@@ -1,0 +1,269 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management:
+  health:
+    redis:
+      enabled: false
+
+# API Keys that are acceptable
+validApiKeys: 11bb4c1845c7a0137ad0bc8f1df055792849df16, c62ac14ec31ffdd04d98268aeb6ec3b5244b1bcf, 94d9b8d2c7433f7145ae5d83bf2a73310b6c0628, 9d6c3f85669a40cd1b1fa4635b049b92bb04c881, f84f6e88351fbf27f2c58643063b84d263318ae2, 7573c26b16993ef536dc9397f5c08911a551c79a, dda54ae0a6b57658537d01ac47deca8799c965ca
+
+
+endpoints:
+  restart:
+    enabled: true
+  shutdown:
+    enabled: true
+  health:
+    sensitive: false
+
+management.security.enabled: false
+
+
+customForwarding:
+  urlRewrites:
+    -
+      sourcePath: /api/v1/pp/vehicleliveevents/search(.)*
+      targetPath: /api/v1.0/vehicleliveevents/search
+      targetServiceId: VEHICLELIVEEVENTSERVICE
+zuul:
+  ignoredHeaders: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+  sensitiveHeaders: Cookie,Set-Cookie
+  ribbonIsolationStrategy: THREAD
+  routes:
+    accounts:
+      path: /api/*/accounts/**
+      serviceId: ACCMGMTSERVICE
+      stripPrefix: false
+    accountsPage:
+      path: /api/*/pages/accounts/**
+      serviceId: ACCMGMTSERVICE
+      stripPrefix: false
+    login:
+      path: /api/v1/signin/**
+      serviceId: AUTHSERVICE
+      stripPrefix: false
+    events:
+      path: /event/**
+      serviceId: EVENTQUERYWSAPI
+    events_v1:
+      path: /api/0.1/events/**
+      serviceId: VEHICLELIVEEVENTSERVICE
+      # serviceId: EVENTQUERYWSAPI
+      stripPrefix: false
+    events_v2:
+      path: /api/0.2/events/**
+      serviceId: VEHICLELIVEEVENTSERVICE
+      # serviceId: EVENTQUERYWSAPI
+      stripPrefix: false
+    vehicleStatus:
+      path: /api/v1/vehicleStatus/**
+      serviceId: VEHICLELIVEEVENTSERVICE
+      # serviceId: EVENTQUERYWSAPI
+      stripPrefix: false
+    vehicles:
+      path: /api/*/vehicles/**
+      serviceId: VEHICLEQUERYWSAPI
+      stripPrefix: false
+    vehicles2:
+      path: /api/v2/tenants/*/vehicles/**
+      serviceId: VEHICLEQUERYWSAPI
+      stripPrefix: false
+    vehicles3:
+      path: /api/v3/vehicletenantmappings/devices/**
+      serviceId: VEHICLEQUERYWSAPI
+      stripPrefix: false
+    tenants:
+      path: /api/*/tenants/**
+      serviceId: TENANTSERVICE
+      stripPrefix: false
+    tenantsettings:
+      path: /api/*/tenantsettings/**
+      serviceId: TENANTSERVICE
+      stripPrefix: false
+    districts:
+      path: /api/*/districts/**
+      serviceId: TENANTSERVICE
+      stripPrefix: false
+    schools:
+      path: /api/v*/schools/**
+      serviceId: TENANTSERVICE
+      stripPrefix: false
+    transportation:
+      path: /api/v1/students/*/trips/**
+      serviceId: TRANSPORTATIONLOOKUPSERVICE
+      stripPrefix: false
+    people:
+      path: /api/v*/people/**
+      serviceId: PERSONSERVICE
+      stripPrefix: false
+    students:
+      path: /api/v*/students/**
+      serviceId: PERSONSERVICE
+      stripPrefix: false
+    insights:
+      path: /insight/**
+      serviceId: INSIGHTWSAPI
+    routeAssignments:
+      path: /api/*/routeAssignments/**
+      serviceId: ROUTEVEHICLEDRIVERMAPPINGSERVICE
+      stripPrefix: false
+    studentTriprouteAssignment:
+      path: /api/v1/studenttriprouteassignment/**
+      serviceId: STUDENTTRIPSERVICE
+      stripPrefix: false
+    studentTrips:
+      path: /api/v*/studenttrips/**
+      serviceId: STUDENTTRIPSERVICE
+      stripPrefix: false
+    aggPlanDataService:
+      path: /api/v1/agg/routes/**
+      serviceId: AGGPLANDATASERVICE
+      stripPrefix: false
+    planDataHistoryService:
+      path: /api/v*/planDataHistory/**
+      serviceId: planDataHistoryService
+      stripPrefix: false
+    driverDirectionsService:
+      path: /api/v1/drivingDirections/**
+      serviceId: driverDirectionsService
+      stripPrefix: false
+    vehicleLiveEvent:
+      path: /api/v*/vehicleliveevents/**
+      serviceId: VEHICLELIVEEVENTSERVICE
+      stripPrefix: false
+    accessRequests:
+      path: /api/*/studentAccessRequests/**
+      serviceId: accessManagementService
+      stripPrefix: false
+    accessRequestsById:
+      path: /api/*/users/*/studentAccessRequests/**
+      serviceId: accessManagementService
+      stripPrefix: false
+    missioncontrol:
+      path: /api/*/mc/**
+      serviceId: MCWSAPI
+      stripPrefix: false
+    routeServices:
+      path: /api/v*/plan/routes/**
+      serviceId: ROUTESERVICE
+      stripPrefix: false
+    systemManagement:
+      path: /api/*/sm/**
+      serviceId: SMWSAPI
+      stripPrefix: false
+    notificationService:
+      path: /api/*/notification/**
+      serviceId: NOTIFICATIONSERVICE
+      stripPrefix: false
+    subscriptions:
+      path: /api/*/subscriptions/**
+      serviceId: NOTIFICATIONSERVICE
+      stripPrefix: false
+    registrationCodes:
+      path: /api/*/registrationcodes/**
+      serviceId: accessManagementService
+      stripPrefix: false
+    accessmanagementservice:
+      path: /api/*/accessrequest/**
+      serviceId: accessManagementService
+      stripPrefix: false
+    accessmanagementservicev2:
+      path: /api/*/accessrequests/**
+      serviceId: accessManagementService
+      stripPrefix: false
+    transportationRequests:
+      path: /api/v*/transportationRequests/**
+      serviceId: TRWSAPI
+      stripPrefix: false
+    pp:
+      path: /api/v*/pp/**
+      serviceId: PPWSAPI
+      stripPrefix: false
+    ingestionmanagementservice:
+      path: /api/*/ingestion/**
+      serviceId: INGESTIONMANAGEMENTSERVICE
+      stripPrefix: false
+    substitutionWSAPI:
+      path: /api/*/substitutions/**
+      serviceId: SUBSTITUTIONWSAPI
+      stripPrefix: false
+    studentTripReconcile:
+      path: /api/*/studenttripreconcile/**
+      serviceId: STUDENTTRIPRECONCILESERVICE
+      stripPrefix: false
+    routeVehicleAssignmentService:
+      path: /api/*/rovars/**
+      serviceId: ROUTEVEHICLEASSIGNMENTSERVICE
+      stripPrefix: false
+    inventoryService:
+      path: /api/*/equipment/**
+      serviceId: INVENTORYSERVICE
+      stripPrefix: false
+  retryable: true
+
+# White listed API URLs that will not have JWT validation
+whiteListedRequest: /signin, /signup, /forgotpassword, /verificationemail, /resetpassword, /sendverificationemail, /verified
+
+#Accepted applications names
+validApplications: "*, Ingestion, TenantManagement, Insight, AccountManagement, ParentPortalAdmin, EDP, MissionControl, SystemManagement, ParentPortalLite, ParentPortal"
+
+# the hystrix timeout has to be larger than the ribbon time outs
+# since each proxied request is wrapped in an Hystrix command
+hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 80000
+
+# configure hystrix threadpool
+hystrix.threadpool.default.coreSize: 30
+hystrix.threadpool.default.maximumSize: 500
+hystrix.threadpool.default.allowMaximumSizeToDivergeFromCoreSize: true
+
+### comments on failing to configure threadpool on a per route basis:
+#
+# these do not work although they follow the syntax defined by zuul
+# of the zuul hystrix command for the route i.e routeId with RibbonCommand as suffix
+#hystrix.threadpool.PERSONSERVICERibbonCommand.coreSize: 20
+#hystrix.threadpool.PERSONSERVICERibbonCommand.maximumSize: 500
+#hystrix.threadpool.PERSONSERVICERibbonCommand.allowMaximumSizeToDivergeFromCoreSize: true
+###   end of comment
+
+ribbon:
+  restclient:
+    enabled: true
+  OkToRetryOnAllOperations: true
+  maxAutoRetries: 1
+  maxAutoRetriesNextServer: 2
+  ConnectTimeout: 3000
+  ReadTimeout: 60000
+  eureka:
+    enabled: true
+
+audit:
+  loggedBy: ${spring.application.name}
+  enabled: true
+  methods: POST,PUT,DELETE,PATCH
+  defaultIgnoredEndpoints: ${whiteListedRequest},/search,/export
+  defaultStoreResponseBody: true
+  defaultStoreRequestBody: true
+  #This header will be added before Zuul routing, but Zuul auto converts to lower case, so the value should be in lower case
+  xTrkHeaderKeyName: x-trk-id
+  xUrlRewrittenKeyName: x-url-rewritten
+  customRequests:
+    -
+      endpoints: /api/v1/vehicleStatus, /api/0.2/events/vehicleId?vehicleId=
+      methods: GET
+      enabled: false
+      storeRequestBody: true
+      storeResponseBody: false
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: 120 # Number of minutes
+  refreshTokenExpTime: 60 # Minutes
+  tokenIssuer: http://karrostech.com
+  # base 64 encoded signing key
+  tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
+  tokenHeaderFieldName: Authorization
+  apiKeyHeaderFieldName: ApiKey

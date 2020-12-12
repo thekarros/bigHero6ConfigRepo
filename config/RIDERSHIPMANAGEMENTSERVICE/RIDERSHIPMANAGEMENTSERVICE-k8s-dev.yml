@@ -1,0 +1,62 @@
+# Property file for Staging and Production tiers. Will be used if spring.profiles.active is set to "k8s-dev"
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    accessCard: accesscard
+    studentAccessCardMappingHistory: student_accesscard_mapping_history-*
+    studentAccessCardMappingStatus: student_accesscard_mapping_status
+    studentVehicleMapping: studentvehiclemapping
+
+# Redis config
+spring.redis.host: redis.use2.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 0
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFygaQGqTM9+fOupFyJyoS2AAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMOyFWHmeGDfK9FKYFAgEQgDld2OogLrbzrKBA3GuW7M5PefamTGHGqKCOsXFCTAPqYvWw4d3FF2jl/1+arIwMaBpExwLSvzIiTBI='
+
+spring.redis.jedis.pool.max-active: 30
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30
+
+# Hystrix config
+hystrix.command.getAccessCardInfo.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getAccessCardInfo.coreSize: 10
+hystrix.threadpool.getAccessCardInfo.maximumSize: 500
+hystrix.threadpool.getAccessCardInfo.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchAccessCardWithPaging.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.searchAccessCardWithPaging.coreSize: 10
+hystrix.threadpool.searchAccessCardWithPaging.maximumSize: 500
+hystrix.threadpool.searchAccessCardWithPaging.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.suggestAccessCardWithPaging.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.suggestAccessCardWithPaging.coreSize: 10
+hystrix.threadpool.suggestAccessCardWithPaging.maximumSize: 500
+hystrix.threadpool.suggestAccessCardWithPaging.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchStudentAccessCardMapping.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.searchStudentAccessCardMapping.coreSize: 10
+hystrix.threadpool.searchStudentAccessCardMapping.maximumSize: 500
+hystrix.threadpool.searchStudentAccessCardMapping.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchStudentVehicleLinked.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.searchStudentVehicleLinked.coreSize: 10
+hystrix.threadpool.searchStudentVehicleLinked.maximumSize: 500
+hystrix.threadpool.searchStudentVehicleLinked.allowMaximumSizeToDivergeFromCoreSize: true
+
+# Conditional bean
+kafka-processors:
+  enabled: false

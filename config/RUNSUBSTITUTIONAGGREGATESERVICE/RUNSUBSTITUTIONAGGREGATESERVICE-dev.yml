@@ -1,0 +1,142 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "test"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-dev.use2.karrostech.net:1112/eureka/,http://eureka02-p01-dev.use2.karrostech.net:1112/eureka/
+
+
+management.security.enabled: false
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.elasticsearch.enabled: false
+
+#Accepted status values
+validStatusTypes: "Active, Revoked"
+connectionTimeout: 10000
+socketTimeout: 60000
+maxScrollSize: 10000
+defaultTimeOutinSec: 120
+registrationCodeLength: 8
+
+index: alertzones
+type: doc
+parallelESCountThreads: 250
+
+logging:
+  level:
+    root: WARN
+    org.springframework: INFO
+    org.apache.kafka: INFO
+
+
+# DB Configs
+kafka-broker: 10.40.26.222:9092,10.40.26.210:9092,10.40.26.181:9092,10.40.26.75:9092,10.40.26.99:9092
+spring.cloud.stream.bindings:
+  inputDD:
+    destination: run-sub-es-results-test
+    group: latestRead
+    #binder: kafkaddinput
+  outputDD:
+    destination: run-sub-dd-ktable-test
+    #binder: kafkaddoutput
+  inputRA:
+    destination: run-sub-ra-results-test
+    #binder: kafkarainput
+  outputRA:
+    destination: run-sub-ra-ktable-test
+    #binder: kafkaraoutput
+  inputRO:
+    destination: run-sub-ro-results-test
+    #binder: kafkarainput
+  outputRO:
+    destination: run-sub-ro-ktable-test
+  ddTable:
+    destination: run-sub-dd-ktable-test
+  roTable:
+    destination: run-sub-ro-ktable-test
+  raTable:
+    destination: run-sub-ra-ktable-test
+  #inputRaWithRoKtable:
+    #destination: ra-ro-ktable-test 
+  #outputRaWithRoKtable:
+    #destination: ra-ro-ktable-test
+  #outputJoinedResults:
+    #destination: run-agg-results-test     
+
+
+es:
+  ElasticSearchURL: ${elasticSearch.cloud.url}
+  username: ${elasticSearch.cloud.username}
+  password: ${elasticSearch.cloud.password}
+  port: ${elasticSearch.cloud.port}
+  parallelESCountThreads: 100
+
+spring:
+  redis:
+    host: redis.use2.karrostech.net
+    port: 6379
+    database: 3
+    password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+    #binder: kafkaraoutput
+spring.cloud.stream.kafka.streams.bindings:
+  inputDD:
+    consumer: 
+      applicationId: run-sub-es-results-test   
+  inputRA:
+    consumer: 
+      applicationId: run-substitution-aggregate-service-ra-test
+  inputRO:
+    consumer: 
+      applicationId: run-substitution-aggregate-service-ro-test
+  #ddTable:
+    #consumer: 
+      #applicationId: run-substitution-aggregate-service-ddKtable-test   
+      
+  raTable:
+    consumer: 
+      applicationId: run-substitution-aggregate-service-raKtable-test
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+  roTable:
+    consumer: 
+      applicationId: run-substitution-aggregate-service-roKtable-test
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde            
+  #inputRaWithRoKtable:
+    #consumer: 
+      #applicationId: ra-with-ro-joined-ktable-test
+      #keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      #valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+       
+spring.cloud.stream.kafka.bindings.inputRA.consumer:
+  autoCommitOnError: true
+spring.cloud.stream.kafka.bindings.inputRO.consumer:
+  autoCommitOnError: true
+spring.cloud.stream.kafka.bindings.inputDD.consumer:
+  autoCommitOnError: true    
+              
+spring.cloud.stream.kafka.streams:
+  binder:
+    brokers: ${kafka-broker} #localhost #192.168.99.100
+    applicationId: run-substitution-aggregate-service-test
+    configuration:
+      default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      commit.interval.ms: 1000
+      auto.offset.reset: earliest
+
+numOfMessageToProcess: 20       
+raScore: 1        
+current-version: 
+  version: version1
+  config:
+    coefficient-dd: 1
+    coefficient-ro: 1
+    coefficient-ra: 1        

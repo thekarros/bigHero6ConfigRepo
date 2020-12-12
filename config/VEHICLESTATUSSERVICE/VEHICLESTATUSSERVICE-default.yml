@@ -1,0 +1,48 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        streams:
+          bindings:
+            liveEvent:
+              consumer:
+                applicationId: vehicleStatusService-default
+                startOffset: latest
+          binder:
+            brokers: ${kafka-broker}
+            applicationId: vehicleStatusService-default
+            configuration:
+              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.deserialization.exception.handler: org.apache.kafka.streams.errors.LogAndContinueExceptionHandler
+              commit.interval.ms: 1000
+      bindings:
+        liveEvent:
+          destination: aggregateAVLEvents-p01use2dev
+          binder: kstream
+      binders:
+        kstream:
+          type: kstream
+
+spring.redis.host: redis.use2.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 4
+spring.redis.password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+
+spring.redis.jedis.pool.max-active: 8
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 1
+spring.redis.jedis.pool.max-idle: 8
+
+redis:
+  channel:
+    enable: false
+    tenant_prefix: TENANT_
+
+processed:
+  events: 2103,1

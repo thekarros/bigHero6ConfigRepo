@@ -1,0 +1,155 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,/swagger-resources/configuration/security, /manage/**,/hystrix.stream]
+
+security.basic.enabled: false
+
+kafka:
+  consumer:
+    proposedStudentDeletes: proposedStudentDeletes-p01use2dev
+  producer:
+    publishNotificationRequestTopic: publishNotificationRequest-p01use2dev
+  consumer-group: systemmanagementwsapi-consumer-group-p01use2dev
+  applicationId: systemmanagementWSAPI-test
+
+batchProcessor:
+  batchSizePublishEvent: 500
+  
+es:
+  url: ${elasticSearch.cloud.url}
+  username: ${elasticSearch.cloud.username}
+  password: ${elasticSearch.cloud.password}
+  port: ${elasticSearch.cloud.port}
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  maxSizeQuery: 10000
+  indices:
+    proposedStudentDelete:
+      index: proposed_student_delete
+      type: doc
+    proposedRouteDelete:
+      index: proposed_route_delete
+      type: doc
+  parallelESCountThreads: 100
+
+qrCode:
+  cipherKey: QaE7ZLruDCNe7AhH
+  expirationTimeInMonth: 1
+  
+microservices:
+  accounts:
+    serviceId: ACCMGMTSERVICE
+    search:
+      endpoint: http://${microservices.accounts.serviceId}/api/v1/accounts/search
+  people:
+    serviceId: PERSONSERVICE
+    search-people-by-email-tenantuuids:
+      endpoint: http://${microservices.people.serviceId}/api/v1.0/people/search
+    get-by-ids:
+      endpoint: http://${microservices.people.serviceId}/api/v1.0/people/searchbyids
+    get-person:
+      endpoint: http://${microservices.people.serviceId}/api/v1/people/
+    search-students:
+      endpoint: http://${microservices.people.serviceId}/api/v1/students/search
+    get-student:
+      endpoint: http://${microservices.people.serviceId}/api/v1/students/
+  tenants:
+    serviceId: TENANTSERVICE
+    search-tenant:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/tenants/search
+    get-tenant:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/tenants/
+    search-schools-by-tenant:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/schools/search
+    get-school:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/schools/
+  studentaccessrequests:
+    serviceId: ACCESSMANAGEMENTSERVICE
+    search-studentaccessrequest:
+      endpoint: http://${microservices.studentaccessrequests.serviceId}/api/v1/studentAccessRequests/search
+    get-studentaccessrequest-details:
+      endpoint: http://${microservices.studentaccessrequests.serviceId}/api/v1/studentAccessRequests/
+    fetch-search-studentaccessrequest-result-stream:
+      endpoint: http://${microservices.studentaccessrequests.serviceId}/api/v1/studentAccessRequests/export
+    suggestion-user-by-tenant:
+      endpoint: http://${microservices.studentaccessrequests.serviceId}/api/v1/studentAccessRequests/users/suggest
+    getStudentAccessRequestByStudentIds:
+      endpoint: http://${microservices.studentaccessrequests.serviceId}/api/v1/studentAccessRequests/users/search-by-studentids
+    getStudentAccessRequestByRequesterEmail:
+      endpoint: http://${microservices.studentaccessrequests.serviceId}/api/v1/studentAccessRequests/
+  accessrequests:
+    serviceId: ACCESSMANAGEMENTSERVICE
+    search-accessrequests:
+      endpoint: http://${microservices.accessrequests.serviceId}/api/v1/accessrequest/search
+  vehicleliveevents:
+    serviceId: VEHICLELIVEEVENTSERVICE
+    vehicle-status:
+      endpoint: http://${microservices.vehicleliveevents.serviceId}/api/v1/vehicleStatus/
+  studentTrip:
+    serviceId: STUDENTTRIPSERVICE
+    getStudentTrips:
+      endpoint: http://${microservices.studentTrip.serviceId}/api/v2/studenttrips/search
+  notifications:
+    serviceId: NOTIFICATIONSERVICE
+    publish-messages:
+      endpoint: http://${microservices.notifications.serviceId}/api/v2/notification/publish
+  ridership:
+    serviceId: RIDERSHIPMANAGEMENTSERVICE
+    search-student-access-mapping:
+      endpoint: http://${microservices.ridership.serviceId}/api/v1/studentaccesscardmappings/search
+
+#hystrix configuration
+
+hystrix.command.AccessRequest.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.AccessRequest.coreSize: 10
+hystrix.threadpool.AccessRequest.maximumSize: 500
+hystrix.threadpool.AccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.Account.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.Account.coreSize: 10
+hystrix.threadpool.Account.maximumSize: 500
+hystrix.threadpool.Account.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.StudentAccessRequest.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.StudentAccessRequest.coreSize: 10
+hystrix.threadpool.StudentAccessRequest.maximumSize: 500
+hystrix.threadpool.StudentAccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.Student.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.Student.coreSize: 10
+hystrix.threadpool.Student.maximumSize: 500
+hystrix.threadpool.Student.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.VehicleLiveEvent.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.VehicleLiveEvent.coreSize: 10
+hystrix.threadpool.VehicleLiveEvent.maximumSize: 500
+hystrix.threadpool.VehicleLiveEvent.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.proposedStudentDeleteService.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.proposedStudentDeleteService.coreSize: 10
+hystrix.threadpool.proposedStudentDeleteService.maximumSize: 500
+hystrix.threadpool.proposedStudentDeleteService.allowMaximumSizeToDivergeFromCoreSize: true
+
+threads:
+  executors:
+    corePoolSize: 200
+    maximumPoolSize: 200
+    keepAliveTime: 0
+
+spring.redis.host: redis.use2.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 4
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFFhusdkXy9d+V+BwBDdmcEAAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMvTSoZuC9earPV34BAgEQgDmE8Qs8TG/JZFPWdVPxs94sP15ZhbJT1j8XUvev3x7IMoB8KTSivPp6uHn4HoR4uB7RPBwFKaiPvtU='

@@ -1,0 +1,19 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+spring.cloud.stream.bindings:
+  input:
+    destination: avlEvents
+  output:
+    destination: run-sub-es-results
+
+spring.cloud.stream.kafka.streams:
+  binder:
+    application-id: RUNDETECTIONSERVICE-p01use2dev
+    brokers: 10.20.20.121:9092
+
+ElasticSearchURL: ${elasticSearch.awsv7.url}

@@ -1,0 +1,18 @@
+#### db config ####
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL94Dialect
+  datasource:
+    url: jdbc:postgresql://releasemanagement.ctspwoqaxc3p.us-east-2.rds.amazonaws.com:5432/tools
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: 5v&i03A%5wzDx8f7O3s1
+  hibernate:
+    ddl-auto: update
+  open-in-view: false
+  show-sql: false
+
+#### aws config ####
+aws:
+  accessKey: AKIA2BXDQ66B3KT5LY7V
+  secretKey: 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

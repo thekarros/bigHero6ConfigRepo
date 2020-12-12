@@ -1,0 +1,30 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+eureka.client.enabled: false
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    transportationrequest: transportation_request
+    rideregistration: transportation_request_v2
+
+kafka:
+  consumer:
+    changedStudentPerson: changedStudentPerson-p01use2dev
+    schoolChange: schoolChange-p01use2dev
+  consumer-group: transportationRequestWSAPI-p01use2dev
+  applicationId: transportationRequestWSAPI-p01use2dev
+  producer:
+    rideRegistrationChange: rideRegistrationChange-p01use2dev

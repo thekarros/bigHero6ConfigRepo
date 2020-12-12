@@ -1,0 +1,19 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+quarkus.redis.hosts: 'redis.use2.karrostech.net:6379'
+quarkus.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFygaQGqTM9+fOupFyJyoS2AAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMOyFWHmeGDfK9FKYFAgEQgDld2OogLrbzrKBA3GuW7M5PefamTGHGqKCOsXFCTAPqYvWw4d3FF2jl/1+arIwMaBpExwLSvzIiTBI='
+quarkus.redis.database: 4
+
+redis:
+  channel:
+    tenant_prefix: TENANT_
+
+session:
+  expiration:
+    policy: 0
+    time: 15

@@ -1,0 +1,91 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+routeServiceName: ROUTESERVICE
+# for now using my routeservice   the plan ill go away with the new ones
+routeServiceURL: http://${routeServiceName}/api/v1/plan/routes/
+pathServiceName: PATHSERVICE
+pathServiceURL: http://${pathServiceName}/api/v1/paths/
+waypointServiceName: WAYPOINTSERVICE
+waypointServiceURL: http://${waypointServiceName}/api/v1/waypoints/
+stopPointServiceName: STOPPOINTSERVICE
+stopPointServiceURL: http://${stopPointServiceName}/api/v1/stoppoints/
+
+
+ribbon.eureka.enabled: false
+
+management.security.enabled: false
+
+security.basic.enabled: false
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**/agg/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/** ]
+
+hystrix.command.getPathsByRouteId.execution.isolation.thread.timeoutInMilliseconds: 120000
+hystrix.threadpool.getPathsByRouteId.coreSize: 10
+hystrix.threadpool.getPathsByRouteId.maximumSize: 500
+hystrix.threadpool.getPathsByRouteId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.createOrUpdatePathsForRoute.execution.isolation.thread.timeoutInMilliseconds: 320000
+hystrix.threadpool.createOrUpdatePathsForRoute.coreSize: 10
+hystrix.threadpool.createOrUpdatePathsForRoute.maximumSize: 500
+hystrix.threadpool.createOrUpdatePathsForRoute.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.deactivate.execution.isolation.thread.timeoutInMilliseconds: 120000
+hystrix.threadpool.deactivate.coreSize: 10
+hystrix.threadpool.deactivate.maximumSize: 500
+hystrix.threadpool.deactivate.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.routeExists.execution.isolation.thread.timeoutInMilliseconds: 600000
+hystrix.threadpool.routeExists.coreSize: 10
+hystrix.threadpool.routeExists.maximumSize: 500
+hystrix.threadpool.routeExists.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getRoute.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.threadpool.getRoute.coreSize: 10
+hystrix.threadpool.getRoute.maximumSize: 500
+hystrix.threadpool.getRoute.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchRoutes.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.threadpool.searchRoutes.coreSize: 10
+hystrix.threadpool.searchRoutes.maximumSize: 500
+hystrix.threadpool.searchRoutes.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.createOrUpdateRoutesForTenant.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.threadpool.createOrUpdateRoutesForTenant.coreSize: 10
+hystrix.threadpool.createOrUpdateRoutesForTenant.maximumSize: 500
+hystrix.threadpool.createOrUpdateRoutesForTenant.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.updateStopPoints.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.threadpool.updateStopPoints.coreSize: 10
+hystrix.threadpool.updateStopPoints.maximumSize: 500
+hystrix.threadpool.updateStopPoints.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getStopPointById.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.threadpool.getStopPointById.coreSize: 10
+hystrix.threadpool.getStopPointById.maximumSize: 500
+hystrix.threadpool.getStopPointById.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.createOrUpdateWaypoints.execution.isolation.thread.timeoutInMilliseconds: 60000
+hystrix.threadpool.createOrUpdateWaypoints.coreSize: 10
+hystrix.threadpool.createOrUpdateWaypoints.maximumSize: 500
+hystrix.threadpool.createOrUpdateWaypoints.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getWaypointsByPathId.execution.isolation.thread.timeoutInMilliseconds: 600000
+hystrix.threadpool.getWaypointsByPathId.coreSize: 10
+hystrix.threadpool.getWaypointsByPathId.maximumSize: 500
+hystrix.threadpool.getWaypointsByPathId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.deactivateWaypointsForRoute.execution.isolation.thread.timeoutInMilliseconds: 600000
+hystrix.threadpool.deactivateWaypointsForRoute.coreSize: 10
+hystrix.threadpool.deactivateWaypointsForRoute.maximumSize: 500
+hystrix.threadpool.deactivateWaypointsForRoute.allowMaximumSizeToDivergeFromCoreSize: true

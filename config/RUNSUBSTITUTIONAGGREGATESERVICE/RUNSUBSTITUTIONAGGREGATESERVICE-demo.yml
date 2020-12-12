@@ -1,0 +1,122 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "test"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-demo.usw2.karrostech.net:1112/eureka/,http://eureka02-p01-demo.usw2.karrostech.net:1112/eureka/
+
+management.security.enabled: false
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.elasticsearch.enabled: false
+
+#Accepted status values
+validStatusTypes: "Active, Revoked"
+connectionTimeout: 10000
+socketTimeout: 60000
+maxScrollSize: 10000
+defaultTimeOutinSec: 120
+registrationCodeLength: 8
+
+index: alertzones
+type: doc
+parallelESCountThreads: 250
+
+logging:
+  level:
+    root: WARN
+    org.springframework: INFO
+    org.apache.kafka: INFO
+
+# DB Configs
+kafka-broker: ${kafka-list-servers}
+spring.cloud.stream.bindings:
+  inputDD:
+    destination: run-sub-es-results-p01usw2demo
+    group: latestRead
+    #binder: kafkaddinput
+  outputDD:
+    destination: run-sub-dd-ktable-p01usw2demo
+    #binder: kafkaddoutput
+  inputRA:
+    destination: changeRouteAssignment-p01usw2demo
+    group: readFromBeginning
+  outputRA:
+    destination: run-sub-ra-ktable-p01usw2demo
+    #binder: kafkaraoutput
+  inputRO:
+    destination: run-sub-ro-results-p01usw2demo
+    #binder: kafkarainput
+  outputRO:
+    destination: run-sub-ro-ktable-p01usw2demo
+  ddTable:
+    destination: run-sub-dd-ktable-p01usw2demo
+  roTable:
+    destination: run-sub-ro-ktable-p01usw2demo
+  raTable:
+    destination: run-sub-ra-ktable-p01usw2demo
+  inputRaWithRoKtable:
+    destination: ra-ro-ktable-p01usw2demo 
+  outputRaWithRoKtable:
+    destination: ra-ro-ktable-p01usw2demo
+  outputJoinedResults:
+    destination: run-agg-results-p01usw2demo     
+
+    #binder: kafkaraoutput
+spring.cloud.stream.kafka.streams.bindings:
+  inputDD:
+    consumer: 
+      applicationId: run-substitution-aggregate-service-dd-demo    
+  inputRA:
+    consumer: 
+      applicationId: run-substitution-aggregate-service-ra-demo
+  inputRO:
+    consumer: 
+      applicationId: run-substitution-aggregate-service-ro-demo
+  ddTable:
+    consumer: 
+      applicationId: run-substitution-aggregate-service-ddKtable-demo   
+  raTable:
+    consumer:
+      materializedAs: routeAssignmentsStore 
+      applicationId: run-substitution-aggregate-service-raKtable-demo
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+  roTable:
+    consumer: 
+      applicationId: run-substitution-aggregate-service-roKtable-demo
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde            
+  inputRaWithRoKtable:
+    consumer: 
+      applicationId: ra-with-ro-joined-ktable-demo
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+       
+spring.cloud.stream.kafka.bindings.inputRA.consumer:
+  autoCommitOnError: true
+spring.cloud.stream.kafka.bindings.inputRO.consumer:
+  autoCommitOnError: true
+spring.cloud.stream.kafka.bindings.inputDD.consumer:
+  autoCommitOnError: true    
+              
+spring.cloud.stream.kafka.streams:
+  binder:
+    brokers: ${kafka-list-servers}
+    applicationId: run-substitution-aggregate-service-demo
+    configuration:
+      default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      commit.interval.ms: 1000
+      auto.offset.reset: earliest
+      
+raScore: 1        
+current-version: 
+  version: version1
+  config:
+    coefficient-dd: 1
+    coefficient-ro: 1
+    coefficient-ra: 1       
+raStore: routeAssignmentsStore
+maxNumberOfMessages: 20

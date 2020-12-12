@@ -1,0 +1,33 @@
+keycloak:
+  endpoint: http://keycloakuserfederationspi:8080/auth
+  realms: Edulog
+  clientId: mission-control
+  clientSecret: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFdyqm1BK2W/F/yoHnKgFrXAAAAgzCBgAYJKoZIhvcNAQcGoHMwcQIBADBsBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDCgRO4AhwZUBm/mfWQIBEIA/TbOeqvVOOCpoFwAid0GjozvNEQya4iW+fLnUUuia+rgArc0GlxZXcT6KQJRBROHG2HOMrU80oF82vunya31L'
+  grantType: password
+  username: missioncontrolwsapi
+  password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFxr2+UCrCZW4/DCjBnDbZ/AAAAZDBiBgkqhkiG9w0BBwagVTBTAgEAME4GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMz+Wd8kpHuZwyHYmCAgEQgCHvFv0oASHe9zPAbaYnKywg4vPcskhSMU1YJKG4tGkBl+U='
+  clientIds: parent-portal, parent-portal-lite
+  external-endpoint: https://aaa.use2.karrostech.net/auth
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        default_schema: account
+
+edulog:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 2
+      max-active: 5
+      test-on-borrow: true
+
+server:
+  domain: https://accounts-dev.edulog.cloud

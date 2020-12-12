@@ -1,0 +1,52 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "test"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management.security.enabled: false
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.elasticsearch.enabled: false
+
+
+
+
+# DB Configs
+spring.cloud.stream.bindings:
+  inputRAW:
+    destination: run-agg-results-raw-p01usw2demo
+    group: latestRead
+    
+  outputFS:
+    destination: run-agg-results-p01usw2demo
+   
+spring:
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+spring.cloud.stream.kafka.streams.bindings:
+  inputRAW:
+    consumer: 
+      applicationId: run-agg-results-raw-p01usw2demo    
+spring.cloud.stream.kafka.bindings.inputRAW.consumer:
+  autoCommitOnError: true    
+              
+spring.cloud.stream.kafka.streams:
+  binder:
+    brokers: ${kafka-broker} #localhost #192.168.99.100
+    applicationId: run-substitution-filter-sort-service-demo
+    configuration:
+      default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      commit.interval.ms: 1000
+      auto.offset.reset: earliest
+      num:
+        stream:
+          threads: 3
+numOfMessageToProcess: 20       
+      

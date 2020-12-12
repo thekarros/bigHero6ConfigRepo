@@ -1,0 +1,118 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "test"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management.security.enabled: false
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.defaults.enabled: false
+
+#Accepted status values
+validStatusTypes: "Active, Revoked"
+connectionTimeout: 10000
+socketTimeout: 60000
+maxScrollSize: 10000
+defaultTimeOutinSec: 120
+registrationCodeLength: 8
+
+index: alertzones
+type: doc
+parallelESCountThreads: 250
+
+
+# DB Configs
+kafka-broker: ${kafka-list-servers}
+spring.cloud.stream.bindings:
+  inputDD:
+    destination: run-sub-es-results-p01usw1prod
+    group: latestRead
+  inputRA:
+    destination: changeRouteAssignment-p01usw1prod
+  outputRA:
+    destination: raKtable-p01usw1prod
+  inputRO:
+    destination: run-sub-ro-results-p01usw1prod
+  outputRO:
+    destination: roKtable-p01usw1prod
+  roTable:
+    destination: roKtable-p01usw1prod
+  raTable:
+    destination: raKtable-p01usw1prod
+  inputRaWithRoKtable:
+    destination: raroKtable-p01usw1prod
+  outputRaWithRoKtable:
+    destination: raroKtable-p01usw1prod
+  inputRAJoinRO:
+    destination: raroKtable-p01usw1prod  
+  outputRAJoinRO:
+    destination: run-agg-results-raw-p01usw1prod  
+  outputJoinedResults:
+    destination: run-agg-results-raw-p01usw1prod     
+
+spring.cloud.stream.kafka.streams.bindings:
+  inputDD:
+    consumer: 
+      applicationId: dd-p01usw1prod
+  inputRA:
+    consumer: 
+      applicationId: ra-p01usw1prod
+  inputRO:
+    consumer: 
+      applicationId: ro-p01usw1prod
+  
+      
+  raTable:
+    consumer:
+      materializedAs: routeAssignmentsStore  
+      applicationId: raKtable-p01usw1prod
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+  roTable:
+    consumer: 
+      applicationId: roKtable-p01usw1prod
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde            
+  inputRaWithRoKtable:
+    consumer: 
+      applicationId: raroKtable-p01usw1prod
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+  inputRAJoinRO:
+    consumer: 
+      applicationId: raroUpdateOutput-p01usw1prod
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+
+spring.cloud.stream.kafka.bindings.inputRA.consumer:
+  autoCommitOnError: true
+spring.cloud.stream.kafka.bindings.inputRO.consumer:
+  autoCommitOnError: true
+spring.cloud.stream.kafka.bindings.inputDD.consumer:
+  autoCommitOnError: true
+
+spring.cloud.stream.kafka.streams:
+  binder:
+    brokers: ${kafka-broker} #localhost #192.168.99.100
+    applicationId: RUNSUBSTITUTEAGG-prod
+    configuration:
+      default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      commit.interval.ms: 1000
+      auto.offset.reset: earliest
+      num:
+        stream:
+          threads: 3
+
+raScore: 1
+current-version:
+  version: version1
+  config:
+    coefficient-dd: 1
+    coefficient-ro: 1
+    coefficient-ra: 1
+raStore: routeAssignmentsStore
+maxNumberOfMessages: 20

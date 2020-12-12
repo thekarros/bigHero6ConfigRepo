@@ -1,0 +1,126 @@
+eureka:
+  instances: http://eureka01-p01-prod.usw1.karrostech.net:1112/eureka/,http://eureka02-p01-prod.usw1.karrostech.net:1112/eureka/
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+kafka-list-servers: 10.40.26.222:9092,10.40.26.210:9092,10.40.26.181:9092,10.40.26.75:9092,10.40.26.99:9092
+kafka-broker: ${kafka-list-servers} #use in other services, will be remove soon
+kafka:
+  server: ${kafka-list-servers}
+  bootstrap-server: ${kafka-list-servers}
+  athena-bootstrap-msk:
+  
+management:
+  health:
+    elasticsearch:
+      enabled: false
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: "*"
+        
+ElasticSearchCloud:
+   URL: 20725d3cf72c4ca48a7f2a260c5d4a76.us-west-1.aws.found.io
+   username: elastic
+   password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGDCDEZt8wJ7cz7usk8kOgJAAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMFzn6X8Ys4VK5NGvrAgEQgDNoqNEBTvds5ty7LhR5k/aBMo8p7Fio7Kc67iboqSD73FAsKS6pF/n/wrn8Nj8OoEuXnRc='
+
+elasticSearch:
+  logAggregation:
+    url: 2ccf0579872b4a3aad8aeda90137dfd6.us-east-1.aws.found.io
+    username: elastic
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGcaZWtA+fj+eRZQ7T7FMW+AAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMAt4chiKot4qvp5lGAgEQgDMXt7mSjzH4tyl1w4IVqfSuZky+IjABks9nHqTb/H6Umc6PHXYiCpCslksWG4gpIFtxG98='
+    port: 9243
+  cloud:
+    url: 20725d3cf72c4ca48a7f2a260c5d4a76.us-west-1.aws.found.io
+    username: microservices
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAErg5KOgbUqI8kmu0f1flSRAAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMjrTH3lMTA2nSxQTwAgEQgDknXUBcX8aGSq/C6JeHaEHJLrfMr/TDcWC6YH1SvM5v93RGzJMKBXFYkP7SQ3xOY2cXkey3qFcXKp8='
+    # username: elastic
+    # password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGDCDEZt8wJ7cz7usk8kOgJAAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMFzn6X8Ys4VK5NGvrAgEQgDNoqNEBTvds5ty7LhR5k/aBMo8p7Fio7Kc67iboqSD73FAsKS6pF/n/wrn8Nj8OoEuXnRc='
+    port: 9243
+  aws:
+    url: vpc-p01usw1prod-mk5xmhey72i44thke3onjjacda.us-west-1.es.amazonaws.com
+    username:
+    password:
+    port: 443
+  awsv7:
+    url: vpc-p01usw1prod-v7-bgufnvlmmhqqngrfm4rp3xvnzq.us-west-1.es.amazonaws.com
+    username:
+    password:
+    port: 443
+spring.cloud.stream.kafka.streams:
+  binder:
+    brokers: ${kafka-list-servers}
+
+rds:
+  dataSource:
+    url: jdbc:postgresql://db-prod.usw1.karrostech.net:5432/Edulog
+    username: karros_prod_admin
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGrx/wBTNFYFkMyWMs1zDiRAAAAezB5BgkqhkiG9w0BBwagbDBqAgEAMGUGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMbdsrRTlU6ozJEvsdAgEQgDjNLewA1V49MQQWNmqjsLYRDmsx+9K7TTNCaePFZ+qDLp0KS/Ock1Cvgg/T6hDEPBCdJqYByDDDnw=='
+
+
+edulog:
+  datasource:
+    url: jdbc:postgresql://db-prod.usw1.karrostech.net:5432/Edulog
+    username: karros_prod_admin
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGrx/wBTNFYFkMyWMs1zDiRAAAAezB5BgkqhkiG9w0BBwagbDBqAgEAMGUGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMbdsrRTlU6ozJEvsdAgEQgDjNLewA1V49MQQWNmqjsLYRDmsx+9K7TTNCaePFZ+qDLp0KS/Ock1Cvgg/T6hDEPBCdJqYByDDDnw=='
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 10
+      max-active: 50
+      test-on-borrow: true
+
+# DB Configs
+spring:
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: master_data
+        hbm2ddl:
+          import_files:
+
+apiKeys: 11bb4c1845c7a0137ad0bc8f1df055792849df16, c62ac14ec31ffdd04d98268aeb6ec3b5244b1bcf, 94d9b8d2c7433f7145ae5d83bf2a73310b6c0628, 9d6c3f85669a40cd1b1fa4635b049b92bb04c881, f84f6e88351fbf27f2c58643063b84d263318ae2, 7573c26b16993ef536dc9397f5c08911a551c79a, dda54ae0a6b57658537d01ac47deca8799c965ca
+
+security:
+  jwt:
+    issuer: http://karrostech.com #use in other services, will be remove soon
+    signature: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ==' #use in other services, will be remove soon
+    duration: # minutes #use in other services, will be remove soon
+      token: 120 #use in other services, will be remove soon
+      refreshToken: 60 #use in other services, will be remove soon
+    tokenExpirationTime: 120 # Number of minutes
+    refreshTokenExpTime: 60 # Minutes
+    tokenIssuer: http://karrostech.com
+    # base 64 encoded signing key
+    tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
+    secureAuthenticationEntryUrl: /api/**/students/**
+    unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/**, /api/v1/people ]
+    enableKeycloakJWT: true
+    keycloakTokenIssuer: karros-keycloak
+    keycloakPublicKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFpA9LZN8Lw39OzlTpyfGj8AAAB8DCCAewGCSqGSIb3DQEHBqCCAd0wggHZAgEAMIIB0gYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAz/lwMjAUtPMU30f9wCARCAggGjxbKOEhDsWn8bpDO5/SNhC2txUv+/+MV2ak+SHjGqSw3ohv1tYGNCgFmals/AmHKjiGD/5edn+NjkU0EnWQIuLFy2b35IC2LEAmgomPWu4t73naqckTPuqAQYFeZ78lMAFuyRGx+it9vkgc+loVZtBg9CE2ghIETY2C34qLwWTocROncgO6S0C8MAa7m5Ej9u67+E/OqyLACuaKVRSzUbf/KNrAHCVg9WhdoVUtrT6YFsiuzYE4bExN5X68uVXEtVk/ExBY8H+qfNm9NCn27ygZhmsBgxTXlf0jwO5QSUYybow78C8lI/+m+Xhe+q3NmxTolv0aIwJ+JwgG9BweoNJOk7RJfTq2PjJP/1SrYmf+DvQXmd0vo4u4sY/mxee8frWiloxwVCQcIVxguMA1N5HmTmQREy7Qt6p6d7UQjJrE8ss7ZN8wFMn47NItYFMsModi946Dj2fX960gKqRI0KF66XqoY71XwIVMgYpg1r/ELJJnN53tgODVI6PebohBL/X0/oVVvl//Cpydj6t0bygwxpJyJhs01jFgBidYoF1UbD0ys='  
+      
+auth:
+  credentials:
+    clientId: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGmPuYgvi3Lf7P5TWnsf8JfAAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDJMYu4jRoIBsa6XbCQIBEIBD/A+aT/5ePQslezNxhmUdvJtoI+/BJDMfdOTqMzcyZKu4GPWTgG1ZWkXw1vlvk5dFz9Gx/xZRG8mfJuA3zM7kbzxECw=='
+    clientSecret: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHb0IfPLp/eDFvfIcl5LQTSAAAAojCBnwYJKoZIhvcNAQcGoIGRMIGOAgEAMIGIBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDH4LBpJloA6W7YSLvwIBEIBbdqhIaNfX+NYqo5yckaU4vbeIjqt2haLWRDRejhl1XKZUTKXVBUonsrmw+NRl41HeDNLeLu3BLh8Rs/+TArRr9m01n7zHDwTQsn2TiNdLW2wSdVWWqSawrXad8Q=='
+
+aesKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAEknn8joGV1dY2c7x06fJNtAAAAazBpBgkqhkiG9w0BBwagXDBaAgEAMFUGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM3vvHm+h6yaalSEDRAgEQgChxNI9aqNevUh4YuQ7Q2MSL6GwQe9fExI/BqUn6yzjXmuNq16vDe8nC'
+
+# email config
+ses:
+  sender: support@edulog.cloud
+  accessKey: AKIAJH4RDM46EXEB3W3Q
+  secretKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHdMq572aR3dl6W40QmshM2AAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDLPADMul9mXiPagLAwIBEIBD2fOKm7m+K3v/ipwAyTK+GNkzRn6BZkV2fyyqWKS05NZfDmNRpeDzdDxSJdSDMztfrToseHYzJOzCmdI0N8yhnq/rhQ=='
+  region: us-east-1

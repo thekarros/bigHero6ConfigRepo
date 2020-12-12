@@ -1,0 +1,33 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-prod.usw1.karrostech.net:1112/eureka/, http://eureka02-p01-prod.usw1.karrostech.net:1112/eureka/
+
+kafka:
+  bootstrap: ${kafka-list-servers}
+  consumer:
+    groupId: canary-live-event-conversion
+    topic: xirgoRawEvents
+  producer:
+    topic: avlEvents-p01usw1canary
+    errorTopic: rawError
+    
+
+      
+vehicleservice.ribbon.eureka.enabled: true
+vehicleServiceName: VEHICLEQUERYWSAPI
+vehicleServiceURL : http://${vehicleServiceName}/api/v4.0/vehicles?vins=
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: 120 # Number of minutes
+  refreshTokenExpTime: 60 # Minutes
+  tokenIssuer: http://karrostech.com
+  # base 64 encoded signing key
+  tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
+management.security.enabled: false
+
+hystrix.command.getVehicleTenantMapping.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getVehicleTenantMapping.coreSize: 10
+hystrix.threadpool.getVehicleTenantMapping.maximumSize: 500
+hystrix.threadpool.getVehicleTenantMapping.allowMaximumSizeToDivergeFromCoreSize: true

@@ -1,0 +1,89 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management:
+  health:
+    redis:
+      enabled: false
+audit:
+  loggedBy: ${spring.application.name}
+  enabled: true
+  methods: POST,PUT,DELETE,PATCH, GET
+  defaultIgnoredEndpoints: /export
+  defaultStoreResponseBody: true
+  defaultStoreRequestBody: true
+  #This header will be added before Zuul routing, but Zuul auto converts to lower case, so the value should be in lower case
+  xTrkHeaderKeyName: x-trk-id
+  customRequests:
+    -
+      endpoints: /api/v1/vehicleStatus, /api/0.2/events/vehicleId?vehicleId=
+      methods: GET
+      enabled: false
+      storeRequestBody: true
+      storeResponseBody: false
+    -
+      endpoints: /search, /bulksearch, /export
+      methods: POST, GET
+      enabled: true
+      storeRequestBody: true
+      storeResponseBody: false
+      
+# API Keys that are acceptable
+validApiKeys: 11bb4c1845c7a0137ad0bc8f1df055792849df16, c62ac14ec31ffdd04d98268aeb6ec3b5244b1bcf, 94d9b8d2c7433f7145ae5d83bf2a73310b6c0628, 9d6c3f85669a40cd1b1fa4635b049b92bb04c881, f84f6e88351fbf27f2c58643063b84d263318ae2, 7573c26b16993ef536dc9397f5c08911a551c79a, dda54ae0a6b57658537d01ac47deca8799c965ca
+
+customForwarding:
+  urlRewrites:
+    - 
+      sourcePath: /api/v1/pp/vehicleliveevents/search(.)*
+      targetPath: /api/v1.0/vehicleliveevents/search
+      targetServiceId: VEHICLELIVEEVENTSERVICE
+    -
+      sourcePath: /api/v2/subscriptions/alertzones
+      targetPath: /api/v1/geofences
+      targetServiceId: GEOFENCEALERTMANAGEMENTSERVICE
+    -
+      sourcePath: /api/v2/subscriptions/alertzones/search
+      targetPath: /api/v1/geofences/search
+      targetServiceId: GEOFENCEALERTMANAGEMENTSERVICE
+    -
+      sourcePath: /api/v2/subscriptions/alertzones/([0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12})
+      targetPath: /api/v1/geofences/%s
+      targetServiceId: GEOFENCEALERTMANAGEMENTSERVICE
+
+caching:
+  enabled: false
+  defaultCaching: NONE
+  defaultTTL: 10000
+  defaultIgnoredEndpoints: /export, /download
+  customCaching:
+    -
+      apis: POST|/api/v2/subscriptions/alertzones/search
+      enabled: true
+      ttl: 10000
+
+spring.redis.host: redis-demo.usw2.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 4
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsP0dcMRb2ccR0M5OZ9u2QAAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM5ZwTH/yi3i+KkGDHAgEQgDlZb3mBKRe9lvZ4savziOdKl57sdyDy7zH0flgd3GuayrFVgZ6X0It90pekXlX6ccRN3fTO0+dLXuE='
+
+spring.redis.jedis.pool.max-active: 30
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30
+
+zuul:
+  routes:
+    login:
+      path: /api/v1/signin/**
+      serviceId: IDENTITYACCESSCONTROLSERVICE
+      stripPrefix: false
+    signup:
+      path: /api/v1/accounts/parent/signup/**
+      serviceId: IDENTITYACCESSCONTROLSERVICE
+      stripPrefix: false
+    forgotpassword:
+      path: /api/v1/accounts/forgotpassword/**
+      serviceId: IDENTITYACCESSCONTROLSERVICE
+      stripPrefix: false

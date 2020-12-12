@@ -1,0 +1,27 @@
+telematicssubscriptionindex: telematics_subscriptions
+ElasticSearchURL: ${elasticSearch.awsv7.url}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management.security.enabled: false
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.defaults.enabled: false  
+
+spring:
+  redis:
+    host: redis.use2.karrostech.net
+    port: 6379
+    database: 0
+    password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+
+max_vehicle_subscribe_cnt: 1000

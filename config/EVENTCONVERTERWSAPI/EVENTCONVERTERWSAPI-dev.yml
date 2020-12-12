@@ -1,0 +1,61 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+kafka:
+  bootstrap: 10.20.20.121:9092
+  consumer:
+    groupId: test-consumer-group
+    topic: rawEventsTopic
+  producer:
+    topic: avlEvents-p01use2dev
+    errorTopic: rawError
+
+spring:
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: public
+        hbm2ddl:
+          import_files:
+
+edulog:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 10
+      max-active: 50
+      test-on-borrow: true
+
+
+vehicleservice.ribbon.eureka.enabled: true
+vehicleServiceName: VEHICLEQUERYWSAPI
+vehicleServiceURL : http://${vehicleServiceName}/api/v4.0/vehicles?vins=
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+management.security.enabled: false
+
+hystrix.command.getVehicleTenantMapping.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getVehicleTenantMapping.coreSize: 10
+hystrix.threadpool.getVehicleTenantMapping.maximumSize: 500
+hystrix.threadpool.getVehicleTenantMapping.allowMaximumSizeToDivergeFromCoreSize: true

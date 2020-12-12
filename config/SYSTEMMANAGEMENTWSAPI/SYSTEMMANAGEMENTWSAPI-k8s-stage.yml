@@ -1,0 +1,97 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "staging"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,/swagger-resources/configuration/security, /manage/**,/hystrix.stream]
+
+security.basic.enabled: false
+
+kafka:
+  consumer:
+    proposedStudentDeletes: proposedStudentDeletes-p01usw2stage
+  producer:
+    publishNotificationRequestTopic: publishNotificationRequest-p01usw2stage
+  consumer-group: systemmanagementwsapi-consumer-group-p01usw2stage
+  applicationId: systemmanagementWSAPI-stage
+
+batchProcessor:
+  batchSizePublishEvent: 500
+
+es:
+  url: ${elasticSearch.cloud.url}
+  username: ${elasticSearch.cloud.username}
+  password: ${elasticSearch.cloud.password}
+  port: ${elasticSearch.cloud.port}
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  maxSizeQuery: 10000
+  indices:
+    proposedStudentDelete:
+      index: proposed_student_delete
+      type: doc
+    proposedRouteDelete:
+      index: proposed_route_delete
+      type: doc
+  parallelESCountThreads: 100
+
+qrCode:
+  cipherKey: v5vQ33QvdHvZ7fn3
+  expirationTimeInMonth: 1
+
+hystrix.command.AccessRequest.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.AccessRequest.coreSize: 10
+hystrix.threadpool.AccessRequest.maximumSize: 500
+hystrix.threadpool.AccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.Account.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.Account.coreSize: 10
+hystrix.threadpool.Account.maximumSize: 500
+hystrix.threadpool.Account.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.StudentAccessRequest.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.StudentAccessRequest.coreSize: 10
+hystrix.threadpool.StudentAccessRequest.maximumSize: 500
+hystrix.threadpool.StudentAccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.Student.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.Student.coreSize: 10
+hystrix.threadpool.Student.maximumSize: 500
+hystrix.threadpool.Student.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.VehicleLiveEvent.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.VehicleLiveEvent.coreSize: 10
+hystrix.threadpool.VehicleLiveEvent.maximumSize: 500
+hystrix.threadpool.VehicleLiveEvent.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.proposedStudentDeleteService.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.proposedStudentDeleteService.coreSize: 10
+hystrix.threadpool.proposedStudentDeleteService.maximumSize: 500
+hystrix.threadpool.proposedStudentDeleteService.allowMaximumSizeToDivergeFromCoreSize: true
+
+threads:
+  executors:
+    corePoolSize: 200
+    maximumPoolSize: 200
+    keepAliveTime: 0
+
+spring.redis.host: redis-stage.usw2.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 4
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHiDkT5Z+GUy0/eSCZBpWc3AAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMyPGcTFDKMMuu1r63AgEQgDng2zamWCPrwXpIcAAYKTkkBX8tZkNSpL0aqeY6YboWbr7m/xpEZYnSqubqPTomAY/xffjDPmHAmGE='
+
+spring.redis.jedis.pool.max-active: 30
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30

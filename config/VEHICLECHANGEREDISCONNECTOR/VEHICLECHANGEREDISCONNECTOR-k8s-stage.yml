@@ -1,0 +1,58 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+
+
+# Worker configs
+#kafka_broker: 10.40.26.222:9092
+#schema_registry_broker: 10.40.26.222:8081
+
+#worker_key_converter: org.apache.kafka.connect.storage.StringConverter
+#worker_value_converter: org.apache.kafka.connect.json.JsonConverter
+#worker_key_converter_schemas_enable: false
+#worker_value_converter_schemas_enable: false
+#offset_storage_file: /tmp/connect.offsets
+#plugin_path: share/java
+#consumer_max_poll_interval_ms: 30000
+
+# Connector configs
+
+#connector_class: com.github.jcustenborder.kafka.connect.redis.RedisSinkConnector
+#tasks_max: 1
+#connecttopic: vehicle_change_body-p01usw2stage 
+#redis_connection_hosts: redis-stage.usw2.karrostech.net:6379
+#redis_connection_password: MwMNehjHjN9Yta63xQq6gEcAQJ8h5G
+#redis_dbNum: 4
+#connector_key_converter: io.confluent.connect.avro.AvroConverter
+#connector_value_converter: io.confluent.connect.avro.AvroConverter
+#connector_key_converter_schema_enabled: true
+#connector_value_converter_schema_enabled: true
+#connector_internal_key_converter_schema_enabled: true
+#connector_internal_value_converter_schema_enabled: true
+#connector_internal_key_converter: org.apache.kafka.connect.json.JsonConverter
+#connector_internal_value_converter: org.apache.kafka.connect.json.JsonConverter
+#connector_error_tolerance: all
+
+#----
+
+# Worker configs
+kafka_broker: 10.40.26.222:9092
+schema_registry_broker: ""
+
+worker_key_converter: org.apache.kafka.connect.storage.StringConverter
+worker_value_converter: org.apache.kafka.connect.storage.StringConverter
+worker_key_converter_schemas_enable: false
+worker_value_converter_schemas_enable: false
+offset_storage_file: /tmp/connect.offsets
+plugin_path: share/java
+consumer_max_poll_interval_ms: 30000
+
+# Connector configs
+
+connector_class: com.github.jcustenborder.kafka.connect.redis.RedisSinkConnector
+tasks_max: 1
+connecttopic: vehicle_change_body-p01usw2stage
+redis_connection_hosts: redis-stage.usw2.karrostech.net:6379
+redis_connection_password: MwMNehjHjN9Yta63xQq6gEcAQJ8h5G
+redis_dbNum: 4
+connector_error_tolerance: all
+connector_key_converter_schema_enabled: false
+connector_value_converter_schema_enabled: false

@@ -1,0 +1,96 @@
+# Property file for Staging and Production tiers. Will be used if spring.profiles.active is set to "prod"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-prod.usw1.karrostech.net:1112/eureka/,http://eureka02-p01-prod.usw1.karrostech.net:1112/eureka/
+
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: 120 # Number of minutes
+  refreshTokenExpTime: 60 # Minutes
+  tokenIssuer: http://karrostech.com
+  # base 64 encoded signing key
+  tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,/swagger-resources/configuration/security, /manage/**,/hystrix.stream]
+
+# TODO: Need to make this a group list and get code in settings config to parse through all
+# groupNames and do a union of the roles of them all.
+security.basic.enabled: false
+
+kafka:
+  consumer:
+    proposedStudentDeletes: proposedStudentDeletes-p01usw1prod
+  producer:
+    publishNotificationRequestTopic: publishNotificationRequest-p01usw1prod
+  consumer-group: systemmanagementwsapi-consumer-group-p01usw1prod
+  applicationId: systemmanagementWSAPI-prod
+
+batchProcessor:
+  batchSizePublishEvent: 500
+
+es:
+  url: ${elasticSearch.cloud.url}
+  username: ${elasticSearch.cloud.username}
+  password: ${elasticSearch.cloud.password}
+  port: ${elasticSearch.cloud.port}
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  maxSizeQuery: 10000
+  indices:
+    proposedStudentDelete:
+      index: proposed_student_delete
+      type: doc
+    proposedRouteDelete:
+      index: proposed_route_delete
+      type: doc
+  parallelESCountThreads: 100
+
+qrCode:
+  cipherKey: 3X5XzLfRbNhq26DM
+  expirationTimeInMonth: 1
+
+#hystrix configuration
+
+hystrix.command.AccessRequest.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.AccessRequest.coreSize: 10
+hystrix.threadpool.AccessRequest.maximumSize: 500
+hystrix.threadpool.AccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.Account.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.Account.coreSize: 10
+hystrix.threadpool.Account.maximumSize: 500
+hystrix.threadpool.Account.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.StudentAccessRequest.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.StudentAccessRequest.coreSize: 10
+hystrix.threadpool.StudentAccessRequest.maximumSize: 500
+hystrix.threadpool.StudentAccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.Student.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.Student.coreSize: 10
+hystrix.threadpool.Student.maximumSize: 500
+hystrix.threadpool.Student.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.VehicleLiveEvent.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.VehicleLiveEvent.coreSize: 10
+hystrix.threadpool.VehicleLiveEvent.maximumSize: 500
+hystrix.threadpool.VehicleLiveEvent.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.proposedStudentDeleteService.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.proposedStudentDeleteService.coreSize: 10
+hystrix.threadpool.proposedStudentDeleteService.maximumSize: 500
+hystrix.threadpool.proposedStudentDeleteService.allowMaximumSizeToDivergeFromCoreSize: true
+
+spring.redis.host: redis-prod.usw1.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 4
+spring.redis.password:
+
+spring.redis.jedis.pool.max-active: 50
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30

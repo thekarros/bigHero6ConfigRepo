@@ -1,0 +1,22 @@
+
+postgres:
+  url: db-dev.use2.karrostech.net
+  port: 5432
+  database: Edulog
+  username_plan_ingest_monitoring: plan_ingest_monitoring
+  password_plan_ingest_monitoring: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAEzQxuKDCccVy1zWKZQjRSwAAAAbjBsBgkqhkiG9w0BBwagXzBdAgEAMFgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMdDwTdATnsYyalN+aAgEQgCuecrPzyGSwwwFAAL2Ba5oJGSKs/EZu3qsxOJ+ODsPwcnP0Z+bfAvUTQgfP'
+
+
+elastic_search_aws:
+  timeout: 20s 
+  
+elastic_search_co:
+  timeout: 20s
+  
+# Drop Time must be greater than Alert Time.
+telematics_monitor:
+  alert_time: 50  # Minutes
+  drop_time: 60   # Minutes
+
+gateway_url: https://gateway-p01-dev.use2.karrostech.net
+mission_control_gateway: https://missioncontrolgateway-p01-dev.use2.karrostech.net/

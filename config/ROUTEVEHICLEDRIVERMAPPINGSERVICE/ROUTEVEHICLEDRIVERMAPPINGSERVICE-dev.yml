@@ -1,0 +1,102 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+# DB Configs
+spring:
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: public
+        hbm2ddl:
+          import_files:
+  kafka:
+    bootstrap-servers: 10.20.20.121:9092
+    template:
+      default-topic: changeRouteAssignment
+
+edulog:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 2
+      max-active: 5
+      test-on-borrow: true
+
+# Spring Security configurations are required for this application to work with the
+# Karrostech Security dependency included in pom.xml.
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/** ]
+security.basic.enabled: false
+
+kafka:
+  applicationId: routeVehicleDriverMappingService
+  consumer-group: routeVehicleDriverMappingService-consumer-group-p01use2dev
+  consumer:
+    vehicleInfo: vehicle-info-p01use2dev
+
+hystrix.command.GetRouteAssignments.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetRouteAssignments.coreSize: 10
+hystrix.threadpool.GetRouteAssignments.maximumSize: 500
+hystrix.threadpool.GetRouteAssignments.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetRouteAssignmentsWithRun.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetRouteAssignmentsWithRun.coreSize: 10
+hystrix.threadpool.GetRouteAssignmentsWithRun.maximumSize: 500
+hystrix.threadpool.GetRouteAssignmentsWithRun.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetCurrentAssignment.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetCurrentAssignment.coreSize: 10
+hystrix.threadpool.GetCurrentAssignment.maximumSize: 500
+hystrix.threadpool.GetCurrentAssignment.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getCurrentAssignmentV2.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.getCurrentAssignmentV2.coreSize: 10
+hystrix.threadpool.getCurrentAssignmentV2.maximumSize: 500
+hystrix.threadpool.getCurrentAssignmentV2.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.CreateRouteAssignments.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.CreateRouteAssignments.coreSize: 10
+hystrix.threadpool.CreateRouteAssignments.maximumSize: 500
+hystrix.threadpool.CreateRouteAssignments.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.CreateV2RouteAssignments.execution.isolation.thread.timeoutInMilliseconds: 6000
+hystrix.threadpool.CreateV2RouteAssignments.coreSize: 10
+hystrix.threadpool.CreateV2RouteAssignments.maximumSize: 500
+hystrix.threadpool.CreateV2RouteAssignments.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.SynchronizeRouteAssignments.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.SynchronizeRouteAssignments.coreSize: 10
+hystrix.threadpool.SynchronizeRouteAssignments.maximumSize: 500
+hystrix.threadpool.SynchronizeRouteAssignments.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.v2SynchronizeRouteAssignments.execution.isolation.thread.timeoutInMilliseconds: 6000
+hystrix.threadpool.v2SynchronizeRouteAssignments.coreSize: 10
+hystrix.threadpool.v2SynchronizeRouteAssignments.maximumSize: 500
+hystrix.threadpool.v2SynchronizeRouteAssignments.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.findAllRouteAssignmentByRouteCode.execution.isolation.thread.timeoutInMilliseconds: 6000
+hystrix.threadpool.findAllRouteAssignmentByRouteCode.coreSize: 10
+hystrix.threadpool.findAllRouteAssignmentByRouteCode.maximumSize: 500
+hystrix.threadpool.findAllRouteAssignmentByRouteCode.allowMaximumSizeToDivergeFromCoreSize: true

@@ -1,0 +1,41 @@
+management:
+  health:
+    defaults:
+      enabled: false
+
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:1112/eureka/
+
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.elasticsearch.enabled: false
+
+ElasticSearchURL: vpc-p01use2dev-7-3ga6y7r4qsd4mzrwyyrjtnpwra.us-east-2.es.amazonaws.com
+
+es:
+  username:
+  password:
+  protocol: https
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelESCountThreads: 100
+  port: 443  
+
+kafka:
+  bootstrap-server: 10.20.20.121:9092
+  applicationId: telematicsEventService
+  consumer-group: telematics-event-distribution-p01use2dev1
+  consumer:
+    aggregateavltopic: aggregateAVLEvents-p01use2dev
+    
+eventFilterMap: 1,2103
+
+certificateFile: /edc3963789-certificate.pem.crt
+
+privateKeyFile: /edc3963789-private.pem.key
+
+tenant.vehicle.list: fee4e458-8efe-44bd-a588-29826e1d5ef7,7c775726-651a-4f00-9238-8ca3d888b645,75692533-c3aa-4895-8703-10a3a4b0cd06,eb9a9b65-3810-4ffe-8cb2-fbb878ef9d1e,43800dac-9f95-40f2-9414-3dc58ac3234a

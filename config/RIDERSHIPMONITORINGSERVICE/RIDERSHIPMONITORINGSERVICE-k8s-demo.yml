@@ -1,0 +1,87 @@
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management:
+  health:
+    redis:
+      enabled: false
+eureka.client.healthcheck.enabled: true
+ribbon.eureka.enabled: true
+
+kafka:
+  bootstrap-server: ${kafka-broker}
+  consumer:
+    avlEventInput: aggregateAVLEvents-p01usw2demo
+  producer:
+    ridershipMonitoringResponseTopic: publishNotificationRequest-p01usw2demo
+  consumer-group: ridershipMonitoringService-p01usw2demo
+
+spring.redis.host: redis-demo.usw2.karrostech.net
+spring.redis.port: 6379
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsP0dcMRb2ccR0M5OZ9u2QAAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM5ZwTH/yi3i+KkGDHAgEQgDlZb3mBKRe9lvZ4savziOdKl57sdyDy7zH0flgd3GuayrFVgZ6X0It90pekXlX6ccRN3fTO0+dLXuE='
+
+spring.redis.jedis.pool.max-active: 50
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30
+
+# Custom redis factory
+spring.redis.accessrequest.host: ${spring.redis.host}
+spring.redis.accessrequest.port: ${spring.redis.port}
+spring.redis.accessrequest.database: 0
+spring.redis.accessrequest.password: ${spring.redis.password}
+
+spring.redis.vehicle.host: ${spring.redis.host}
+spring.redis.vehicle.port: ${spring.redis.port}
+spring.redis.vehicle.database: 4
+spring.redis.vehicle.password: ${spring.redis.password}
+# Custom redis factory
+
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  index:
+    name: scanhistories-*
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        streams:
+          bindings:
+            avlEventInput:
+              consumer:
+                applicationId: ridershipMonitoringService-p01usw2demo
+                startOffset: latest
+          binder:
+            brokers: ${kafka-broker}
+            applicationId: ridershipMonitoringService-p01usw2demo
+            configuration:
+              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.value.serde: org.apache.kafka.common.serialization.Serdes$BytesSerde
+              commit.interval.ms: 1000
+      bindings:
+        avlEventInput:
+          destination: aggregateAVLEvents-p01usw2demo
+          group: ridershipMonitoringService-p01usw2demo
+          binder: kafka3
+      binders:
+        kafka3:
+          type: kstream
+
+buffered-es-bulk-index:
+  batch-size: 500
+  retention-ms: 1000
+  buffer-size: 5000
+
+kafka-processors:
+  enabled: false

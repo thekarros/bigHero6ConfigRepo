@@ -1,0 +1,37 @@
+# Property file for local use. Will be used if spring.profiles.active = dev
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+      healthcheck:
+        enabled: true
+        
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.elasticsearch.enabled: false    
+
+ribbon:
+  eureka:
+    enabled: true
+   
+drools:
+  enabled: true
+
+spring:
+  redis:
+    host: redis.use2.karrostech.net
+    port: 6379
+    database: 0
+    password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+
+default.notification.disable: false
+kafka: 
+  applicationId: studenttripChangesNotifier-p01use2dev
+  consumer-group: studenttripChangesNotifier-p01use2dev
+  consumer:
+    studentTripChanges: changeStudentTrip-p01use2dev_v2
+  producer:
+    publishNotificationRequest: publishNotificationRequest-p01use2dev
+

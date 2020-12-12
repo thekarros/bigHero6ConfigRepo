@@ -1,0 +1,13 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+spring.redis.host: redis-prod.usw1.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 4
+spring.redis.password:
+
+redis:
+  channel:
+    tenant_prefix: TENANT_

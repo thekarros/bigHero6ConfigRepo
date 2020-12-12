@@ -1,0 +1,119 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "test"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-dev.use2.karrostech.net:1112/eureka/,http://eureka02-p01-dev.use2.karrostech.net:1112/eureka/
+
+
+management.security.enabled: false
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.elasticsearch.enabled: false
+
+
+
+
+# DB Configs
+spring.cloud.stream.bindings:
+  inputDD:
+    destination: run-sub-es-results-dev
+    group: latestRead
+  inputRA:
+    destination: changeRouteAssignment-test
+  outputRAIntermediate:
+    destination:  intermediateRouteAssignment-test  
+  inputRAIntermediate:
+    destination:  intermediateRouteAssignment-test  
+  outputRA:
+    destination: run-sub-ra-ktable-test
+  inputRO:
+    destination: run-sub-ro-results-test
+  outputRO:
+    destination: run-sub-ro-ktable-test
+  roTable:
+    destination: run-sub-ro-ktable-test
+  raTable:
+    destination: run-sub-ra-ktable-test
+  inputRaWithRoKtable:
+    destination: ra-ro-ktable-test 
+  outputRaWithRoKtable:
+    destination: ra-ro-ktable-test
+  inputRAJoinRO:
+    destination: ra-ro-ktable-test
+  outputRAJoinRO:
+    destination: run-agg-results-raw-test
+  outputJoinedResults:
+    destination: run-agg-results-raw-test     
+
+
+spring:
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+    
+spring.cloud.stream.kafka.streams.bindings:
+  inputDD:
+    consumer: 
+      applicationId: run-sub-es-results-test    
+  inputRA:
+    consumer: 
+      applicationId: changeRouteAssignment-test
+  inputRO:
+    consumer: 
+      applicationId: run-substitution-service-ro-test  
+  inputRAIntermediate:
+    consumer: 
+      applicationId: intermediateRouteAssignment-test    
+  raTable:
+    consumer: 
+      applicationId: run-substitution-service-raKtable-test
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+  roTable:
+    consumer: 
+      applicationId: run-substitution-service-roKtable-test
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde            
+  inputRaWithRoKtable:
+    consumer: 
+      applicationId: ra-ro-joined-ktable-test
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+  inputRAJoinRO:
+    consumer: 
+      applicationId: ra-ro-joined-output-ktable-test
+      keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      valueSerde: org.apache.kafka.common.serialization.Serdes$StringSerde     
+spring.cloud.stream.kafka.bindings.inputRA.consumer:
+  autoCommitOnError: true
+spring.cloud.stream.kafka.bindings.inputRO.consumer:
+  autoCommitOnError: true
+spring.cloud.stream.kafka.bindings.inputDD.consumer:
+  autoCommitOnError: true    
+
+
+
+          
+spring.cloud.stream.kafka.streams:
+  binder:
+    brokers: ${kafka-broker} #localhost #192.168.99.100
+    applicationId: run-substitution-aggregate-service-dev-test
+    configuration:
+      default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      default.value.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+      commit.interval.ms: 1000
+      auto.offset.reset: earliest
+      num:
+        stream:
+          threads: 3      
+raScore: 1        
+current-version: 
+  version: version1
+  config:
+    coefficient-dd: 1
+    coefficient-ro: 1
+    coefficient-ra: 1        

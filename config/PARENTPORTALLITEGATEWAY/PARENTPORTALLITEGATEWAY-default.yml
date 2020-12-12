@@ -1,0 +1,51 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+management:
+  health:
+    redis:
+      enabled: false
+
+# API Keys that are acceptable
+validApiKeys: ${apiKeys}
+
+customForwarding:
+  urlRewrites:
+    -
+      sourcePath: /api/v1/pp/vehicleliveevents/search(.)*
+      targetPath: /api/v1.0/vehicleliveevents/search
+      targetServiceId: VEHICLELIVEEVENTSERVICE
+    -
+      sourcePath: /api/v2/subscriptions/alertzones
+      targetPath: /api/v1/geofences
+      targetServiceId: GEOFENCEALERTMANAGEMENTSERVICE
+    -
+      sourcePath: /api/v2/subscriptions/alertzones/search
+      targetPath: /api/v1/geofences/search
+      targetServiceId: GEOFENCEALERTMANAGEMENTSERVICE
+    -
+      sourcePath: /api/v2/subscriptions/alertzones/([0-9a-fA-F]{8}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{4}\-[0-9a-fA-F]{12})
+      targetPath: /api/v1/geofences/%s
+      targetServiceId: GEOFENCEALERTMANAGEMENTSERVICE
+caching:
+  enabled: true
+  defaultCaching: NONE
+  defaultTTL: 10000
+  defaultIgnoredEndpoints: /export, /download
+  customCaching:
+    -
+      apis: POST|/api/v2/subscriptions/alertzones/search
+      enabled: true
+      ttl: 10000
+
+spring.redis.host: redis.use2.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 4
+spring.redis.password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+
+spring.redis.jedis.pool.max-active: 8
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 1
+spring.redis.jedis.pool.max-idle: 8

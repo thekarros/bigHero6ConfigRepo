@@ -1,0 +1,57 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: h${eureka.instances}
+
+spring.cloud.stream.bindings:
+  input:
+    destination: aggregateAVLEvents-p01usw2stage
+
+spring.cloud.stream.kafka.streams:
+  binder:
+    application-id: runDetectionNNet-p01usw2stage
+    brokers: ${kafka-list-servers}
+
+spring.redis.host: redis-stage.usw2.karrostech.net
+spring.redis.port: 6379
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAE2sKTlQDSfimxDjpGVz68IAAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM8e85GsIHhxUIlHd9AgEQgDlDDnuWEINmeSyF3kloXQFrIrnihVq8/itQMyKaN/yqM1X/VVLE61mqv8K2xjeBrHm9edkXR/laE80='
+
+spring.redis.jedis.pool.max-active: 30
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 10
+spring.redis.jedis.pool.max-idle: 30
+
+spring.redis.vehicle.host: ${spring.redis.host}
+spring.redis.vehicle.port: ${spring.redis.port}
+spring.redis.vehicle.database: 4
+spring.redis.vehicle.password: ${spring.redis.password}
+
+es:
+  hosts:
+    -
+      name: ES-AWS
+      url: ${elasticSearch.aws.url}
+      username:
+      password:
+      protocol: https
+      connectionTimeout: 10000
+      socketTimeout: 60000
+      parallelESCountThreads: 100
+      port: ${elasticSearch.aws.port}
+    -
+      name: ES-CLUSTER
+      url: ${elasticSearch.cloud.url}
+      username: ${elasticSearch.cloud.username}
+      password: ${elasticSearch.cloud.password}
+      protocol: https
+      connectionTimeout: 10000
+      socketTimeout: 60000
+      parallelESCountThreads: 100
+      port: ${elasticSearch.cloud.port}
+  tenantIndex:
+    indexName: tenant
+    type: doc
+  directionIndex: rundirections
+  realTimeVehicleEvent:
+    indexName: realtimevehiclesevents
+    type: doc

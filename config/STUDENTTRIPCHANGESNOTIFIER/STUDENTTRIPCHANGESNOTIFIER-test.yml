@@ -1,0 +1,22 @@
+# Property file for local use. Will be used if spring.profiles.active = dev
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+      healthcheck:
+        enabled: true
+
+ribbon:
+  eureka:
+    enabled: true
+
+
+kafka: 
+  applicationId: studenttripChangesNotifier-p01use2dev
+  consumer-group: studenttripChangesNotifier-p01use2dev
+  consumer:
+    studentTripChanges: changeStudentTrip-p01use2dev_v2
+  producer:
+    publishNotificationRequest: publishNotificationRequest-p01use2dev
+

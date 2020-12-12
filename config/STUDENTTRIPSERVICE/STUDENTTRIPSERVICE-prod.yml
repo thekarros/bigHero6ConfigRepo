@@ -1,0 +1,145 @@
+# Property file for prod use. Will be used if spring.profiles.active is to set prod
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-prod.usw1.karrostech.net:1112/eureka/
+
+kafka:
+  bootstrap: ${kafka-list-servers}
+  groupId: testchangedStudentTripGroup
+  producer:
+    topic: changeStudentTrip-p01usw1prod_v2
+  consumer:
+    changedRoute:
+      topic: changedPlanRoute-p01usw1prod
+    changedStudent:
+      topic: changedStudentPerson-p01usw1prod
+    changedRouteAssignment:
+      topic: changeRouteAssignment-p01usw1prod
+
+# DB Configs
+spring:
+  jpa:
+    show-sql: false
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: public
+        hbm2ddl:
+          import_files:
+
+edulog:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 10
+      max-active: 100
+      test-on-borrow: true
+
+secret: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHKIqcbzk1YdOeXi22sCaZLAAAAdDByBgkqhkiG9w0BBwagZTBjAgEAMF4GCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMHWQNrKPdFIPsDEDnAgEQgDEq/2ZAEaWXXGWUVTwve4TMkUIoSbBlBiYrj7hQCYOdrZgDFS4pz0bRukPb3sgb5+a1'
+
+# Spring Security configurations are required for this application to work with the
+# Karrostech Security dependency included in pom.xml.
+security.jwt:
+  tokenExpirationTime: 120 # Number of minutes
+  refreshTokenExpTime: 60 # Minutes
+  tokenIssuer: http://karrostech.com
+  # base 64 encoded signing key
+  tokenSigningKey: bGFrZGZqO2FzZGxmYm47YWxzZGtoZmc=
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/** ]
+  applications: ["ParentPortal", "*", "Insight", "TenantManagement"]
+security.basic.enabled: false
+management.security.enabled: false
+
+rest-assured:
+  auth:
+    url: https://gateway-p01-prod.usw1.karrostech.net/api/v1/signin
+  baseUrl: https://gateway-p01-prod.usw1.karrostech.net/api/v2/studenttrips
+
+hystrix.command.GetTripsByStudentId.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetTripsByStudentId.coreSize: 10
+hystrix.threadpool.GetTripsByStudentId.maximumSize: 30
+hystrix.threadpool.GetTripsByStudentId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.CreateStudentTrip.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.CreateStudentTrip.coreSize: 10
+hystrix.threadpool.CreateStudentTrip.maximumSize: 30
+hystrix.threadpool.CreateStudentTrip.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.CreateStudentTripOnIngest.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.CreateStudentTripOnIngest.coreSize: 10
+hystrix.threadpool.CreateStudentTripOnIngest.maximumSize: 30
+hystrix.threadpool.CreateStudentTripOnIngest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.createStudentTripByHashing.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.createStudentTripByHashing.coreSize: 10
+hystrix.threadpool.createStudentTripByHashing.maximumSize: 30
+hystrix.threadpool.createStudentTripByHashing.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.putAllTripsForStudent.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.putAllTripsForStudent.coreSize: 10
+hystrix.threadpool.putAllTripsForStudent.maximumSize: 30
+hystrix.threadpool.putAllTripsForStudent.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.DeactivateAllTrips.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.DeactivateAllTrips.coreSize: 10
+hystrix.threadpool.DeactivateAllTrips.maximumSize: 30
+hystrix.threadpool.DeactivateAllTrips.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.ChangeActiveStateForTripsByRouteId.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.ChangeActiveStateForTripsByRouteId.coreSize: 10
+hystrix.threadpool.ChangeActiveStateForTripsByRouteId.maximumSize: 30
+hystrix.threadpool.ChangeActiveStateForTripsByRouteId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetTripsByRouteId.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.GetTripsByRouteId.coreSize: 10
+hystrix.threadpool.GetTripsByRouteId.maximumSize: 30
+hystrix.threadpool.GetTripsByRouteId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getTripsByFilter.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getTripsByFilter.coreSize: 10
+hystrix.threadpool.getTripsByFilter.maximumSize: 30
+hystrix.threadpool.getTripsByFilter.allowMaximumSizeToDivergeFromCoreSize: 30
+
+hystrix.command.getTripsByFilterV2.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getTripsByFilterV2.coreSize: 10
+hystrix.threadpool.getTripsByFilterV2.maximumSize: 30
+hystrix.threadpool.getTripsByFilterV2.allowMaximumSizeToDivergeFromCoreSize: 30
+
+hystrix.command.getTripById.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getTripById.coreSize: 10
+hystrix.threadpool.getTripById.maximumSize: 30
+hystrix.threadpool.getTripById.allowMaximumSizeToDivergeFromCoreSize: 30
+
+hystrix.command.searchFilter.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.searchFilter.coreSize: 10
+hystrix.threadpool.searchFilter.maximumSize: 30
+hystrix.threadpool.searchFilter.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.countFilter.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.countFilter.coreSize: 10
+hystrix.threadpool.countFilter.maximumSize: 30
+hystrix.threadpool.countFilter.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.UpdateVehicleAssignmentByRouteId.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.UpdateVehicleAssignmentByRouteId.coreSize: 10
+hystrix.threadpool.UpdateVehicleAssignmentByRouteId.maximumSize: 30
+hystrix.threadpool.UpdateVehicleAssignmentByRouteId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.UpdateVehicleAssignmentByRouteIdAndRunId.execution.isolation.thread.timeoutInMilliseconds: 3000
+hystrix.threadpool.UpdateVehicleAssignmentByRouteIdAndRunId.coreSize: 10
+hystrix.threadpool.UpdateVehicleAssignmentByRouteIdAndRunId.maximumSize: 30
+hystrix.threadpool.UpdateVehicleAssignmentByRouteIdAndRunId.allowMaximumSizeToDivergeFromCoreSize: true

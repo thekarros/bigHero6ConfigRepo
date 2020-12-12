@@ -1,0 +1,66 @@
+telematicssubscriptionindex: telematics_subscriptions
+ElasticSearchURL: ${elasticSearch.awsv7.url}
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+management.security.enabled: false
+management.endpoints.enabled-by-default: true
+management.endpoints.web.exposure.include: "*"
+management.endpoints.web.base-path: /
+management.health.defaults.enabled: false  
+
+spring:
+  redis:
+    host: redis.use2.karrostech.net
+    port: 6379
+    database: 0
+    password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+
+
+aws:
+  accountId: 690893158275
+  role: Cognito_athenaIdentityPool_devUnauth_Role
+
+identityPoolId: us-east-2:88dd1938-eb7f-4da2-b7a5-fcb8ed6b550d
+region: us-east-2
+sessionDuration: 43200
+durationMetrics: 60
+deploymentEnv: dev 
+
+max_vehicle_subscribe_cnt: 1000
+security:
+  jwt:
+    tokenExpirationTime: 120 # Number of minutes
+    refreshTokenExpTime: 60 # Minutes
+    tokenIssuer: http://karrostech.com
+    # base 64 encoded signing key
+    tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
+    secureAuthenticationEntryUrl: /api/**
+    unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                      /swagger-resources/configuration/security, /manage/**, /api/v1/people ]
+    issuer: http://karrostech.com #use in other services, will be remove soon
+    signature: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ==' #use in other services, will be remove soon
+    duration: # minutes #use in other services, will be remove soon
+      token: 120 #use in other services, will be remove soon
+      refreshToken: 60 #use in other services, will be remove soon
+    enableKeycloakJWT: true
+    keycloakTokenIssuer: karros-keycloak
+    keycloakPublicKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGmgGdeNADHiUu7tcvky8k2AAAB8DCCAewGCSqGSIb3DQEHBqCCAd0wggHZAgEAMIIB0gYJKoZIhvcNAQcBMB4GCWCGSAFlAwQBLjARBAyOuPuo8rq5x0+/xdwCARCAggGjKpqxXzbJCqj5HP+EXzH2B6zZ/7X3HC/KHhYh285Tuu5ztE+ZC33AS6+RoKUv+cQeNJ91t55rMObyYFXMVhHqzhkwHG9YRqdvPJD4wKFI5PhMCK9dE9OxzWg6k8iAhGnJLK+Y9f4ZrRS8siAvcAhHiooMPy4AzIz/2Ir9c4OpivJ3EoOI0lWrLBtCDRQgAM+oTw6gPzTnJCqN8ZvYosRLJlzn53KhmrPxbhnkwXOAqDCWY79hMDVnjkegd6i5lMU0Z/g82YFhcS0+O+qjrmge8bzFvlJUtjmX4DzNvsmD701VtVc003PSzauzleYLfUSjosP6NFMuzxaXD9p9d2iP4Vb9rUrn6W+exFMh3OKGl/Z6oD2aXt+8CbpIeqoIpwhvOSaxPP4FY/xZRgEi7M8wJ95rhK71AbfL1fXsEBlOPeGEsiwiKQL2ye+uaW4pbjU07SU5UKh2h8v9Xa8cQqL3l2JeARpPuzlPESOwgEJ1uICyMVcF5vX7pJlr1ikA6ZskdZbySVc3kRAXLcWE7hqRPcQsZpP5AXEZbC40gUW0N1S2t6U='
+auth:
+  credentials:
+    clientId: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAH+B2Aa2gdAV4uOodo4dgGcAAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDHCp+JqK/s8hu1hbWwIBEIBDZVeV3Vpkfy+yrqL0EfYIio/AT3okxFgUxBJzkX8D4XMNgpdQyYIIosnTMerBO/0Jq1Je1ezmnktzVSFlXeA2cOKEIw=='
+    clientSecret: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHMTVc0y0zg9CkheEQ8djrSAAAAojCBnwYJKoZIhvcNAQcGoIGRMIGOAgEAMIGIBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDC1Zmq4pEPAyLkqhXwIBEIBbD9zgW5/+k21v/MOylELL/ylZJ5kQXXXP93pMoEh+ny1VdFoy3ZVBoZ+Y3NdRpCTpmufdXaqPKL5SFKtHUQqjDGx4w0Fy5v0y9WtTOAWyNEgSO42AzEv36ZHj0g=='
+
+aesKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAEknn8joGV1dY2c7x06fJNtAAAAazBpBgkqhkiG9w0BBwagXDBaAgEAMFUGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM3vvHm+h6yaalSEDRAgEQgChxNI9aqNevUh4YuQ7Q2MSL6GwQe9fExI/BqUn6yzjXmuNq16vDe8nC'
+
+apiKeys: 0844c776530ac4da07fdbbe3e588ee642a13657e, 799173c1bdcc5b19b2a7a9eccd65178f5673af8e, 2279779a6ffd50f5e8784c2307224fac0d7a9325, 3b252846658f89dd61156c921d18df649938f041, 92574542d968c136c9b3b7bc4502766ba831dc11, da139ba972eee32e734103b4bf7561787fff930e, 6826be840dd21691d06f91a803e93ae7c8722390

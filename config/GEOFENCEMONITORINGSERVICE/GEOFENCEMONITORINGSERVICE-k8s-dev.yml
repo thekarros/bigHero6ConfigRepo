@@ -1,0 +1,92 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+kafka-broker: 10.20.20.121:9092
+spring:
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+    stream:
+      kafka:
+        streams:
+          bindings:
+            vehicleIntersectGeoFence:
+              consumer:
+                applicationId: geofenceMonitoringService-p01use2dev
+                startOffset: earliest
+          binder:
+            brokers: ${kafka-broker}
+            applicationId: geofenceMonitoringService-p01use2dev
+            configuration:
+              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.value.serde: org.apache.kafka.common.serialization.Serdes$BytesSerde
+              commit.interval.ms: 1000
+      bindings:
+        vehicleIntersectGeoFence:
+          destination: aggregateAVLEvents-p01use2dev
+          group: geofenceMonitoringService-p01use2dev
+          binder: kafka3
+      binders:
+        kafka3:
+          type: kstream
+kafka:
+  bootstrap: ${kafka-broker}
+  producer:
+    publishNotificationRequest: publishNotificationRequest-p01use2dev
+
+labelToAdd: geoFence
+trackToAdd: Inside
+statsToAdd: Some Stats Coming Soon!
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    ignoredMessage: ignored_messages-*
+    geofences: geofences
+
+AlertZoneKeyValueStoreName: ${spring.cloud.stream.bindings.insideStateStore.destination}
+keyValueStoreName: vehicleInterested
+eventIdToBeProcessed: 2103,1
+searchSize: 1000
+
+alertZone:
+  maximum_allowed_alert_zone_per_user_vehicle_source_app: 6
+  minimum_time_interval: 1
+
+timeToIgnoredPushNotification: 3600000
+timeToStillSendPushNotification: 900000
+
+spring.redis.host: redis.use2.karrostech.net
+spring.redis.port: 6379
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAFygaQGqTM9+fOupFyJyoS2AAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMOyFWHmeGDfK9FKYFAgEQgDld2OogLrbzrKBA3GuW7M5PefamTGHGqKCOsXFCTAPqYvWw4d3FF2jl/1+arIwMaBpExwLSvzIiTBI='
+
+# Custom redis factory
+spring.redis.geofence.host: ${spring.redis.host}
+spring.redis.geofence.port: ${spring.redis.port}
+spring.redis.geofence.database: 2
+spring.redis.geofence.password: ${spring.redis.password}
+
+spring.redis.tenant.host: ${spring.redis.host}
+spring.redis.tenant.port: ${spring.redis.port}
+spring.redis.tenant.database: 0
+spring.redis.tenant.password: ${spring.redis.password}
+# Custom redis factory
+
+spring.redis.jedis.pool.max-active: 8
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 1
+spring.redis.jedis.pool.max-idle: 8

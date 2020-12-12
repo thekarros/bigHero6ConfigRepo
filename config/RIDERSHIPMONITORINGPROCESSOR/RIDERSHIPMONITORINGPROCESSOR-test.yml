@@ -1,0 +1,103 @@
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+eureka.client.healthcheck.enabled: true
+ribbon.eureka.enabled: true
+
+kafka:
+  bootstrap-server: ${kafka-broker}
+  consumer:
+    avlEventInput: aggregateAVLEvents
+  producer:
+    ridershipMonitoringResponseTopic: publishNotificationRequest
+  consumer-group: ridershipMonitoringService
+
+spring.redis.host: redis.use2.karrostech.net
+spring.redis.port: 6379
+spring.redis.password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+
+spring.redis.jedis.pool.max-active: 8
+spring.redis.jedis.pool.max-wait: 5000ms
+spring.redis.jedis.pool.min-idle: 1
+spring.redis.jedis.pool.max-idle: 8
+
+# Custom redis factory
+spring.redis.accessrequest.host: ${spring.redis.host}
+spring.redis.accessrequest.port: ${spring.redis.port}
+spring.redis.accessrequest.database: 0
+spring.redis.accessrequest.password: ${spring.redis.password}
+
+spring.redis.vehicle.host: ${spring.redis.host}
+spring.redis.vehicle.port: ${spring.redis.port}
+spring.redis.vehicle.database: 4
+spring.redis.vehicle.password: ${spring.redis.password}
+# Custom redis factory
+
+spring:
+  cloud:
+    stream:
+      kafka:
+        streams:
+          bindings:
+            avlEventInput:
+              consumer:
+                applicationId: ridershipMonitoringService-test
+                startOffset: latest
+          binder:
+            brokers: ${kafka-broker}
+            applicationId: ridershipMonitoringService-test
+            configuration:
+              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.value.serde: org.apache.kafka.common.serialization.Serdes$BytesSerde
+              commit.interval.ms: 1000
+      bindings:
+        avlEventInput:
+          destination: aggregateAVLEvents-test
+          group: ridershipMonitoringService-test
+          binder: kafka3
+      binders:
+        kafka3:
+          type: kstream
+
+es:
+  host:
+    targetData: SCANHISTORY
+    url: ${elasticSearch.cloud.url}
+    username: ${elasticSearch.cloud.username}
+    password: ${elasticSearch.cloud.password}
+    protocol: https
+    port: ${elasticSearch.cloud.port}
+    parallelESCountThreads: 10
+    connectionTimeout: 2000
+    socketTimeout: 3000
+    maxScrollSize: 5000
+  indices:
+    -
+      targetData: SCANHISTORY
+      indexName: scanhistories-*
+      typeName: doc
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: 60 # Number of minutes
+  refreshTokenExpTime: 120 # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: a-test-signature
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,/swagger-resources/configuration/security, /manage/**,/hystrix.stream]
+
+credentials:
+  apiKey: ${auth.clientId}
+  clientSecret: ${auth.clientSecret}
+
+buffered-es-bulk-index:
+  batch-size: 500
+  retention-ms: 1000
+  buffer-size: 5000
+
+kafka-processors:
+  enabled: true

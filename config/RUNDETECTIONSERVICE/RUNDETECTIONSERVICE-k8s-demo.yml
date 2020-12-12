@@ -1,0 +1,44 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+spring.cloud.stream.bindings:
+  input:
+    destination: aggregateAVLEvents-p01usw2demo
+    #destination: aggregateAVLEvents-LasVegasDemo-2019
+  output:
+    destination: run-sub-es-results-p01usw2demo
+
+spring.cloud.stream.kafka.streams:
+  binder:
+    application-id: RUNDETECTIONSERVICE-p01usw2demo
+    brokers: ${kafka-list-servers}
+    configuration:
+      num:
+        stream:
+          threads: 4
+
+
+spring.cloud.stream.kafka.binder.autoAddPartitions: true
+spring.cloud.stream.kafka.binder.autoCreateTopics: true
+spring.cloud.stream.kafka.binder.minPartitionCount: 12
+spring.cloud.stream.kafka.binder.replicationFactor: 3
+
+
+ElasticSearchURL: ${elasticSearch.awsv7.url}
+
+valid:
+  tenants:
+    - 103ff877-d57a-46cf-8b34-57d72b0550ae
+    - dbc49b6b-ba7f-4075-b894-179f66f10fbb
+    - eb9a9b65-3810-4ffe-8cb2-fbb878ef9d1e
+    - e2bb367b-172f-4354-8883-f6eb2ce35e01
+    - 47ba9b81-fe8c-4af6-a4d7-a92f53d369cc
+
+detection:
+  oldRunDeleteThreshold: 1h
+  weights:
+    consecutive: 1
+    missed: -.1
+    total: 1

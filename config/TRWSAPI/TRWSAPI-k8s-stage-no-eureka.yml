@@ -1,0 +1,33 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "staging"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+# ES7 config
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10
+  indexes:
+    transportationrequest: transportation_request
+    rideregistration: transportation_request_v2
+
+kafka:
+  bootstrap-msk: ${kafka.athena-bootstrap-msk}
+  consumer:
+    changedStudentPerson: changedStudentPerson-p01usw2stage
+    schoolChange: schoolChange-p01usw2stage
+    transportationRequestChange: athenaTransportationRequestChange-p01usw2stage
+  consumer-group: transportationRequestWSAPI-p01usw2stage
+  applicationId: transportationRequestWSAPI-p01usw2stage
+  producer:
+    rideRegistrationChange: rideRegistrationChange-p01usw2stage

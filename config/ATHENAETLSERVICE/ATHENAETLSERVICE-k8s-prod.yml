@@ -1,0 +1,19 @@
+
+
+kafka:
+  bootstrap-msk: ${kafka.athena-bootstrap-msk}
+  applicationId: athenaETLService
+  consumer-group: athenaETLService-p01usw1prod
+  consumer:
+    athenaSchoolChange: athenaSchoolChange-p01usw1prod
+    athenaStudentChange: athenaStudentChange-p01usw1prod
+    
+es:
+  url: ${elasticSearch.awsv7.url}
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 2000
+  socketTimeout: 3000
+  parallelThreads: 10 

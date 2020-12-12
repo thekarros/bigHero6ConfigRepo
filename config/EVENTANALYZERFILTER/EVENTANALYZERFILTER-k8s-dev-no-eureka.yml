@@ -1,0 +1,19 @@
+server:
+  port: 9393
+kafka: 
+  bootstrap-server: 10.20.20.121:9092
+  applicationId: comparator-filter-validation-dev
+  consumer-group: comparator-filter-validation-devusw
+  consumer:
+    aggregateEvent: aggregateAvlEvents-test-dev
+
+
+tenant.enabled.list: ba82b332-dcad-442b-969f-f989a9a1d5ef,65b9371b-10e1-4c85-b2a3-a271628b0345
+eventId.enabled: 1,2103,2001,2140,2002,2141,2005,2152,2006,2153,2160,2150,2151
+speed.limit: 5
+comparator.output.topic: comparatoranalysis-input-dev
+comparator.input.topic: aggregateAvlEvents-test-dev
+
+
+bootstrap.server: 10.20.20.121:9092
+client.groupId: comparaor-event-filter-devanalyzer

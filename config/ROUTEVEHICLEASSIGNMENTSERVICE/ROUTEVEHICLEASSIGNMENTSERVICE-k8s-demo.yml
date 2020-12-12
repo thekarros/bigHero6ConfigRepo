@@ -1,0 +1,88 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+
+endpoints.sensitive: true
+management.security.enabled: false
+management.context-path: /
+
+kafka:
+  schemaUrl: http://10.40.26.222:8081
+  bootstrap: ${kafka-list-servers}
+  vehicle:
+    groupId: vehicleConsumer-rovars-demo
+    topic: vehicle-info-p01usw2demo
+availabilityversion: 1.0
+depotversion: 1.0
+route.assignment.topic: route-assignment-p01usw2demo
+
+# DB Configs
+spring:
+  redis:
+    host: redis-demo.usw2.karrostech.net
+    port: 6379
+    database: 0
+    password: J4r8qXA44w6ZukWAtR6qU7wJcKvXTA
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: rovars
+        hbm2ddl:
+          import_files:
+        format_sql: true
+
+  
+edulog:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 2
+      max-active: 50
+      max-idle: 50
+      test-on-borrow: false
+assignment.env: demo
+default.tenant:holdarea: 3
+default.search.allowedDays: 7
+
+microservices:
+  vms:
+    serviceId: VEHICLEMANAGEMENTSERVICE
+    getOutOfService:
+      endpoint: http://${microservices.vms.serviceId}/api/v1/vms/graphql
+      
+graphql-path: /api/v1/rovars/graphql
+
+graphql:
+  servlet:
+    mapping: ${graphql-path}
+graphiql:
+  endpoint: ${graphql-path}
+  
+default.assignment.rules: TimeAvailability,vehicleOutService
+substituion.assignment.rules: TimeAvailability,vehicleOutService

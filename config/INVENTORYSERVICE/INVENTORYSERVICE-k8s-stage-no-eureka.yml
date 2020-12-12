@@ -1,0 +1,36 @@
+ribbon.eureka.enabled: false
+
+kafka:
+  bootstrap-server: ${kafka-broker}
+  consumer-group: inventoryService-p01usw2stage
+  producer:
+    equipmentTopic: equipment-info-p01usw2stage
+spring:
+  cloud:
+    stream:
+      kafka:
+        streams:
+          bindings:
+            equipmentInputBinding:
+              consumer:
+                applicationId: inventoryService-p01usw2stage
+                startOffset: latest
+          binder:
+            brokers: ${kafka-broker}
+            applicationId: inventoryService-p01usw2stage
+            configuration:
+              default.key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+              default.value.serde: org.apache.kafka.common.serialization.Serdes$BytesSerde
+              commit.interval.ms: 1000
+      bindings:
+        equipmentInputBinding:
+          destination: vehicle-info-p01usw2stage
+          group: inventoryService-p01usw2stage
+          binder: kafka3
+      binders:
+        kafka3:
+          type: kstream
+  jpa:
+    properties:
+      hibernate:
+        default_schema: public

@@ -1,0 +1,78 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+
+endpoints.sensitive: true
+management.security.enabled: false
+management.context-path: /
+
+maxVehicleLimit: 5
+assignment.env: dev
+
+default.assignment.rules: TimeAvailability,vehicleOutService
+substituion.assignment.rules: TimeAvailability,vehicleOutService
+
+# DB Configs
+spring:
+  redis:
+    host: redis.use2.karrostech.net
+    port: 6379
+    database: 0
+    password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+  cloud:
+    config:
+      allowOverride: true
+      overrideNone: true
+      overrideSystemProperties: true
+  jpa:
+    show-sql: true
+    generate-ddl: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: none
+        default_schema: rovars
+        hbm2ddl:
+          import_files:
+        format_sql: true
+        
+kafka-broker: 10.20.20.121:9092
+kafka:
+  schemaUrl: http://10.20.20.121:8081/
+  bootstrap: ${kafka-broker}
+  vehicle:
+    groupId: vehicleConsumer-vms-dev
+    topic: vehicle-info-p01use2dev
+route.assignment.topic: route-assignment-dev
+ 
+edulog:
+  datasource:
+    url: ${rds.dataSource.url}
+    username: ${rds.dataSource.username}
+    password: ${rds.dataSource.password}
+    driverClassName: org.postgresql.Driver
+    test-while-idle: true
+    validation-query: select 1;
+    tomcat:
+      max-wait: 10000
+      initialSize: 2
+      max-active: 50
+      max-idle: 50
+      test-on-borrow: false
+default.search.allowedDays: 7
+microservices:
+  vms:
+    serviceId: VEHICLEMANAGEMENTSERVICE
+    getOutOfService:
+      endpoint: http://${microservices.vms.serviceId}/api/v1/vms/graphql

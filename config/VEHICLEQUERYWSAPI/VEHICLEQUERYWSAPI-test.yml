@@ -1,0 +1,166 @@
+# Property file for local use. Will be used if spring.profiles.active is not set
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: true
+
+endpoints.sensitive: true
+management.security.enabled: false
+management.context-path: /
+
+# Spring Security configurations
+security.jwt:
+  tokenExpirationTime: ${security.jwt.duration.token} # Number of minutes
+  refreshTokenExpTime: ${security.jwt.duration.refreshToken} # Minutes
+  tokenIssuer: ${security.jwt.issuer}
+  # base 64 encoded signing key
+  tokenSigningKey: ${security.jwt.signature}
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/**]
+security.basic.enabled: false
+
+spring:
+  h2:
+    console:
+      enabled: true
+      settings.trace: true
+      settings.web-allow-others: true
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+      generate_statistics: false
+    properties:
+      hibernate:
+        dialect:
+        default_schema: public
+
+edulog:
+  datasource:
+    url: jdbc:h2:mem:Edulog;MODE=PostgreSQL;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;DATABASE_TO_UPPER=FALSE;INIT=create schema IF NOT EXISTS public
+    username: sa
+    password: sa
+    driverClassName: org.h2.Driver
+    test-while-idle: true
+    validation-query: select 1
+    tomcat:
+      max-wait: 10000
+      initialSize: 1
+      max-active: 5
+      test-on-borrow: true
+
+microservices:
+  notifications:
+    serviceId: NOTIFICATIONSERVICE
+    createTopic:
+      endpoint: http://${microservices.notifications.serviceId}/api/v2/subscriptions/topics
+  tenants:
+    serviceId: TENANTSERVICE
+    getTenant:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/tenants/
+
+hystrix.command.GetVehicleByVehicleId.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.GetVehicleByVehicleId.coreSize: 10
+hystrix.threadpool.GetVehicleByVehicleId.maximumSize: 500
+hystrix.threadpool.GetVehicleByVehicleId.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetVehicleTenantMappingsFromVin.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.GetVehicleTenantMappingsFromVin.coreSize: 10
+hystrix.threadpool.GetVehicleTenantMappingsFromVin.maximumSize: 500
+hystrix.threadpool.GetVehicleTenantMappingsFromVin.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetVehicleTenantMappingsFromVins.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.GetVehicleTenantMappingsFromVins.coreSize: 10
+hystrix.threadpool.GetVehicleTenantMappingsFromVins.maximumSize: 500
+hystrix.threadpool.GetVehicleTenantMappingsFromVins.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetAllVehicleTenantMappings.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.GetAllVehicleTenantMappings.coreSize: 10
+hystrix.threadpool.GetAllVehicleTenantMappings.maximumSize: 500
+hystrix.threadpool.GetAllVehicleTenantMappings.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetAllVehicles.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.GetAllVehicles.coreSize: 10
+hystrix.threadpool.GetAllVehicles.maximumSize: 500
+hystrix.threadpool.GetAllVehicles.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetVehiclesByTenantId.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.GetVehiclesByTenantId.coreSize: 10
+hystrix.threadpool.GetVehiclesByTenantId.maximumSize: 500
+hystrix.threadpool.GetVehiclesByTenantId.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.UpdateVehicle.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.UpdateVehicle.coreSize: 10
+hystrix.threadpool.UpdateVehicle.maximumSize: 500
+hystrix.threadpool.UpdateVehicle.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.GetVehicle.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.GetVehicle.coreSize: 10
+hystrix.threadpool.GetVehicle.maximumSize: 500
+hystrix.threadpool.GetVehicle.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.AddVehicles.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.AddVehicles.coreSize: 10
+hystrix.threadpool.AddVehicles.maximumSize: 500
+hystrix.threadpool.AddVehicles.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.getVehiclesWithDevices.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getVehiclesWithDevices.coreSize: 10
+hystrix.threadpool.getVehiclesWithDevices.maximumSize: 500
+hystrix.threadpool.getVehiclesWithDevices.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.updateVehicleWithDevice.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.updateVehicleWithDevice.coreSize: 10
+hystrix.threadpool.updateVehicleWithDevice.maximumSize: 500
+hystrix.threadpool.updateVehicleWithDevice.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.getDevicesToTenantMappings.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getDevicesToTenantMappings.coreSize: 10
+hystrix.threadpool.getDevicesToTenantMappings.maximumSize: 500
+hystrix.threadpool.getDevicesToTenantMappings.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.createVehiclesAlongWithDevice.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.createVehiclesAlongWithDevice.coreSize: 10
+hystrix.threadpool.createVehiclesAlongWithDevice.maximumSize: 500
+hystrix.threadpool.createVehiclesAlongWithDevice.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.getVinsToTenantMappings.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.getVinsToTenantMappings.coreSize: 10
+hystrix.threadpool.getVinsToTenantMappings.maximumSize: 500
+hystrix.threadpool.getVinsToTenantMappings.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.createVehicleV4.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.createVehicleV4.coreSize: 10
+hystrix.threadpool.createVehicleV4.maximumSize: 500
+hystrix.threadpool.createVehicleV4.allowMaximumSizeToDivergeFromCoreSize: true
+hystrix.command.createOrUpdateVehicle.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix.threadpool.createOrUpdateVehicle.coreSize: 10
+hystrix.threadpool.createOrUpdateVehicle.maximumSize: 500
+hystrix.threadpool.createOrUpdateVehicle.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getAllDeviceIdByTenantId.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix:threadpool.getAllDeviceIdByTenantId.coreSize: 10
+hystrix.threadpool.getAllDeviceIdByTenantId.maximumSize: 500
+hystrix.threadpool.getAllDeviceIdByTenantId.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getVehicle.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix:threadpool.getVehicle.coreSize: 10
+hystrix.threadpool.getVehicle.maximumSize: 500
+hystrix.threadpool.getVehicle.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getVehiclesByVins.execution.isolation.thread.timeoutInMilliseconds: 5000
+hystrix:threadpool.getVehiclesByVins.coreSize: 10
+hystrix.threadpool.getVehiclesByVins.maximumSize: 500
+hystrix.threadpool.getVehiclesByVins.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getVehiclesWithQueries.execution.isolation.thread.timeoutInMilliseconds: 30000
+hystrix:threadpool.getVehiclesWithQueries.coreSize: 10
+hystrix.threadpool.getVehiclesWithQueries.maximumSize: 500
+hystrix.threadpool.getVehiclesWithQueries.allowMaximumSizeToDivergeFromCoreSize: true
+
+kafka:
+  bootstrap-server: ${kafka.servers}
+  producer:
+    vehicleChanged: vehicleChanged-p01use2dev
+
+# Redis
+spring.redis.host: redis.use2.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 4
+spring.redis.password: B8VZKjs4LL8a24Gq7zftw2M4eQvNmQ
+
+spring.redis.pool.max-active: 30
+spring.redis.pool.max-wait: 5000
+spring.redis.pool.min-idle: 10
+spring.redis.pool.max-idle: 30
