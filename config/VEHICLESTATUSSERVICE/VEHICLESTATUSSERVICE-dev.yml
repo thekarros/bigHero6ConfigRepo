@@ -45,4 +45,4 @@ redis:
     tenant_prefix: TENANT_
 
 processed:
-  events: 2103,1
+  
