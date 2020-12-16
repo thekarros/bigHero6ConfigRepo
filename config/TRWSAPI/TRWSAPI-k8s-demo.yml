@@ -17,7 +17,7 @@ es:
   parallelThreads: 10
   indexes:
     transportationrequest: transportation_request
-    rideregistration: transportation_request_v2
+    rideregistration: transportation_request_v3
 
 kafka:
   bootstrap-msk: ${kafka.athena-bootstrap-msk}

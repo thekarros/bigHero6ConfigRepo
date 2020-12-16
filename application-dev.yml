@@ -1,5 +1,5 @@
 eureka:
-#instances: http://eureka01-p01-dev.use2.karrostech.net:1112/eureka/
+  instances: http://eureka01-p01-dev.use2.karrostech.net:1112/eureka/
   client:
     serviceUrl:
       defaultZone: ${eureka.instances}
@@ -24,7 +24,11 @@ management:
       exposure:
         include: "*"
 
-
+elasticSearch:
+  logAggregation:
+    url: 2ccf0579872b4a3aad8aeda90137dfd6.us-east-1.aws.found.io
+    username: elastic
+    password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGcaZWtA+fj+eRZQ7T7FMW+AAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMAt4chiKot4qvp5lGAgEQgDMXt7mSjzH4tyl1w4IVqfSuZky+IjABks9nHqTb/H6Umc6PHXYiCpCslksWG4gpIFtxG98='
     port: 9243
   cloud:
     url: 265eb3574a7146a791b71965a2e378fa.us-west-2.aws.found.io
@@ -48,7 +52,7 @@ rds:
     username: karros #use in other services, will be remove soon
     password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAF1tjwR9jL3pwqiDVUwBkrMAAAAfTB7BgkqhkiG9w0BBwagbjBsAgEAMGcGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMsxulA/cLhH/DVWPIAgEQgDqhMN6j5wKMj/5H4HHEW1O3vodBUEabssk2Sv2Nzi+pp0jItHq4QaFWNmj8PCQpFuSSjmYKWKC4d31K' #use in other services, will be remove soon
 
-AWS DevQA DB
+#AWS DevQA DB
 edulog:
   datasource:
     url: jdbc:postgresql://db-dev.use2.karrostech.net:5432/Edulog
@@ -63,7 +67,7 @@ edulog:
       max-active: 50
       test-on-borrow: true
 
- DB Configs
+# DB Configs
 spring:
   jpa:
     show-sql: true
@@ -81,14 +85,14 @@ spring:
         hbm2ddl:
           import_files:
 
- Spring Security configurations are required for this application to work with the
- Karrostech Security dependency included in pom.xml.
+# Spring Security configurations are required for this application to work with the
+# Karrostech Security dependency included in pom.xml.
 security:
   jwt:
     tokenExpirationTime: 120 # Number of minutes
     refreshTokenExpTime: 60 # Minutes
     tokenIssuer: http://karrostech.com
-     base 64 encoded signing key
+    # base 64 encoded signing key
     tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
     secureAuthenticationEntryUrl: /api/**/students/**
     unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
@@ -119,7 +123,7 @@ gateways:
   parentPortal: https://parentportalgateway-p01-dev.use2.karrostech.net
   parentPortalLite: https://parentportallitegateway-p01-dev.use2.karrostech.net
 
- email config
+# email config
 ses:
   sender: support@karroslab.com
   accessKey: AKIARNCTWFL5EMO5CKPN
