@@ -44,7 +44,7 @@ elasticSearch:
     url: vpc-p01use2dev-7-3ga6y7r4qsd4mzrwyyrjtnpwra.us-east-2.es.amazonaws.com
     username:
     password:
-    port: 443
+    port: 4433
 
 rds:
   dataSource:
