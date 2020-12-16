@@ -6,23 +6,6 @@ instances: http://eureka01-p01-dev.use2.karrostech.net:1112/eureka/
     healthcheck:
       enabled: true
 
-kafka-broker: 10.20.20.121:9092 #use in other services, will be remove soon
-kafka:
-  server: 10.20.20.121:9092
-  bootstrap-server: 10.20.20.121:9092
-  athena-bootstrap-msk: b-1.athenamsk.eg7z0i.c3.kafka.us-east-2.amazonaws.com:9092, b-2.athenamsk.eg7z0i.c3.kafka.us-east-2.amazonaws.com:9092
-
-management:
-  security:
-    enabled: false
-  health:
-    elasticsearch:
-      enabled: false
-  endpoints: 
-    web: 
-      base-path: /
-      exposure:
-        include: "*"
 
 elasticSearch:
   logAggregation:
@@ -31,7 +14,7 @@ elasticSearch:
     password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGcaZWtA+fj+eRZQ7T7FMW+AAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMAt4chiKot4qvp5lGAgEQgDMXt7mSjzH4tyl1w4IVqfSuZky+IjABks9nHqTb/H6Umc6PHXYiCpCslksWG4gpIFtxG98='
     port: 9243
   cloud:
-    url: 
+    url: 265eb3574a7146a791b71965a2e378fa.us-west-2.aws.found.io
     username: elastic
     password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGnZdnV5uwcWTG3MvEK/ys3AAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMtC/iBkI5cxQeg5qTAgEQgDNmCgz5QqPD5Ks2FGA5G0QwRi4FDKZcEeN4kHP+NLVIRiV8Urca0hKVoNr4KFp26Ugya8w='
     port: 9243
