@@ -63,7 +63,7 @@ edulog:
       max-active: 50
       test-on-borrow: true
 
-# DB Configs
+ DB Configs
 spring:
   jpa:
     show-sql: true
