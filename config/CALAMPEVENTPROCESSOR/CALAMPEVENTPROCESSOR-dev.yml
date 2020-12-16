@@ -1,4 +1,4 @@
-# Property file for local use. Will be used if spring.profiles.active is not set
+#Property file for local use. Will be used if spring.profiles.active is not set
 
 eureka:
   client:
