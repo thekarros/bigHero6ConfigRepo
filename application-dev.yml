@@ -26,7 +26,7 @@ management:
 
 elasticSearch:
   logAggregation:
-    url: 2ccf0579872b4a3aad8aeda90137dfd6.us-east-1.aws.found.ioS
+    url: 2ccf0579872b4a3aad8aeda90137dfd6.us-east-1.aws.found.ioVanxinhdep
     username: elastic
     password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGcaZWtA+fj+eRZQ7T7FMW+AAAAdjB0BgkqhkiG9w0BBwagZzBlAgEAMGAGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMAt4chiKot4qvp5lGAgEQgDMXt7mSjzH4tyl1w4IVqfSuZky+IjABks9nHqTb/H6Umc6PHXYiCpCslksWG4gpIFtxG98='
     port: 9243
