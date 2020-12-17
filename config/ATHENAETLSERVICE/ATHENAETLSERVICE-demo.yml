@@ -1,4 +1,4 @@
-
+2222222222222
 kafka:
   bootstrap-msk: ${kafka.athena-bootstrap-msk}
   applicationId: athenaETLService
