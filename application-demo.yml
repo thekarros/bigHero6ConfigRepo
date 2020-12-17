@@ -102,7 +102,7 @@ aesKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAEknn8joGV1dY2
 
 # email config
 ses:
-  sender: support@karroslab.com
+  sender: support@karroslab.comm
   accessKey: AKIARNCTWFL5EMO5CKPN
   secretKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAHTybxOBDaAECabZ47LQ925AAAAhzCBhAYJKoZIhvcNAQcGoHcwdQIBADBwBgkqhkiG9w0BBwEwHgYJYIZIAWUDBAEuMBEEDCbwtUEk8z3S/hhHJwIBEIBDPd1pJdKdRka8WH51X6Qnd/tiPPtd0E3zqJquVegHoMh/TJjNvSIUqlk7bwjKeZAZ1nZt3gzcvdn3HNHSR5fJD1lqsg=='
   region: us-east-1
