@@ -1,13 +1,12 @@
-# Property file for DevTest tier. Will be used if spring.profiles.active is set to "staging"
-
 eureka:
   client:
     serviceUrl:
       defaultZone: ${eureka.instances}
 
 kafka:
-  consumer-group: rideRegistrationChange-kafka-consumer-group-usw2demo
+  consumer:
+    group-id: rideRegistrationChange-usw2demo
   topic:
     ride-registration-change: rideRegistrationChange-p01usw2demo
     msk-suffix:
-      ride-registration-change: rideRegistrationChange-usw2demo
+      ride-registration-change: athenaRideRegistrationChange-usw2demo

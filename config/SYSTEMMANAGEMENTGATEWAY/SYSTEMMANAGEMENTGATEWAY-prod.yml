@@ -47,11 +47,11 @@ zuul:
       path: /api/*/equipment/**
       serviceId: INVENTORYSERVICE
       stripPrefix: false
-    vehiclemanagementservice:
+    vehiclemanagementservice: 
       path: /vehiclemanagementservice/**
       serviceId: VEHICLEMANAGEMENTSERVICE
       stripPrefix: true
-    vehiclemanagementservice_graphql:
+    vehiclemanagementservice_graphql: 
       path: /vms/**
       serviceId: VEHICLEMANAGEMENTSERVICE
       stripPrefix: true

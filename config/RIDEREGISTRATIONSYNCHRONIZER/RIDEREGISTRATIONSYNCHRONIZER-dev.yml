@@ -4,8 +4,9 @@ eureka:
       defaultZone: ${eureka.instances}
 
 kafka:
-  consumer-group: rideRegistrationChange-kafka-consumer-group-use2dev
+  consumer:
+    group-id: rideRegistrationChange-use2dev
   topic:
     ride-registration-change: rideRegistrationChange-p01use2dev
     msk-suffix:
-      ride-registration-change: rideRegistrationChange-use2dev
+      ride-registration-change: athenaRideRegistrationChange-use2dev

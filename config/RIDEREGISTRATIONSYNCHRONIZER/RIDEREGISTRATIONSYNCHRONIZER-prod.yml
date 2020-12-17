@@ -4,8 +4,9 @@ eureka:
       defaultZone: http://eureka01-p01-prod.usw1.karrostech.net:1112/eureka/
 
 kafka:
-  consumer-group: rideRegistrationChange-kafka-consumer-group-usw1prod
+  consumer:
+    group-id: rideRegistrationChange-usw1prod
   topic:
     ride-registration-change: rideRegistrationChange-p01usw1prod
     msk-suffix:
-      ride-registration-change: rideRegistrationChange-usw1prod
+      ride-registration-change: athenaRideRegistrationChange-usw1prod

@@ -1,13 +1,12 @@
-# Property file for Staging and Production tiers. Will be used if spring.profiles.active is set to "prod"
-
 eureka:
   client:
     serviceUrl:
       defaultZone: ${eureka.instances}
 
 kafka:
-  consumer-group: rideRegistrationChange-kafka-consumer-group-usw1prod
+  consumer:
+    group-id: rideRegistrationChange-usw1prod
   topic:
     ride-registration-change: rideRegistrationChange-p01usw1prod
     msk-suffix:
-      ride-registration-change: rideRegistrationChange-usw1prod
+      ride-registration-change: athenaRideRegistrationChange-usw1prod
