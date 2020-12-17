@@ -1,0 +1,25 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        default_schema: account
+        
+es:
+  ElasticSearchURL: ${elasticSearch.cloud.url}
+  username: ${elasticSearch.cloud.username}
+  password: ${elasticSearch.cloud.password}
+  port: ${elasticSearch.cloud.port}
+  parallelESCountThreads: 100
+
+kafka:
+  bootstrap-server: ${kafka-broker}
+  producer:
+    changedAccountSetting: changedAccountSetting-p01usw1prod
+
+server:
+  domain: https://accounts.edulog.cloud

@@ -1,0 +1,27 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.instances}
+
+ribbon.eureka.enabled: false
+
+spring:
+  jpa:
+    properties:
+      hibernate:
+        default_schema: account
+
+es:
+  ElasticSearchURL: ${elasticSearch.cloud.url}
+  username: ${elasticSearch.cloud.username}
+  password: ${elasticSearch.cloud.password}
+  port: ${elasticSearch.cloud.port}
+  parallelESCountThreads: 100
+
+kafka:
+  bootstrap-server: ${kafka.servers}
+  producer:
+    changedAccountSetting: changedAccountSetting-p01usw2stage
+
+server:
+  domain: https://accounts-stage.edulog.cloud
