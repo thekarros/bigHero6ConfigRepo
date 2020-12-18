@@ -6,6 +6,12 @@ eureka:
       defaultZone: http://eureka01-p01-prod.usw1.karrostech.net:1112/eureka/,http://eureka02-p01-prod.usw1.karrostech.net:1112/eureka/
 
 
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-prod.usw1.karrostech.net:1112/eureka/,http://eureka02-p01-prod.usw1.karrostech.net:1112/eureka/
+
+
 # Spring Security configurations
 security.jwt:
   tokenExpirationTime: 120 # Number of minutes
