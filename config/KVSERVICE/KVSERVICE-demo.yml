@@ -100,7 +100,7 @@ defaultTimeOutinSec: 120
 registrationCodeLength: 8
 
 es:
-  url: ${elasticSearch.awsv7.url}/test
+  url: ${elasticSearch.awsv7.url}
   protocol: https
   username: ${elasticSearch.awsv7.username}
   password: ${elasticSearch.awsv7.password}
