@@ -1,0 +1,292 @@
+# Property file for DevTest tier. Will be used if spring.profiles.active is set to "test"
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://eureka01-p01-demo.usw2.karrostech.net:1112/eureka/,http://eureka02-p01-demo.usw2.karrostech.net:1112/eureka/
+
+management.security.enabled: false
+management.context-path: /
+eureka.client.healthcheck.enabled: true
+ribbon.eureka.enabled: true
+
+# Spring Security configurations are required for this application to work with the
+# Karrostech Security dependency included in pom.xml.
+security.jwt:
+  tokenExpirationTime: 120 # Number of minutes
+  refreshTokenExpTime: 60 # Minutes
+  tokenIssuer: http://karrostech.com
+  # base 64 encoded signing key
+  tokenSigningKey: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsh0GXHEy3S3jOX9QXXT8yAAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMRDWTMtLq5qBNuvpYAgEQgDvEFsvknk7vamQJiB5wJmwbF570MckoCVEqD8O7MVwpzzbK8pdXJ4dMDfFUeMcWL+eE/SaCae9u6QX4cQ=='
+  secureAuthenticationEntryUrl: /api/**
+  unsecurePathList: [/v2/api-docs/**, /configuration/ui, /swagger-resources, /configuration/security, /swagger-ui.html, /swagger-ui.html/**, /webjars/**, /swagger-resources/configuration/ui,
+                     /swagger-resources/configuration/security, /manage/** ]
+
+  # TODO: Need to make this a group list and get code in settings config to parse through all
+  # groupNames and do a union of the roles of them all.
+  applications: ["ParentPortal", "*", "Insight", "SystemManagement"]
+security.basic.enabled: false
+
+microservices:
+  tenants:
+    serviceId: TENANTSERVICE
+    get-school:
+      endpoint: http://${microservices.tenants.serviceId}/api/v2.0/schools/
+  people:
+    serviceId: PERSONSERVICE
+    searchStudents:
+      endpoint: http://${microservices.people.serviceId}/api/v1/students
+    searchLikeStudents:
+      endpoint: http://${microservices.people.serviceId}/api/v3/students
+    get-person-by-id:
+      endpoint: http://${microservices.people.serviceId}/api/v1/people/
+  notifications:
+    serviceId: NOTIFICATIONSERVICE
+    createTopic:
+      endpoint: http://${microservices.notifications.serviceId}/api/v2/subscriptions/topics
+    subscribeTopic:
+      endpoint: http://${microservices.notifications.serviceId}/api/v2/subscriptions/topics/subscribe
+    unSubscribeTopic:
+      endpoint: http://${microservices.notifications.serviceId}/api/v2/subscriptions/topics/unsubscribe
+    deleteAlertZone:
+      endpoint: http://${microservices.geofences.serviceId}/api/v1/geofences
+  geofences:
+    serviceId: GEOFENCEALERTMANAGEMENTSERVICE
+    deleteAlertZone:
+      endpoint: http://${microservices.geofences.serviceId}/api/v1/geofences
+    updateCustomGeofenceVehicles:
+      endpoint: http://${microservices.geofences.serviceId}/api/v1/geofences/vehicles
+  vehicles:
+    serviceId: VEHICLEQUERYWSAPI
+    getVehicle:
+      endpoint: http://${microservices.vehicles.serviceId}/api/v3.0/vehicles/
+    filterVehicles:
+      endpoint: http://${microservices.vehicles.serviceId}/api/v4.0/vehicles/search
+  sm:
+    serviceId: SYSTEMMANAGEMENTWSAPI
+    getExtraUserInfo:
+      endpoint: http://${microservices.sm.serviceId}/api/v1/sm/accounts/details
+      
+kafka:
+  brokers: ${kafka-list-servers}
+  bootstrap-server: ${kafka.brokers}
+  producer:
+    accessRequestChangeTopic: accessRequestChange-p01usw2demo
+    studentAccessRequestChangeTopic: studentAccessRequestChangeTopic-p01usw2demo
+    publishNotificationRequest: publishNotificationRequest-p01usw2demo
+  consumer:
+    groupId: accessMgmtService-p01usw2demo
+    studentPersonChangeTopic: changedStudentPerson-p01usw2demo
+    tenantChanged: tenantChanged-p01usw2demo
+    schoolChange: schoolChange-p01usw2demo
+
+spring.redis.host: redis-demo.usw2.karrostech.net
+spring.redis.port: 6379
+spring.redis.database: 0
+spring.redis.password: '{cipher}AQICAHhwRLH9r5EwhXiI7DKT7Bu2NJ2KcnE9k/MeZthez+G0EAGsP0dcMRb2ccR0M5OZ9u2QAAAAfDB6BgkqhkiG9w0BBwagbTBrAgEAMGYGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQM5ZwTH/yi3i+KkGDHAgEQgDlZb3mBKRe9lvZ4savziOdKl57sdyDy7zH0flgd3GuayrFVgZ6X0It90pekXlX6ccRN3fTO0+dLXuE='
+
+spring.redis.pool.max-active: 30
+spring.redis.pool.max-wait: 5000
+spring.redis.pool.min-idle: 10
+spring.redis.pool.max-idle: 30
+
+spring.redis.vehicle.host: ${spring.redis.host}
+spring.redis.vehicle.port: ${spring.redis.port}
+spring.redis.vehicle.database: 4
+spring.redis.vehicle.password: ${spring.redis.password}
+
+maxScrollSize: 10000
+defaultTimeOutinSec: 120
+registrationCodeLength: 8
+
+es:
+  url: ${elasticSearch.awsv7.url}/test-hackathon
+  protocol: https
+  username: ${elasticSearch.awsv7.username}
+  password: ${elasticSearch.awsv7.password}
+  port: ${elasticSearch.awsv7.port}
+  connectionTimeout: 10000
+  socketTimeout: 60000
+  parallelThreads: 100
+  indexes:
+    accessRequest: usertenantvehiclemapping
+    registrationCode: registrationcodemapping
+    studentAccessRequest: studentaccessrequests
+
+#Hystrix Configuration
+hystrix.command.searchRegistrationCode.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.searchRegistrationCode.coreSize: 10
+hystrix.threadpool.searchRegistrationCode.maximumSize: 500
+hystrix.threadpool.searchRegistrationCode.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GenerateAccessCode.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.GenerateAccessCode.coreSize: 10
+hystrix.threadpool.GenerateAccessCode.maximumSize: 500
+hystrix.threadpool.GenerateAccessCode.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.createRegistration.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.createRegistration.coreSize: 10
+hystrix.threadpool.createRegistration.maximumSize: 500
+hystrix.threadpool.createRegistration.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.updateRegistration.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.updateRegistration.coreSize: 10
+hystrix.threadpool.updateRegistration.maximumSize: 500
+hystrix.threadpool.updateRegistration.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchRegistrationRecords.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.searchRegistrationRecords.coreSize: 10
+hystrix.threadpool.searchRegistrationRecords.maximumSize: 500
+hystrix.threadpool.searchRegistrationRecords.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.createAccessRegistration.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.createAccessRegistration.coreSize: 10
+hystrix.threadpool.createAccessRegistration.maximumSize: 500
+hystrix.threadpool.createAccessRegistration.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.createAccessRegistrationForVehicles.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.createAccessRegistrationForVehicles.coreSize: 10
+hystrix.threadpool.createAccessRegistrationForVehicles.maximumSize: 500
+hystrix.threadpool.createAccessRegistrationForVehicles.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.deleteAccessRequestForUsers.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.deleteAccessRequestForUsers.coreSize: 10
+hystrix.threadpool.deleteAccessRequestForUsers.maximumSize: 500
+hystrix.threadpool.deleteAccessRequestForUsers.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.deleteAccessToRegistration.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.deleteAccessToRegistration.coreSize: 10
+hystrix.threadpool.deleteAccessToRegistration.maximumSize: 500
+hystrix.threadpool.deleteAccessToRegistration.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getAccessRequestSearch.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getAccessRequestSearch.coreSize: 10
+hystrix.threadpool.getAccessRequestSearch.maximumSize: 500
+hystrix.threadpool.getAccessRequestSearch.allowMaximumSizeToDivergeFromCoreSize: true
+
+#hystrix.command.GetDrivingDirections.execution.isolation.thread.timeoutInMilliseconds: 10000
+#hystrix.threadpool.GetDrivingDirections.coreSize: 10
+#hystrix.threadpool.GetDrivingDirections.maximumSize: 500
+#hystrix.threadpool.GetDrivingDirections.allowMaximumSizeToDivergeFromCoreSize: true
+#
+#
+#hystrix.command.GetDrivingDirectionsForPathList.execution.isolation.thread.timeoutInMilliseconds: 10000
+#hystrix.threadpool.GetDrivingDirectionsForPathList.coreSize: 10
+#hystrix.threadpool.GetDrivingDirectionsForPathList.maximumSize: 500
+#hystrix.threadpool.GetDrivingDirectionsForPathList.allowMaximumSizeToDivergeFromCoreSize: true
+#
+#hystrix.command.GetMetaDataPlanDataHistory.execution.isolation.thread.timeoutInMilliseconds: 10000
+#hystrix.threadpool.GetMetaDataPlanDataHistory.coreSize: 10
+#hystrix.threadpool.GetMetaDataPlanDataHistory.maximumSize: 500
+#hystrix.threadpool.GetMetaDataPlanDataHistory.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchStudents.execution.isolation.thread.timeoutInMilliseconds: 20000
+hystrix.threadpool.searchStudents.coreSize: 10
+hystrix.threadpool.searchStudents.maximumSize: 500
+hystrix.threadpool.searchStudents.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.SearchStudentAccessRequest.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.SearchStudentAccessRequest.coreSize: 10
+hystrix.threadpool.SearchStudentAccessRequest.maximumSize: 500
+hystrix.threadpool.SearchStudentAccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+
+hystrix.command.GetStudentRequestById.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.GetStudentRequestById.coreSize: 10
+hystrix.threadpool.GetStudentRequestById.maximumSize: 500
+hystrix.threadpool.GetStudentRequestById.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.UpdateStudentAccessRequest.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.UpdateStudentAccessRequest.coreSize: 10
+hystrix.threadpool.UpdateStudentAccessRequest.maximumSize: 500
+hystrix.threadpool.UpdateStudentAccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.SearchAccessRequest.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.SearchAccessRequest.coreSize: 10
+hystrix.threadpool.SearchAccessRequest.maximumSize: 500
+hystrix.threadpool.SearchAccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.DeleteStudentAccessRequest.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.DeleteStudentAccessRequest.coreSize: 10
+hystrix.threadpool.DeleteStudentAccessRequest.maximumSize: 500
+hystrix.threadpool.DeleteStudentAccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.PatchStudentAccessRequest.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.PatchStudentAccessRequest.coreSize: 10
+hystrix.threadpool.PatchStudentAccessRequest.maximumSize: 500
+hystrix.threadpool.PatchStudentAccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.GetStudentAccessRequestsByPerson.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.GetStudentAccessRequestsByPerson.coreSize: 10
+hystrix.threadpool.GetStudentAccessRequestsByPerson.maximumSize: 500
+hystrix.threadpool.GetStudentAccessRequestsByPerson.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.CreateStudentAccessRequest.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.CreateStudentAccessRequest.coreSize: 10
+hystrix.threadpool.CreateStudentAccessRequest.maximumSize: 500
+hystrix.threadpool.CreateStudentAccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.suggestRegistrationCode.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.suggestRegistrationCode.coreSize: 10
+hystrix.threadpool.suggestRegistrationCode.maximumSize: 500
+hystrix.threadpool.suggestRegistrationCode.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchUserAccessRequest.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.searchUserAccessRequest.coreSize: 10
+hystrix.threadpool.searchUserAccessRequest.maximumSize: 500
+hystrix.threadpool.searchUserAccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getAllUsersPerTenant.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getAllUsersPerTenant.coreSize: 10
+hystrix.threadpool.getAllUsersPerTenant.maximumSize: 500
+hystrix.threadpool.getAllUsersPerTenant.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getRequesterEmailsByCodes.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getRequesterEmailsByCodes.coreSize: 10
+hystrix.threadpool.getRequesterEmailsByCodes.maximumSize: 500
+hystrix.threadpool.getRequesterEmailsByCodes.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getRequesterEmailsByVehicleIds.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getRequesterEmailsByVehicleIds.coreSize: 10
+hystrix.threadpool.getRequesterEmailsByVehicleIds.maximumSize: 500
+hystrix.threadpool.getRequesterEmailsByVehicleIds.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getDetailsStudentAccessRequest.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getDetailsStudentAccessRequest.coreSize: 10
+hystrix.threadpool.getDetailsStudentAccessRequest.maximumSize: 500
+hystrix.threadpool.getDetailsStudentAccessRequest.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchStudentAccessRequests.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.searchStudentAccessRequests.coreSize: 10
+hystrix.threadpool.searchStudentAccessRequests.maximumSize: 500
+hystrix.threadpool.searchStudentAccessRequests.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getAllStudentAccessRequests.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getAllStudentAccessRequests.coreSize: 10
+hystrix.threadpool.getAllStudentAccessRequests.maximumSize: 500
+hystrix.threadpool.getAllStudentAccessRequests.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.searchStudentAccessRequestWithSuggestionUser.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.searchStudentAccessRequestWithSuggestionUser.coreSize: 10
+hystrix.threadpool.searchStudentAccessRequestWithSuggestionUser.maximumSize: 500
+hystrix.threadpool.searchStudentAccessRequestWithSuggestionUser.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getAllRequesterEmailsOfApprovedRequestBasedOnListOfStudentIds.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getAllRequesterEmailsOfApprovedRequestBasedOnListOfStudentIds.coreSize: 10
+hystrix.threadpool.getAllRequesterEmailsOfApprovedRequestBasedOnListOfStudentIds.maximumSize: 500
+hystrix.threadpool.getAllRequesterEmailsOfApprovedRequestBasedOnListOfStudentIds.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getRequesterEmailsBySchools.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getRequesterEmailsBySchools.coreSize: 10
+hystrix.threadpool.getRequesterEmailsBySchools.maximumSize: 500
+hystrix.threadpool.getRequesterEmailsBySchools.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getRequesterEmailsByStudentIds.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getRequesterEmailsByStudentIds.coreSize: 10
+hystrix.threadpool.getRequesterEmailsByStudentIds.maximumSize: 500
+hystrix.threadpool.getRequesterEmailsByStudentIds.allowMaximumSizeToDivergeFromCoreSize: true
+
+hystrix.command.getStudentRequestsByPerson.execution.isolation.thread.timeoutInMilliseconds: 10000
+hystrix.threadpool.getStudentRequestsByPerson.coreSize: 10
+hystrix.threadpool.getStudentRequestsByPerson.maximumSize: 500
+hystrix.threadpool.getStudentRequestsByPerson.allowMaximumSizeToDivergeFromCoreSize: true
