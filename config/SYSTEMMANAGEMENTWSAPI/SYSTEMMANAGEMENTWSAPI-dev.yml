@@ -27,7 +27,7 @@ batchProcessor:
   batchSizePublishEvent: 500
   
 es:
-  url: ${elasticSearch.cloud.url}/test
+  url: ${elasticSearch.cloud.url}
   username: ${elasticSearch.cloud.username}
   password: ${elasticSearch.cloud.password}
   port: ${elasticSearch.cloud.port}
